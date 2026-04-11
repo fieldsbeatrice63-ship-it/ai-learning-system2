@@ -6,85 +6,155 @@
 <title>AI Foundations - Level 1</title>
 
 <style>
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: Arial, sans-serif;
   background: #f4f6f8;
+  color: #1f2937;
 }
 
 .header {
   background: linear-gradient(90deg, #1e3c72, #2a5298);
   color: white;
-  padding: 20px;
+  padding: 18px 22px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 16px;
 }
 
-.header h1 {
+.header-left h1 {
   margin: 0;
   font-size: 22px;
 }
 
+.header-left p {
+  margin: 6px 0 0;
+  font-size: 13px;
+  opacity: 0.92;
+}
+
+.header-right {
+  font-size: 12px;
+  text-align: right;
+  opacity: 0.95;
+  line-height: 1.5;
+}
+
 .container {
-  max-width: 900px;
+  max-width: 980px;
   margin: 40px auto;
   padding: 20px;
 }
 
 .card {
   background: white;
-  border-radius: 12px;
-  padding: 25px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+  border-radius: 18px;
+  padding: 28px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.card h2 {
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+
+.card-intro {
+  color: #5b6472;
+  margin-bottom: 24px;
 }
 
 .ai-box {
   display: flex;
-  gap: 15px;
-  align-items: center;
+  gap: 18px;
+  align-items: flex-start;
   background: #eef3ff;
-  padding: 15px;
-  border-radius: 10px;
+  padding: 18px;
+  border-radius: 14px;
   margin-bottom: 20px;
+  border: 1px solid #d9e5ff;
 }
 
 .ai-avatar {
-  width: 60px;
-  height: 60px;
+  width: 78px;
+  min-width: 78px;
+  height: 78px;
   border-radius: 50%;
-  background: #2a5298;
+  background: radial-gradient(circle at 30% 30%, #66b3ff, #2a5298 70%);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
-  font-size: 24px;
+  box-shadow: 0 10px 24px rgba(42, 82, 152, 0.25);
+  animation: floatBot 2.8s ease-in-out infinite;
+}
+
+.ai-avatar svg {
+  width: 48px;
+  height: 48px;
+}
+
+@keyframes floatBot {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+  100% { transform: translateY(0px); }
+}
+
+.ai-message-wrap {
+  flex: 1;
+}
+
+.ai-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #2a5298;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+#aiMessage {
+  font-size: 16px;
+  line-height: 1.65;
 }
 
 .question {
-  font-size: 18px;
-  margin-bottom: 15px;
+  font-size: 16px;
+  margin-bottom: 10px;
+  font-weight: 600;
 }
 
 textarea {
   width: 100%;
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid #cfd8e3;
   resize: none;
-  height: 80px;
-  font-size: 14px;
+  height: 110px;
+  font-size: 15px;
+  outline: none;
+}
+
+textarea:focus {
+  border-color: #2a5298;
+  box-shadow: 0 0 0 3px rgba(42,82,152,0.12);
 }
 
 button {
-  margin-top: 15px;
-  padding: 12px 20px;
+  margin-top: 16px;
+  padding: 13px 22px;
   background: #2a5298;
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
   font-size: 16px;
+  font-weight: 600;
 }
 
 button:hover {
@@ -92,29 +162,81 @@ button:hover {
 }
 
 .progress {
-  margin-top: 20px;
+  margin-top: 26px;
+}
+
+.progress p {
+  margin: 0 0 10px;
+  font-weight: 600;
 }
 
 .progress-bar {
-  height: 8px;
-  background: #ddd;
-  border-radius: 5px;
+  height: 10px;
+  background: #dde3ea;
+  border-radius: 999px;
   overflow: hidden;
 }
 
 .progress-fill {
   height: 100%;
   width: 10%;
-  background: green;
+  background: linear-gradient(90deg, #2a5298, #5aa9ff);
+  transition: width 0.35s ease;
 }
 
 .result {
-  margin-top: 20px;
-  font-weight: bold;
+  margin-top: 18px;
+  font-weight: 700;
+  min-height: 24px;
 }
 
-.hidden {
-  display: none;
+.floating-bot {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #78c2ff, #2a5298 72%);
+  box-shadow: 0 14px 30px rgba(30, 60, 114, 0.28);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: floatBot 2.8s ease-in-out infinite;
+  z-index: 1000;
+}
+
+.floating-bot svg {
+  width: 50px;
+  height: 50px;
+}
+
+@media (max-width: 700px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .header-right {
+    text-align: left;
+  }
+
+  .ai-box {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .floating-bot {
+    width: 68px;
+    height: 68px;
+    right: 12px;
+    bottom: 12px;
+  }
+
+  .floating-bot svg {
+    width: 40px;
+    height: 40px;
+  }
 }
 </style>
 </head>
@@ -122,22 +244,40 @@ button:hover {
 <body>
 
 <div class="header">
-  <h1>AI Foundations: Level 1</h1>
-  <div>Perception Legacy Group</div>
+  <div class="header-left">
+    <h1>AI Foundations: Level 1</h1>
+    <p>Perception Legacy Group LLC</p>
+  </div>
+
+  <div class="header-right">
+    AI Governance Powered by HALO™
+  </div>
 </div>
 
 <div class="container">
   <div class="card">
-
     <h2>Welcome to AI Foundations</h2>
-    <p>Learn AI step-by-step and earn your certification.</p>
+    <p class="card-intro">Learn AI step by step and earn your first certificate.</p>
 
     <div class="ai-box">
-      <div class="ai-avatar">AI</div>
-      <div id="aiMessage">
-        AI is transforming many industries.<br><br>
-        <strong>First question:</strong><br>
-        What do you think AI is?
+      <div class="ai-avatar" aria-hidden="true">
+        <svg viewBox="0 0 64 64" fill="none">
+          <circle cx="32" cy="32" r="26" fill="white" fill-opacity="0.95"/>
+          <circle cx="24" cy="29" r="4" fill="#2a5298"/>
+          <circle cx="40" cy="29" r="4" fill="#2a5298"/>
+          <rect x="22" y="39" width="20" height="4" rx="2" fill="#2a5298"/>
+          <rect x="29" y="10" width="6" height="10" rx="3" fill="white"/>
+          <circle cx="32" cy="8" r="4" fill="#9dd3ff"/>
+        </svg>
+      </div>
+
+      <div class="ai-message-wrap">
+        <div class="ai-label">AI Learning Guide</div>
+        <div id="aiMessage">
+          Welcome. I am your AI learning guide.<br><br>
+          <strong>First question:</strong><br>
+          What do you think AI is?
+        </div>
       </div>
     </div>
 
@@ -155,8 +295,18 @@ button:hover {
         <div class="progress-fill" id="progressFill"></div>
       </div>
     </div>
-
   </div>
+</div>
+
+<div class="floating-bot" title="AI Learning Guide" aria-hidden="true">
+  <svg viewBox="0 0 64 64" fill="none">
+    <circle cx="32" cy="32" r="26" fill="white" fill-opacity="0.96"/>
+    <circle cx="24" cy="29" r="4" fill="#2a5298"/>
+    <circle cx="40" cy="29" r="4" fill="#2a5298"/>
+    <rect x="22" y="39" width="20" height="4" rx="2" fill="#2a5298"/>
+    <rect x="29" y="10" width="6" height="10" rx="3" fill="white"/>
+    <circle cx="32" cy="8" r="4" fill="#9dd3ff"/>
+  </svg>
 </div>
 
 <script>
@@ -173,40 +323,37 @@ function submitAnswer() {
     return;
   }
 
-  // VERY BASIC LOGIC (we will upgrade later)
   if (input.toLowerCase().includes("intelligence") || input.length > 10) {
-    
     progress += 30;
+    if (progress > 100) progress = 100;
     document.getElementById("progressFill").style.width = progress + "%";
 
     if (step === 1) {
       aiMessage.innerHTML = `
-      Good start. AI refers to systems that simulate human intelligence.<br><br>
-      <strong>Next question:</strong><br>
-      How can AI be used in real life?
+        Good start. AI refers to systems that simulate human intelligence and help perform tasks like answering questions, analyzing information, and recognizing patterns.<br><br>
+        <strong>Next question:</strong><br>
+        How can AI be used in real life?
       `;
+      result.innerText = "Correct. Moving forward...";
       step++;
-    } 
-    else if (step === 2) {
+    } else if (step === 2) {
       aiMessage.innerHTML = `
-      Great. AI is used in business, healthcare, automation, and more.<br><br>
-      <strong>Final question:</strong><br>
-      Why is learning AI important?
+        Great. AI can be used in business, healthcare, customer support, education, automation, and many daily tools people already use.<br><br>
+        <strong>Final question:</strong><br>
+        Why is learning AI important?
       `;
+      result.innerText = "Correct. Moving forward...";
       step++;
-    } 
-    else {
+    } else {
       result.innerHTML = "✅ You passed! Generating certificate...";
       setTimeout(() => {
         window.location.href = "certificate.html";
-      }, 1500);
+      }, 1400);
     }
 
-    result.innerText = "Correct. Moving forward...";
     document.getElementById("userInput").value = "";
-
   } else {
-    result.innerText = "Not quite. Try again.";
+    result.innerText = "Not quite. Try again with a little more detail.";
   }
 }
 </script>
