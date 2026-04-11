@@ -1,362 +1,516 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>AI Foundations - Level 1</title>
-
-<style>
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f4f6f8;
-  color: #1f2937;
-}
-
-.header {
-  background: linear-gradient(90deg, #1e3c72, #2a5298);
-  color: white;
-  padding: 18px 22px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-}
-
-.header-left h1 {
-  margin: 0;
-  font-size: 22px;
-}
-
-.header-left p {
-  margin: 6px 0 0;
-  font-size: 13px;
-  opacity: 0.92;
-}
-
-.header-right {
-  font-size: 12px;
-  text-align: right;
-  opacity: 0.95;
-  line-height: 1.5;
-}
-
-.container {
-  max-width: 980px;
-  margin: 40px auto;
-  padding: 20px;
-}
-
-.card {
-  background: white;
-  border-radius: 18px;
-  padding: 28px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-  position: relative;
-  overflow: hidden;
-}
-
-.card h2 {
-  margin-top: 0;
-  margin-bottom: 8px;
-}
-
-.card-intro {
-  color: #5b6472;
-  margin-bottom: 24px;
-}
-
-.ai-box {
-  display: flex;
-  gap: 18px;
-  align-items: flex-start;
-  background: #eef3ff;
-  padding: 18px;
-  border-radius: 14px;
-  margin-bottom: 20px;
-  border: 1px solid #d9e5ff;
-}
-
-.ai-avatar {
-  width: 78px;
-  min-width: 78px;
-  height: 78px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, #66b3ff, #2a5298 70%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 10px 24px rgba(42, 82, 152, 0.25);
-  animation: floatBot 2.8s ease-in-out infinite;
-}
-
-.ai-avatar svg {
-  width: 48px;
-  height: 48px;
-}
-
-@keyframes floatBot {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
-  100% { transform: translateY(0px); }
-}
-
-.ai-message-wrap {
-  flex: 1;
-}
-
-.ai-label {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: #2a5298;
-  margin-bottom: 8px;
-  text-transform: uppercase;
-}
-
-#aiMessage {
-  font-size: 16px;
-  line-height: 1.65;
-}
-
-.question {
-  font-size: 16px;
-  margin-bottom: 10px;
-  font-weight: 600;
-}
-
-textarea {
-  width: 100%;
-  padding: 14px;
-  border-radius: 12px;
-  border: 1px solid #cfd8e3;
-  resize: none;
-  height: 110px;
-  font-size: 15px;
-  outline: none;
-}
-
-textarea:focus {
-  border-color: #2a5298;
-  box-shadow: 0 0 0 3px rgba(42,82,152,0.12);
-}
-
-button {
-  margin-top: 16px;
-  padding: 13px 22px;
-  background: #2a5298;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: 600;
-}
-
-button:hover {
-  background: #1e3c72;
-}
-
-.progress {
-  margin-top: 26px;
-}
-
-.progress p {
-  margin: 0 0 10px;
-  font-weight: 600;
-}
-
-.progress-bar {
-  height: 10px;
-  background: #dde3ea;
-  border-radius: 999px;
-  overflow: hidden;
-}
-
-.progress-fill {
-  height: 100%;
-  width: 10%;
-  background: linear-gradient(90deg, #2a5298, #5aa9ff);
-  transition: width 0.35s ease;
-}
-
-.result {
-  margin-top: 18px;
-  font-weight: 700;
-  min-height: 24px;
-}
-
-.floating-bot {
-  position: fixed;
-  right: 18px;
-  bottom: 18px;
-  width: 84px;
-  height: 84px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, #78c2ff, #2a5298 72%);
-  box-shadow: 0 14px 30px rgba(30, 60, 114, 0.28);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: floatBot 2.8s ease-in-out infinite;
-  z-index: 1000;
-}
-
-.floating-bot svg {
-  width: 50px;
-  height: 50px;
-}
-
-@media (max-width: 700px) {
-  .header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .header-right {
-    text-align: left;
-  }
-
-  .ai-box {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .floating-bot {
-    width: 68px;
-    height: 68px;
-    right: 12px;
-    bottom: 12px;
-  }
-
-  .floating-bot svg {
-    width: 40px;
-    height: 40px;
-  }
-}
-</style>
-</head>
-
-<body>
-
-<div class="header">
-  <div class="header-left">
-    <h1>AI Foundations: Level 1</h1>
-    <p>Perception Legacy Group LLC</p>
-  </div>
-
-  <div class="header-right">
-    AI Governance Powered by HALO™
-  </div>
-</div>
-
-<div class="container">
-  <div class="card">
-    <h2>Welcome to AI Foundations</h2>
-    <p class="card-intro">Learn AI step by step and earn your first certificate.</p>
-
-    <div class="ai-box">
-      <div class="ai-avatar" aria-hidden="true">
-        <svg viewBox="0 0 64 64" fill="none">
-          <circle cx="32" cy="32" r="26" fill="white" fill-opacity="0.95"/>
-          <circle cx="24" cy="29" r="4" fill="#2a5298"/>
-          <circle cx="40" cy="29" r="4" fill="#2a5298"/>
-          <rect x="22" y="39" width="20" height="4" rx="2" fill="#2a5298"/>
-          <rect x="29" y="10" width="6" height="10" rx="3" fill="white"/>
-          <circle cx="32" cy="8" r="4" fill="#9dd3ff"/>
-        </svg>
-      </div>
-
-      <div class="ai-message-wrap">
-        <div class="ai-label">AI Learning Guide</div>
-        <div id="aiMessage">
-          Welcome. I am your AI learning guide.<br><br>
-          <strong>First question:</strong><br>
-          What do you think AI is?
-        </div>
-      </div>
-    </div>
-
-    <div class="question">Type your answer:</div>
-
-    <textarea id="userInput" placeholder="Type your answer here..."></textarea>
-
-    <button onclick="submitAnswer()">Submit Answer</button>
-
-    <div class="result" id="result"></div>
-
-    <div class="progress">
-      <p>Your Progress</p>
-      <div class="progress-bar">
-        <div class="progress-fill" id="progressFill"></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="floating-bot" title="AI Learning Guide" aria-hidden="true">
-  <svg viewBox="0 0 64 64" fill="none">
-    <circle cx="32" cy="32" r="26" fill="white" fill-opacity="0.96"/>
-    <circle cx="24" cy="29" r="4" fill="#2a5298"/>
-    <circle cx="40" cy="29" r="4" fill="#2a5298"/>
-    <rect x="22" y="39" width="20" height="4" rx="2" fill="#2a5298"/>
-    <rect x="29" y="10" width="6" height="10" rx="3" fill="white"/>
-    <circle cx="32" cy="8" r="4" fill="#9dd3ff"/>
-  </svg>
-</div>
-
-<script>
-let progress = 10;
-let step = 1;
-
-function submitAnswer() {
-  const input = document.getElementById("userInput").value.trim();
-  const result = document.getElementById("result");
-  const aiMessage = document.getElementById("aiMessage");
-
-  if (!input) {
-    result.innerText = "Please enter an answer.";
-    return;
-  }
-
-  if (input.toLowerCase().includes("intelligence") || input.length > 10) {
-    progress += 30;
-    if (progress > 100) progress = 100;
-    document.getElementById("progressFill").style.width = progress + "%";
-
-    if (step === 1) {
-      aiMessage.innerHTML = `
-        Good start. AI refers to systems that simulate human intelligence and help perform tasks like answering questions, analyzing information, and recognizing patterns.<br><br>
-        <strong>Next question:</strong><br>
-        How can AI be used in real life?
-      `;
-      result.innerText = "Correct. Moving forward...";
-      step++;
-    } else if (step === 2) {
-      aiMessage.innerHTML = `
-        Great. AI can be used in business, healthcare, customer support, education, automation, and many daily tools people already use.<br><br>
-        <strong>Final question:</strong><br>
-        Why is learning AI important?
-      `;
-      result.innerText = "Correct. Moving forward...";
-      step++;
-    } else {
-      result.innerHTML = "✅ You passed! Generating certificate...";
-      setTimeout(() => {
-        window.location.href = "certificate.html";
-      }, 1400);
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Foundations: Level 1</title>
+  <style>
+    * {
+      box-sizing: border-box;
     }
 
-    document.getElementById("userInput").value = "";
-  } else {
-    result.innerText = "Not quite. Try again with a little more detail.";
-  }
-}
-</script>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f7fb;
+      color: #1d2b3a;
+    }
 
+    .header {
+      background: linear-gradient(90deg, #17356f, #2d67c8);
+      color: #fff;
+      padding: 18px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .header-left h1 {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.2;
+    }
+
+    .header-left .brand {
+      margin-top: 6px;
+      font-size: 13px;
+      opacity: 0.95;
+    }
+
+    .header-right {
+      text-align: right;
+      font-size: 13px;
+      line-height: 1.5;
+      opacity: 0.95;
+    }
+
+    .hero {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 36px 20px 18px;
+    }
+
+    .hero-card {
+      background: linear-gradient(135deg, #eaf3ff, #ffffff);
+      border-radius: 24px;
+      box-shadow: 0 14px 36px rgba(21, 49, 99, 0.10);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      align-items: center;
+      min-height: 420px;
+    }
+
+    .hero-copy {
+      padding: 42px 40px;
+    }
+
+    .hero-copy h2 {
+      margin: 0 0 14px;
+      font-size: 38px;
+      line-height: 1.15;
+      color: #17356f;
+    }
+
+    .hero-copy p {
+      margin: 0 0 22px;
+      font-size: 17px;
+      line-height: 1.7;
+      color: #41566f;
+      max-width: 540px;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      padding: 10px 16px;
+      background: rgba(45, 103, 200, 0.10);
+      color: #1d4fb1;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      margin-bottom: 18px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .hero-actions button {
+      border: none;
+      border-radius: 12px;
+      padding: 14px 20px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .primary-btn {
+      background: #2d67c8;
+      color: white;
+    }
+
+    .primary-btn:hover {
+      background: #1f52aa;
+    }
+
+    .secondary-btn {
+      background: #eef4ff;
+      color: #214a96;
+    }
+
+    .secondary-btn:hover {
+      background: #dfeaff;
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 420px;
+      background: radial-gradient(circle at 50% 30%, #d9ecff, #edf5ff 45%, #ffffff 78%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .hero-visual img {
+      max-width: 100%;
+      max-height: 390px;
+      object-fit: contain;
+      display: block;
+      filter: drop-shadow(0 18px 28px rgba(28, 70, 135, 0.18));
+    }
+
+    .main-wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 12px 20px 40px;
+    }
+
+    .lesson-card {
+      background: #fff;
+      border-radius: 24px;
+      box-shadow: 0 14px 34px rgba(0,0,0,0.07);
+      padding: 30px;
+    }
+
+    .lesson-top {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 20px;
+      align-items: start;
+      margin-bottom: 22px;
+    }
+
+    .bot-headshot {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 50% 30%, #e1f2ff, #a6d7ff 65%, #65b2ff);
+      box-shadow: 0 10px 28px rgba(45, 103, 200, 0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      animation: floatBot 3.2s ease-in-out infinite;
+    }
+
+    .bot-headshot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .lesson-message {
+      background: #eef4ff;
+      border: 1px solid #dbe8ff;
+      border-radius: 18px;
+      padding: 22px;
+      min-height: 120px;
+    }
+
+    .lesson-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+      color: #2153b2;
+      margin-bottom: 10px;
+    }
+
+    #aiMessage {
+      font-size: 17px;
+      line-height: 1.7;
+      color: #20364f;
+    }
+
+    .question-label {
+      font-weight: 700;
+      font-size: 16px;
+      margin: 14px 0 10px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 120px;
+      border-radius: 16px;
+      border: 1px solid #cdd9ea;
+      padding: 16px;
+      font-size: 15px;
+      resize: vertical;
+      outline: none;
+    }
+
+    textarea:focus {
+      border-color: #2d67c8;
+      box-shadow: 0 0 0 4px rgba(45, 103, 200, 0.10);
+    }
+
+    .action-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .submit-btn {
+      border: none;
+      background: #2d67c8;
+      color: #fff;
+      padding: 14px 22px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .submit-btn:hover {
+      background: #1f52aa;
+    }
+
+    .result {
+      min-height: 24px;
+      font-weight: 700;
+      color: #17356f;
+    }
+
+    .progress-wrap {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid #e7edf5;
+    }
+
+    .progress-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .progress-head strong {
+      font-size: 15px;
+    }
+
+    .progress-head span {
+      font-size: 14px;
+      color: #46627e;
+      font-weight: 700;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 12px;
+      background: #e1e8f1;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 10%;
+      background: linear-gradient(90deg, #1f56b6, #54c0ff);
+      border-radius: 999px;
+      transition: width 0.35s ease;
+    }
+
+    .floating-bot {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      width: 92px;
+      height: 92px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 50% 30%, #e2f4ff, #78c8ff 62%, #2d67c8);
+      box-shadow: 0 14px 30px rgba(32, 75, 150, 0.28);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      animation: floatBot 3.2s ease-in-out infinite;
+      z-index: 1000;
+    }
+
+    .floating-bot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    @keyframes floatBot {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+      100% { transform: translateY(0); }
+    }
+
+    @media (max-width: 900px) {
+      .hero-card {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        min-height: 320px;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .header {
+        align-items: flex-start;
+      }
+
+      .header-right {
+        text-align: left;
+      }
+
+      .hero-copy {
+        padding: 30px 22px;
+      }
+
+      .hero-copy h2 {
+        font-size: 30px;
+      }
+
+      .lesson-card {
+        padding: 22px;
+      }
+
+      .lesson-top {
+        grid-template-columns: 1fr;
+      }
+
+      .bot-headshot {
+        width: 92px;
+        height: 92px;
+      }
+
+      .floating-bot {
+        width: 74px;
+        height: 74px;
+        right: 12px;
+        bottom: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="header-left">
+      <h1>AI Foundations: Level 1</h1>
+      <div class="brand">Perception Legacy Group LLC</div>
+    </div>
+    <div class="header-right">
+      AI Governance Powered by HALO™
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="hero-card">
+      <div class="hero-copy">
+        <div class="hero-tag">Foundational AI Learning Experience</div>
+        <h2>Learn AI with a guide that actually teaches you back.</h2>
+        <p>
+          Start with the fundamentals of artificial intelligence, answer guided questions,
+          build confidence step by step, and earn your first completion certificate.
+        </p>
+        <div class="hero-actions">
+          <button class="primary-btn" onclick="scrollToLesson()">Start Learning</button>
+          <button class="secondary-btn" onclick="scrollToLesson()">View Lesson</button>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <img src="robot-full.png" alt="AI Foundations guide robot">
+      </div>
+    </div>
+  </section>
+
+  <main class="main-wrap">
+    <section class="lesson-card" id="lessonCard">
+      <div class="lesson-top">
+        <div class="bot-headshot">
+          <img src="robot-headshot.png" alt="AI guide headshot">
+        </div>
+
+        <div class="lesson-message">
+          <div class="lesson-label">AI Learning Guide</div>
+          <div id="aiMessage">
+            Welcome. I am your AI Foundations guide.<br><br>
+            <strong>First question:</strong><br>
+            What do you think AI is?
+          </div>
+        </div>
+      </div>
+
+      <div class="question-label">Type your answer below:</div>
+      <textarea id="userInput" placeholder="Type your answer here..."></textarea>
+
+      <div class="action-row">
+        <button class="submit-btn" onclick="submitAnswer()">Submit Answer</button>
+        <div class="result" id="result"></div>
+      </div>
+
+      <div class="progress-wrap">
+        <div class="progress-head">
+          <strong>Your Progress</strong>
+          <span id="progressText">10% Complete</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="floating-bot" title="AI Helper">
+    <img src="robot-orb.png" alt="AI helper orb">
+  </div>
+
+  <script>
+    let progress = 10;
+    let step = 1;
+
+    function scrollToLesson() {
+      document.getElementById('lessonCard').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function updateProgress() {
+      document.getElementById('progressFill').style.width = progress + '%';
+      document.getElementById('progressText').innerText = progress + '% Complete';
+    }
+
+    function submitAnswer() {
+      const input = document.getElementById('userInput').value.trim();
+      const result = document.getElementById('result');
+      const aiMessage = document.getElementById('aiMessage');
+
+      if (!input) {
+        result.innerText = 'Please enter an answer.';
+        return;
+      }
+
+      if (input.toLowerCase().includes('intelligence') || input.length > 10) {
+        progress += 30;
+        if (progress > 100) progress = 100;
+        updateProgress();
+
+        if (step === 1) {
+          aiMessage.innerHTML = `
+            Good start. AI refers to systems that simulate human intelligence and help perform tasks such as answering questions, recognizing patterns, generating ideas, and assisting with decision-making.<br><br>
+            <strong>Next question:</strong><br>
+            How can AI be used in real life?
+          `;
+          result.innerText = 'Correct. Moving forward.';
+          step++;
+        } else if (step === 2) {
+          aiMessage.innerHTML = `
+            Great. AI can be used in education, business, healthcare, writing, customer support, automation, research, and many other real-world areas.<br><br>
+            <strong>Final question:</strong><br>
+            Why is learning AI important?
+          `;
+          result.innerText = 'Correct. Moving forward.';
+          step++;
+        } else {
+          result.innerText = 'You passed. Generating certificate...';
+          setTimeout(() => {
+            window.location.href = 'certificate.html';
+          }, 1400);
+        }
+
+        document.getElementById('userInput').value = '';
+      } else {
+        result.innerText = 'Not quite. Try again with a little more detail.';
+      }
+    }
+
+    updateProgress();
+  </script>
 </body>
 </html>
