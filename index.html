@@ -128,24 +128,64 @@
       background: #dfeaff;
     }
 
-    .hero-visual {
-      position: relative;
-      min-height: 420px;
-      background: radial-gradient(circle at 50% 30%, #d9ecff, #edf5ff 45%, #ffffff 78%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
+  .hero-visual {
+  position: relative;
+  min-height: 420px;
+  background: radial-gradient(circle at 50% 30%, #d9ecff, #edf5ff 45%, #ffffff 78%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow: hidden;
+}
 
-    .hero-visual img {
-      max-width: 100%;
-      max-height: 390px;
-      object-fit: contain;
-      display: block;
-      filter: drop-shadow(0 18px 28px rgba(28, 70, 135, 0.18));
-    }
+.robot-stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+  border-radius: 32px;
+  background:
+    radial-gradient(circle at center, rgba(181, 227, 255, 0.45) 0%, rgba(181, 227, 255, 0.18) 38%, rgba(181, 227, 255, 0.00) 72%);
+}
 
+.robot-stage::before {
+  content: "";
+  position: absolute;
+  bottom: 18px;
+  width: 180px;
+  height: 38px;
+  background: radial-gradient(ellipse at center, rgba(71, 142, 255, 0.25) 0%, rgba(71, 142, 255, 0.10) 45%, rgba(71, 142, 255, 0.00) 75%);
+  filter: blur(8px);
+  border-radius: 50%;
+}
+
+.robot-stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 32px;
+  background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0) 45%, rgba(234,243,255,0.55) 100%);
+  pointer-events: none;
+}
+
+.hero-robot {
+  position: relative;
+  z-index: 2;
+  max-width: 100%;
+  max-height: 390px;
+  object-fit: contain;
+  display: block;
+
+  mix-blend-mode: multiply;
+  opacity: 0.98;
+  filter:
+    drop-shadow(0 22px 28px rgba(28, 70, 135, 0.18))
+    drop-shadow(0 0 18px rgba(108, 205, 255, 0.16));
+
+  animation: robotFloat 3.4s ease-in-out infinite;
+}
     .main-wrap {
       max-width: 1180px;
       margin: 0 auto;
@@ -377,6 +417,11 @@
         bottom: 12px;
       }
     }
+    @keyframes robotFloat {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
   </style>
 </head>
 <body>
@@ -407,8 +452,10 @@
       </div>
 
       <div class="hero-visual">
-        <img src="robot-full2.png" alt="AI Foundations guide robot">
-      </div>
+  <div class="robot-stage">
+    <img src="robot-full2.png" alt="AI Foundations guide robot" class="hero-robot">
+  </div>
+</div>
     </div>
   </section>
 
