@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Foundations Branded Certificate</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #dfeeff;
+      font-family: Arial, sans-serif;
+      padding: 28px 12px;
+    }
+
+    .certificate-wrap {
+      max-width: 1320px;
+      margin: 0 auto;
+      background:
+        radial-gradient(circle at 72% 38%, rgba(138,207,255,0.22), transparent 22%),
+        radial-gradient(circle at 24% 78%, rgba(138,207,255,0.14), transparent 22%),
+        linear-gradient(180deg, #fdfefe 0%, #f3f9ff 100%);
+      border: 8px solid #7fa4d7;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .certificate-wrap::before {
+      content: "";
+      position: absolute;
+      inset: 12px;
+      border: 2px solid #d1ae63;
+      pointer-events: none;
+    }
+
+    .certificate-wrap::after {
+      content: "";
+      position: absolute;
+      right: -100px;
+      bottom: -120px;
+      width: 520px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(125,205,255,0.20), rgba(125,205,255,0.00) 70%);
+      pointer-events: none;
+    }
+
+    .inner {
+      padding: 34px 34px 28px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-family: Georgia, serif;
+      color: #173b79;
+      font-size: clamp(40px, 6vw, 76px);
+      line-height: 1;
+      letter-spacing: 0.06em;
+    }
+
+    .header h2 {
+      margin: 10px 0 0;
+      font-family: Georgia, serif;
+      color: #4a5f82;
+      font-size: clamp(20px, 2.3vw, 32px);
+      letter-spacing: 0.14em;
+      line-height: 1;
+    }
+
+    .top-ribbon {
+      width: fit-content;
+      max-width: 100%;
+      margin: 22px auto 10px;
+      background: linear-gradient(180deg, #ecd9a2, #c79847);
+      color: #173b79;
+      padding: 14px 28px;
+      font-family: Georgia, serif;
+      font-weight: 700;
+      font-size: clamp(24px, 3vw, 42px);
+      line-height: 1.15;
+      box-shadow: 0 10px 18px rgba(0,0,0,0.12);
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #173b79;
+      font-family: Georgia, serif;
+      font-size: clamp(18px, 2vw, 28px);
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      margin-bottom: 16px;
+    }
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: 220px 1fr 330px;
+      gap: 22px;
+      align-items: center;
+    }
+
+    .seal {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #f7e19b, #bb8b32 70%);
+      padding: 8px;
+      box-shadow: 0 10px 22px rgba(0,0,0,0.18);
+      margin: 0 auto;
+    }
+
+    .seal-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 4px solid #f2dca4;
+      background: #1b5aa2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #f2dca4;
+      text-align: center;
+      padding: 18px;
+      font-weight: 700;
+      font-size: 17px;
+      line-height: 1.25;
+    }
+
+    .center-content {
+      text-align: center;
+    }
+
+    .certifies {
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: 14px;
+      color: #6a7892;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .student-name {
+      font-family: Georgia, serif;
+      color: #173b79;
+      font-size: clamp(34px, 5vw, 62px);
+      font-weight: 700;
+      line-height: 1.05;
+      margin-bottom: 10px;
+    }
+
+    .summary {
+      color: #2b3e5b;
+      font-size: 18px;
+      line-height: 1.6;
+      max-width: 620px;
+      margin: 0 auto;
+    }
+
+    .robot-panel {
+      position: relative;
+      min-height: 320px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: radial-gradient(circle at center, rgba(196,235,255,0.45), rgba(196,235,255,0.00) 70%);
+      border-radius: 28px;
+    }
+
+    .robot-panel::after {
+      content: "";
+      position: absolute;
+      bottom: 22px;
+      width: 160px;
+      height: 28px;
+      background: radial-gradient(circle, rgba(41,87,150,0.18), transparent 70%);
+      filter: blur(8px);
+    }
+
+    .robot-panel img {
+      max-width: 100%;
+      max-height: 300px;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+      filter:
+        drop-shadow(0 14px 18px rgba(17,44,96,0.16))
+        drop-shadow(0 0 16px rgba(110,214,255,0.20));
+      animation: robotFloat 3.4s ease-in-out infinite;
+      position: relative;
+      z-index: 2;
+    }
+
+    .meta-row {
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .meta-box {
+      text-align: center;
+    }
+
+    .meta-label {
+      font-size: 12px;
+      color: #6d7f99;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.10em;
+      margin-bottom: 5px;
+    }
+
+    .meta-value {
+      font-size: 22px;
+      color: #173b79;
+      font-weight: 700;
+    }
+
+    .signature {
+      font-family: "Brush Script MT", "Segoe Script", cursive;
+      font-size: 40px;
+      color: #173b79;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .sig-sub {
+      font-size: 14px;
+      color: #475b7f;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+
+    .footer {
+      margin-top: 20px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(23,59,121,0.12);
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      color: #173b79;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    @keyframes robotFloat {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+
+    @media (max-width: 1050px) {
+      .main-grid,
+      .meta-row {
+        grid-template-columns: 1fr;
+      }
+
+      .robot-panel {
+        max-width: 360px;
+        margin: 0 auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="certificate-wrap">
+    <div class="inner">
+      <div class="header">
+        <h1>CERTIFICATE</h1>
+        <h2>OF COMPLETION</h2>
+      </div>
+
+      <div class="top-ribbon">AI FOUNDATIONS LEVEL 1</div>
+      <div class="subtitle">Basic Training of AI</div>
+
+      <div class="main-grid">
+        <div class="left-col">
+          <div class="seal">
+            <div class="seal-inner">
+              HALO<br>AI GOVERNANCE
+            </div>
+          </div>
+        </div>
+
+        <div class="center-content">
+          <div class="certifies">This certifies that</div>
+          <div class="student-name">Your Name</div>
+          <div class="summary">
+            has successfully completed the AI Foundations Level 1:
+            Basic Training of AI, demonstrating introductory understanding of AI tools,
+            systems, and foundational practical use.
+          </div>
+        </div>
+
+        <div class="robot-panel">
+          <img src="robot-4-3.png" alt="AI Foundations Robot">
+        </div>
+      </div>
+
+      <div class="meta-row">
+        <div class="meta-box">
+          <div class="meta-label">Certificate ID</div>
+          <div class="meta-value">ABCD-1234-EFGH-5678</div>
+        </div>
+
+        <div class="meta-box">
+          <div class="meta-label">Issue Date</div>
+          <div class="meta-value">2026</div>
+        </div>
+
+        <div class="meta-box">
+          <div class="signature">Tyler Randall</div>
+          <div class="sig-sub">AI Foundations Instructor</div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <div>Perception Legacy Group LLC</div>
+        <div>AI Governance Powered by HALO™</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
