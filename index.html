@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AI Foundations - Level 1</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f6f8;
+}
+
+.header {
+  background: linear-gradient(90deg, #1e3c72, #2a5298);
+  color: white;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.ai-box {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  background: #eef3ff;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.ai-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #2a5298;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 24px;
+}
+
+.question {
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  resize: none;
+  height: 80px;
+  font-size: 14px;
+}
+
+button {
+  margin-top: 15px;
+  padding: 12px 20px;
+  background: #2a5298;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button:hover {
+  background: #1e3c72;
+}
+
+.progress {
+  margin-top: 20px;
+}
+
+.progress-bar {
+  height: 8px;
+  background: #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 10%;
+  background: green;
+}
+
+.result {
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+.hidden {
+  display: none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <h1>AI Foundations: Level 1</h1>
+  <div>Perception Legacy Group</div>
+</div>
+
+<div class="container">
+  <div class="card">
+
+    <h2>Welcome to AI Foundations</h2>
+    <p>Learn AI step-by-step and earn your certification.</p>
+
+    <div class="ai-box">
+      <div class="ai-avatar">AI</div>
+      <div id="aiMessage">
+        AI is transforming many industries.<br><br>
+        <strong>First question:</strong><br>
+        What do you think AI is?
+      </div>
+    </div>
+
+    <div class="question">Type your answer:</div>
+
+    <textarea id="userInput" placeholder="Type your answer here..."></textarea>
+
+    <button onclick="submitAnswer()">Submit Answer</button>
+
+    <div class="result" id="result"></div>
+
+    <div class="progress">
+      <p>Your Progress</p>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+let progress = 10;
+let step = 1;
+
+function submitAnswer() {
+  const input = document.getElementById("userInput").value.trim();
+  const result = document.getElementById("result");
+  const aiMessage = document.getElementById("aiMessage");
+
+  if (!input) {
+    result.innerText = "Please enter an answer.";
+    return;
+  }
+
+  // VERY BASIC LOGIC (we will upgrade later)
+  if (input.toLowerCase().includes("intelligence") || input.length > 10) {
+    
+    progress += 30;
+    document.getElementById("progressFill").style.width = progress + "%";
+
+    if (step === 1) {
+      aiMessage.innerHTML = `
+      Good start. AI refers to systems that simulate human intelligence.<br><br>
+      <strong>Next question:</strong><br>
+      How can AI be used in real life?
+      `;
+      step++;
+    } 
+    else if (step === 2) {
+      aiMessage.innerHTML = `
+      Great. AI is used in business, healthcare, automation, and more.<br><br>
+      <strong>Final question:</strong><br>
+      Why is learning AI important?
+      `;
+      step++;
+    } 
+    else {
+      result.innerHTML = "✅ You passed! Generating certificate...";
+      setTimeout(() => {
+        window.location.href = "certificate.html";
+      }, 1500);
+    }
+
+    result.innerText = "Correct. Moving forward...";
+    document.getElementById("userInput").value = "";
+
+  } else {
+    result.innerText = "Not quite. Try again.";
+  }
+}
+</script>
+
+</body>
+</html>
