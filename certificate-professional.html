@@ -344,7 +344,7 @@
       </div>
 
       <div class="certifies">This certifies that</div>
-      <div class="student-name">Your Name</div>
+      <div class="student-name" id="studentName">Your Name</div>
       <div class="completion-line">Has successfully completed the requirements for</div>
 
       <div class="program-banner">AI PROFESSIONAL CERTIFICATION</div>
@@ -383,18 +383,18 @@
 
           <div class="info-grid">
             <div class="info-box">
-              <div class="label">Certificate ID</div>
-              <div class="value">AIPC-2026-0001</div>
+              <div class="value" id="certificateId">LUMI-00000</div>
+             
             </div>
             <div class="info-box">
-              <div class="label">Issue Date</div>
+              <div class="value" id="issueDate">00/00/0000</div>
               <div class="value">2026</div>
             </div>
           </div>
         </div>
 
         <div class="sign-box">
-          <div class="signature">Tyler Randall</div>
+          <div class="student-name" id="studentName">Your Name</div>
           <div class="sign-line"></div>
           <div class="sign-role">
             AI Program Director<br>
@@ -412,5 +412,26 @@ AI Governance Powered by HALO™</div>
       </div>
     </div>
   </div>
+
+  <script>
+  const studentName = localStorage.getItem("studentName") || "Your Name";
+  const issueDate = localStorage.getItem("issueDate") || "00/00/0000";
+  const certificateId = localStorage.getItem("certificateId") || "LUMI-00000";
+  const courseName = localStorage.getItem("courseName") || "AI Foundations™";
+  const courseSubtitle = localStorage.getItem("courseSubtitle") || "Completed all modules and assessments";
+
+  const studentNameEl = document.getElementById("studentName");
+  const courseSummaryEl = document.getElementById("courseSummary");
+  const certificateIdEl = document.getElementById("certificateId");
+  const issueDateEl = document.getElementById("issueDate");
+
+  if (studentNameEl) studentNameEl.innerText = studentName;
+  if (courseSummaryEl) {
+    courseSummaryEl.innerText =
+      "This certifies successful completion of " + courseName + ", " + courseSubtitle + ".";
+  }
+  if (certificateIdEl) certificateIdEl.innerText = certificateId;
+  if (issueDateEl) issueDateEl.innerText = issueDate;
+</script>
 </body>
 </html>
