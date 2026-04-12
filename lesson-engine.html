@@ -1772,8 +1772,14 @@
         mode = "lesson";
 
         if (moduleIndex >= modules.length) {
-          alert("Congratulations! You completed AI Foundations™. Your certificate has been unlocked.");
-          window.location.href = "certificate-choice.html";
+        // SAVE CERTIFICATE DATA
+localStorage.setItem("courseName", "AI Foundations™");
+localStorage.setItem("courseSubtitle", "Completed all modules and assessments");
+localStorage.setItem("issueDate", new Date().toLocaleDateString());
+localStorage.setItem("certificateId", "LUMI-" + Math.floor(10000 + Math.random() * 90000));
+
+// REDIRECT TO CERTIFICATE CHOICE
+window.location.href = "certificate-choice.html";
         } else {
           load();
         }
