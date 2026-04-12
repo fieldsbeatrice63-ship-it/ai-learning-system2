@@ -1,0 +1,2401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lumi AI Nexus™ Learning Engine</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(180deg, #eaf6ff 0%, #d8efff 100%);
+      color: #173b79;
+    }
+
+    .top-bar {
+      width: 100%;
+      height: 8px;
+      background: #cce6ff;
+    }
+
+    .progress {
+      height: 8px;
+      width: 0%;
+      background: linear-gradient(90deg, #4aa9ff, #215fe5);
+      transition: width 0.35s ease;
+    }
+
+    .wrap {
+      max-width: 920px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 30px 28px;
+      box-shadow: 0 18px 40px rgba(20, 59, 121, 0.12);
+    }
+
+    .module-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #4a78c2;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .lesson-title {
+      font-size: 30px;
+      font-weight: 800;
+      margin-bottom: 18px;
+      color: #173b79;
+      line-height: 1.2;
+    }
+
+    .content {
+      font-size: 18px;
+      line-height: 1.75;
+      color: #355171;
+    }
+
+    .content p {
+      margin: 0 0 14px;
+    }
+
+    .question-text {
+      font-size: 22px;
+      font-weight: 700;
+      color: #173b79;
+      margin-bottom: 18px;
+      line-height: 1.45;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 15px 18px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(180deg, #4aa9ff, #215fe5);
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      box-shadow:
+        0 10px 20px rgba(33, 95, 229, 0.25),
+        inset 0 2px 0 rgba(255,255,255,0.3);
+      transition: transform 0.15s ease, filter 0.15s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.02);
+    }
+
+    .answer-btn {
+      margin: 12px 0;
+      background: #f3f8ff;
+      color: #173b79;
+      box-shadow: none;
+      border: 1px solid #d6e6ff;
+    }
+
+    .answer-btn:hover {
+      background: #e4f1ff;
+      filter: none;
+    }
+
+    .footer-note {
+      margin-top: 22px;
+      text-align: center;
+      font-size: 14px;
+      color: #58739b;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      .wrap {
+        margin: 24px auto;
+        padding: 14px;
+      }
+
+      .card {
+        padding: 22px 18px;
+      }
+
+      .lesson-title {
+        font-size: 24px;
+      }
+
+      .content,
+      .question-text {
+        font-size: 17px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <div class="progress" id="progressBar"></div>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <div class="module-title" id="moduleLabel"></div>
+      <div class="lesson-title" id="title"></div>
+      <div class="content" id="content"></div>
+
+      <button id="nextBtn" onclick="next()">Next</button>
+
+      <div class="footer-note">
+        Lumi AI Nexus™<br>
+        Where AI, People, and Knowledge Meet.<br>
+        AI Governance Powered by HALO™
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let moduleIndex = 0;
+    let lessonIndex = 0;
+    let quizIndex = 0;
+    let mode = "lesson";
+
+    const modules = [
+      {
+        name: "Module 1: What is AI",
+        lessons: [
+          "What is AI? AI processes information and responds using patterns.",
+          "AI is NOT human, emotional, or conscious.",
+          "Types of AI: Narrow AI is what we use today.",
+          "AI is used in business, phones, healthcare.",
+          "AI improves efficiency and productivity."
+        ],
+        quiz: [
+          {
+            q: "You are using AI to answer a question. What is it primarily doing?",
+            a: ["Thinking like a human", "Predicting a response based on patterns in data", "Making emotional decisions", "Creating original thoughts"],
+            correct: 1
+          },
+          {
+            q: "AI responses are based on what?",
+            a: ["Feelings", "Data patterns", "Memory", "Opinions"],
+            correct: 1
+          },
+          {
+            q: "A person believes AI 'knows everything.' What is the correct understanding?",
+            a: ["AI has full knowledge like a human", "AI stores all information permanently", "AI generates responses based on data patterns", "AI is always aware of facts"],
+            correct: 2
+          },
+          {
+            q: "Which explanation of AI is best for a beginner?",
+            a: ["AI is a human-like brain", "AI is a system that processes information and responds using patterns", "AI is a thinking machine", "AI is always intelligent"],
+            correct: 1
+          },
+          {
+            q: "Why should AI responses be verified?",
+            a: ["AI is always perfect", "AI should never be questioned", "AI responses should be checked for accuracy", "AI cannot answer questions"],
+            correct: 2
+          },
+          {
+            q: "What type of AI do we mostly use today?",
+            a: ["General AI", "Emotional AI", "Narrow AI", "Human AI"],
+            correct: 2
+          },
+          {
+            q: "Which statement about AI is correct?",
+            a: ["AI thinks and feels like humans", "AI does not think or feel like humans", "AI is conscious", "AI has emotions"],
+            correct: 1
+          },
+          {
+            q: "Why can AI give different answers to similar questions?",
+            a: ["AI guesses randomly", "AI changes emotions", "AI responds based on patterns and input differences", "AI is broken"],
+            correct: 2
+          },
+          {
+            q: "Which statement is true about AI in daily life?",
+            a: ["AI is rarely used", "AI is already part of many everyday tools and systems", "AI only exists in labs", "AI is only for experts"],
+            correct: 1
+          },
+          {
+            q: "What is the best mindset when using AI?",
+            a: ["Trust everything AI says", "Avoid AI completely", "Use AI as a tool and verify results", "Let AI make all decisions"],
+            correct: 2
+          }
+        ]
+      },
+
+      {
+        name: "Module 2: How AI Works",
+        lessons: [
+          "AI learns using data patterns.",
+          "Data is information AI is trained on.",
+          "Models process input and generate output.",
+          "AI follows input → processing → output.",
+          "AI makes mistakes due to imperfect data."
+        ],
+        quiz: [
+          {
+            q: "How does AI 'learn' most accurately?",
+            a: ["Through emotions and experience", "By memorizing everything exactly", "By identifying patterns in large amounts of data", "By understanding information like humans"],
+            correct: 2
+          },
+          {
+            q: "Strong AI answers are based on what?",
+            a: ["Personal opinions", "Emotional reasoning", "Data patterns and previous examples", "Independent thinking"],
+            correct: 2
+          },
+          {
+            q: "Why does better data improve AI results?",
+            a: ["AI becomes emotional", "AI understands meaning", "Better data improves pattern recognition", "AI becomes human-like"],
+            correct: 2
+          },
+          {
+            q: "What is happening when AI gives an answer?",
+            a: ["AI is thinking independently", "AI is predicting a response based on patterns", "AI is remembering personal experiences", "AI is guessing randomly"],
+            correct: 1
+          },
+          {
+            q: "Why might a vague user request get a poor response?",
+            a: ["AI system failure", "Lack of emotional intelligence", "Weak or unclear input", "AI cannot answer questions"],
+            correct: 2
+          },
+          {
+            q: "What should a user improve first to get better AI results?",
+            a: ["The AI system itself", "Their input and instructions", "The AI's memory", "The device being used"],
+            correct: 1
+          },
+          {
+            q: "A model is best described as what?",
+            a: ["A human brain", "A system that processes input and produces output", "A database only", "A memory system"],
+            correct: 1
+          },
+          {
+            q: "Which statement about AI accuracy is correct?",
+            a: ["AI is always accurate", "AI never makes mistakes", "AI responses depend on data quality and patterns", "AI cannot be wrong"],
+            correct: 2
+          },
+          {
+            q: "What is the correct AI flow?",
+            a: ["Output → Input → Thinking", "Input → Processing → Output", "Thinking → Output → Input", "Processing → Output → Input"],
+            correct: 1
+          },
+          {
+            q: "Why can AI give incorrect answers?",
+            a: ["AI chose to be wrong", "AI has emotions", "Data or pattern limitations", "AI ignored the question"],
+            correct: 2
+          }
+        ]
+      },
+
+      {
+        name: "Module 3: AI Tools in Real Life",
+        lessons: [
+          "AI tools help complete tasks faster and smarter.",
+          "Different tools are used for different purposes.",
+          "AI is already used in daily life and work.",
+          "AI should be used responsibly, not blindly trusted.",
+          "Choosing the right tool is part of AI skill."
+        ],
+        quiz: [
+          {
+            q: "You need help writing a professional email. What is the best use of an AI tool?",
+            a: ["Ignore AI completely", "Use an AI tool to generate a draft and review it", "Let AI send the email without checking", "Copy random information"],
+            correct: 1
+          },
+          {
+            q: "Why can using one AI tool for every task lead to poor results?",
+            a: ["AI tools are broken", "AI tools all work the same", "Different tools are designed for different purposes", "The user should avoid AI"],
+            correct: 2
+          },
+          {
+            q: "What is true about AI tools in everyday life?",
+            a: ["They are only for experts", "They are already part of everyday systems", "They are rarely used", "They are not practical"],
+            correct: 1
+          },
+          {
+            q: "What is the best workplace approach to AI tools?",
+            a: ["Let AI do everything without checking", "Use AI as a support tool and review results", "Avoid AI", "Trust every response automatically"],
+            correct: 1
+          },
+          {
+            q: "Why do businesses use AI for customer responses?",
+            a: ["To slow communication", "To increase efficiency", "To create more manual work", "To reduce productivity"],
+            correct: 1
+          },
+          {
+            q: "What should you do if an AI tool gives inaccurate results?",
+            a: ["Stop using AI completely", "Improve how you use the tool and review output", "Accept all results", "Ignore the problem"],
+            correct: 1
+          },
+          {
+            q: "Which is an example of good AI usage?",
+            a: ["Copying AI results without understanding", "Using AI to assist and improve work", "Avoiding AI completely", "Letting AI make all decisions"],
+            correct: 1
+          },
+          {
+            q: "What should guide your choice between AI tools?",
+            a: ["Which one looks better", "Which one matches your task needs", "Which one is most popular", "Which one is fastest"],
+            correct: 1
+          },
+          {
+            q: "A strong AI user is someone who:",
+            a: ["Uses any tool randomly", "Avoids all tools", "Chooses tools with purpose and reviews results", "Lets AI decide everything"],
+            correct: 2
+          },
+          {
+            q: "You want to create an image using AI. What should you use?",
+            a: ["A writing tool", "An AI tool designed for image creation", "A calculator", "No AI at all"],
+            correct: 1
+          }
+        ]
+      },
+
+      {
+        name: "Module 4: Talking to AI (Prompting)",
+        lessons: [
+          "A prompt is an instruction given to AI.",
+          "Clear prompts produce better results.",
+          "Specific prompts give better output.",
+          "Better input leads to better output.",
+          "Practice improves AI interaction skills."
+        ],
+        quiz: [
+          {
+            q: "You ask AI: 'Help me.' The response is unclear. What is the issue?",
+            a: ["The AI is broken", "The prompt is too vague", "The AI does not work", "The system is offline"],
+            correct: 1
+          },
+          {
+            q: "Which prompt is best for writing a professional email?",
+            a: ["Write something", "Help me", "Write a professional email requesting time off from work", "Do it"],
+            correct: 2
+          },
+          {
+            q: "What should you do first if AI gives a poor response?",
+            a: ["Stop using AI", "Accept the answer", "Improve and refine your prompt", "Ignore the issue"],
+            correct: 2
+          },
+          {
+            q: "Which is a strong prompt?",
+            a: ["Fix this", "Make something", "Rewrite this paragraph to sound more professional and clear", "Do better"],
+            correct: 2
+          },
+          {
+            q: "Why is context important in a prompt?",
+            a: ["It slows the system", "It confuses AI", "It helps AI generate more accurate responses", "It limits output"],
+            correct: 2
+          },
+          {
+            q: "How do you ask AI for a structured answer?",
+            a: ["Say nothing specific", "Ask for a specific format", "Use fewer words", "Avoid details"],
+            correct: 1
+          },
+          {
+            q: "Why do general prompts usually get general answers?",
+            a: ["AI cannot answer", "AI gives random results", "The prompt lacked detail", "The system is broken"],
+            correct: 2
+          },
+          {
+            q: "How do you improve AI responses over time?",
+            a: ["Use the same prompt repeatedly", "Avoid changing prompts", "Practice and refine prompts", "Stop asking questions"],
+            correct: 2
+          },
+          {
+            q: "Which is a refined prompt?",
+            a: ["Explain AI", "Do it again", "Explain AI in simple terms for someone with no technical background", "Help me"],
+            correct: 2
+          },
+          {
+            q: "A skilled AI user understands that:",
+            a: ["AI always knows what you mean", "AI needs clear instructions to perform well", "AI can think independently", "AI replaces communication"],
+            correct: 1
+          }
+        ]
+      },
+
+      {
+        name: "Module 5: AI in Real Life & Responsible Use",
+        lessons: [
+          "AI helps businesses automate and improve efficiency.",
+          "AI supports medical professionals, not replaces them.",
+          "AI exists in daily tools and systems.",
+          "AI creates opportunities for growth and productivity.",
+          "AI must be used ethically and responsibly."
+        ],
+        quiz: [
+          {
+            q: "Why do companies use AI in customer service?",
+            a: ["Slower response times", "Increased efficiency and automation", "Eliminating all employees", "Removing decision-making"],
+            correct: 1
+          },
+          {
+            q: "What is the correct role of AI in healthcare?",
+            a: ["Replace the doctor completely", "Make final medical decisions alone", "Support the doctor’s decision-making", "Ignore human input"],
+            correct: 2
+          },
+          {
+            q: "What do shopping recommendations powered by AI show?",
+            a: ["AI is not used daily", "AI is only for experts", "AI is integrated into everyday systems", "AI is not functional"],
+            correct: 2
+          },
+          {
+            q: "How should someone use AI to improve work performance?",
+            a: ["Avoid AI", "Use AI to support and improve workflow", "Let AI do everything", "Ignore results"],
+            correct: 1
+          },
+          {
+            q: "What is the risk of blindly trusting AI-generated information?",
+            a: ["Increased accuracy", "No risk", "Spreading incorrect or misleading information", "Faster work"],
+            correct: 2
+          },
+          {
+            q: "Which represents responsible AI use?",
+            a: ["Sharing unverified information", "Trusting AI completely", "Verifying results and using judgment", "Ignoring outputs"],
+            correct: 2
+          },
+          {
+            q: "What is the problem with using AI-generated content without reviewing it?",
+            a: ["AI is too fast", "Lack of responsibility and verification", "AI cannot create content", "The system is broken"],
+            correct: 1
+          },
+          {
+            q: "Why does understanding AI create opportunities?",
+            a: ["It reduces productivity", "It limits growth", "It improves efficiency and skill development", "It removes jobs completely"],
+            correct: 2
+          },
+          {
+            q: "What is the benefit of using AI to automate repetitive tasks?",
+            a: ["More manual work", "Increased errors", "Time savings and efficiency", "Slower performance"],
+            correct: 2
+          },
+          {
+            q: "AI should ultimately be viewed as:",
+            a: ["A complete replacement for humans", "A perfect decision-maker", "A tool that supports human decisions", "An independent authority"],
+            correct: 2
+          }
+        ]
+      }
+    ];
+
+    function getTotalSteps() {
+      let total = 0;
+      modules.forEach(module => {
+        total += module.lessons.length + module.quiz.length;
+      });
+      return total;
+    }
+
+    function getCurrentStep() {
+      let step = 0;
+
+      for (let i = 0; i < moduleIndex; i++) {
+        step += modules[i].lessons.length + modules[i].quiz.length;
+      }
+
+      if (mode === "lesson") {
+        step += lessonIndex;
+      } else {
+        step += modules[moduleIndex].lessons.length + quizIndex;
+      }
+
+      return step;
+    }
+
+    function updateProgress() {
+      const progressBar = document.getElementById("progressBar");
+      const totalSteps = getTotalSteps();
+      const currentStep = getCurrentStep();
+      const progressPercent = (currentStep / totalSteps) * 100;
+      progressBar.style.width = progressPercent + "%";
+    }
+
+    function renderQuestion(q) {
+      let html = `<div class="question-text">${q.q}</div>`;
+      q.a.forEach((opt, i) => {
+        html += `<button class="answer-btn" onclick="checkAnswer(${i})">${opt}</button>`;
+      });
+      return html;
+    }
+
+    function load() {
+      const title = document.getElementById("title");
+      const content = document.getElementById("content");
+      const nextBtn = document.getElementById("nextBtn");
+      const moduleLabel = document.getElementById("moduleLabel");
+
+      const module = modules[moduleIndex];
+
+      updateProgress();
+      moduleLabel.innerText = module.name;
+
+      if (mode === "lesson") {
+        title.innerText = "Lesson " + (lessonIndex + 1);
+        content.innerHTML = `<p>${module.lessons[lessonIndex]}</p>`;
+        nextBtn.style.display = "block";
+      }
+
+      if (mode === "quiz") {
+        title.innerText = "Question " + (quizIndex + 1);
+        content.innerHTML = renderQuestion(module.quiz[quizIndex]);
+        nextBtn.style.display = "none";
+      }
+    }
+
+    function checkAnswer(i) {
+      const module = modules[moduleIndex];
+      const correct = module.quiz[quizIndex].correct;
+
+      if (i === correct) {
+        alert("Correct!");
+      } else {
+        alert("Incorrect. Try again.");
+        return;
+      }
+
+      quizIndex++;
+
+      if (quizIndex < module.quiz.length) {
+        load();
+      } else {
+        alert(module.name + " Complete!");
+        moduleIndex++;
+        lessonIndex = 0;
+        quizIndex = 0;
+        mode = "lesson";
+
+        if (moduleIndex >= modules.length) {
+          alert("Congratulations! You completed AI Foundations™. Your certificate has been unlocked.");
+          window.location.href = "certificate-choice.html";
+        } else {
+          load();
+        }
+      }
+    }
+
+    function next() {
+      const module = modules[moduleIndex];
+
+      if (mode === "lesson") {
+        lessonIndex++;
+
+        if (lessonIndex >= module.lessons.length) {
+          mode = "quiz";
+          lessonIndex = 0;
+        }
+
+        load();
+      }
+    }
+
+    load();
+  </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lumi AI Nexus™ Learning Engine</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(180deg, #eaf6ff 0%, #d8efff 100%);
+      color: #173b79;
+    }
+
+    .top-bar {
+      width: 100%;
+      height: 8px;
+      background: #cce6ff;
+    }
+
+    .progress {
+      height: 8px;
+      width: 0%;
+      background: linear-gradient(90deg, #4aa9ff, #215fe5);
+      transition: width 0.35s ease;
+    }
+
+    .wrap {
+      max-width: 920px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 30px 28px;
+      box-shadow: 0 18px 40px rgba(20, 59, 121, 0.12);
+    }
+
+    .module-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #4a78c2;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .lesson-title {
+      font-size: 30px;
+      font-weight: 800;
+      margin-bottom: 18px;
+      color: #173b79;
+      line-height: 1.2;
+    }
+
+    .content {
+      font-size: 18px;
+      line-height: 1.75;
+      color: #355171;
+    }
+
+    .content p {
+      margin: 0 0 14px;
+    }
+
+    .question-text {
+      font-size: 22px;
+      font-weight: 700;
+      color: #173b79;
+      margin-bottom: 18px;
+      line-height: 1.45;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 15px 18px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(180deg, #4aa9ff, #215fe5);
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      box-shadow:
+        0 10px 20px rgba(33, 95, 229, 0.25),
+        inset 0 2px 0 rgba(255,255,255,0.3);
+      transition: transform 0.15s ease, filter 0.15s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.02);
+    }
+
+    .answer-btn {
+      margin: 12px 0;
+      background: #f3f8ff;
+      color: #173b79;
+      box-shadow: none;
+      border: 1px solid #d6e6ff;
+    }
+
+    .answer-btn:hover {
+      background: #e4f1ff;
+      filter: none;
+    }
+
+    .footer-note {
+      margin-top: 22px;
+      text-align: center;
+      font-size: 14px;
+      color: #58739b;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      .wrap {
+        margin: 24px auto;
+        padding: 14px;
+      }
+
+      .card {
+        padding: 22px 18px;
+      }
+
+      .lesson-title {
+        font-size: 24px;
+      }
+
+      .content,
+      .question-text {
+        font-size: 17px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <div class="progress" id="progressBar"></div>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <div class="module-title" id="moduleLabel"></div>
+      <div class="lesson-title" id="title"></div>
+      <div class="content" id="content"></div>
+
+      <button id="nextBtn" onclick="next()">Next</button>
+
+      <div class="footer-note">
+        Lumi AI Nexus™<br>
+        Where AI, People, and Knowledge Meet.<br>
+        AI Governance Powered by HALO™
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let moduleIndex = 0;
+    let lessonIndex = 0;
+    let quizIndex = 0;
+    let mode = "lesson";
+
+    const modules = [
+      {
+        name: "Module 1: What is AI",
+        lessons: [
+          "What is AI? AI processes information and responds using patterns.",
+          "AI is NOT human, emotional, or conscious.",
+          "Types of AI: Narrow AI is what we use today.",
+          "AI is used in business, phones, healthcare.",
+          "AI improves efficiency and productivity."
+        ],
+        quiz: [
+          {
+            q: "You are using AI to answer a question. What is it primarily doing?",
+            a: ["Thinking like a human", "Predicting a response based on patterns in data", "Making emotional decisions", "Creating original thoughts"],
+            correct: 1
+          },
+          {
+            q: "AI responses are based on what?",
+            a: ["Feelings", "Data patterns", "Memory", "Opinions"],
+            correct: 1
+          },
+          {
+            q: "A person believes AI 'knows everything.' What is the correct understanding?",
+            a: ["AI has full knowledge like a human", "AI stores all information permanently", "AI generates responses based on data patterns", "AI is always aware of facts"],
+            correct: 2
+          },
+          {
+            q: "Which explanation of AI is best for a beginner?",
+            a: ["AI is a human-like brain", "AI is a system that processes information and responds using patterns", "AI is a thinking machine", "AI is always intelligent"],
+            correct: 1
+          },
+          {
+            q: "Why should AI responses be verified?",
+            a: ["AI is always perfect", "AI should never be questioned", "AI responses should be checked for accuracy", "AI cannot answer questions"],
+            correct: 2
+          },
+          {
+            q: "What type of AI do we mostly use today?",
+            a: ["General AI", "Emotional AI", "Narrow AI", "Human AI"],
+            correct: 2
+          },
+          {
+            q: "Which statement about AI is correct?",
+            a: ["AI thinks and feels like humans", "AI does not think or feel like humans", "AI is conscious", "AI has emotions"],
+            correct: 1
+          },
+          {
+            q: "Why can AI give different answers to similar questions?",
+            a: ["AI guesses randomly", "AI changes emotions", "AI responds based on patterns and input differences", "AI is broken"],
+            correct: 2
+          },
+          {
+            q: "Which statement is true about AI in daily life?",
+            a: ["AI is rarely used", "AI is already part of many everyday tools and systems", "AI only exists in labs", "AI is only for experts"],
+            correct: 1
+          },
+          {
+            q: "What is the best mindset when using AI?",
+            a: ["Trust everything AI says", "Avoid AI completely", "Use AI as a tool and verify results", "Let AI make all decisions"],
+            correct: 2
+          }
+        ]
+      },
+
+      {
+        name: "Module 2: How AI Works",
+        lessons: [
+          "AI learns using data patterns.",
+          "Data is information AI is trained on.",
+          "Models process input and generate output.",
+          "AI follows input → processing → output.",
+          "AI makes mistakes due to imperfect data."
+        ],
+        quiz: [
+          {
+            q: "How does AI 'learn' most accurately?",
+            a: ["Through emotions and experience", "By memorizing everything exactly", "By identifying patterns in large amounts of data", "By understanding information like humans"],
+            correct: 2
+          },
+          {
+            q: "Strong AI answers are based on what?",
+            a: ["Personal opinions", "Emotional reasoning", "Data patterns and previous examples", "Independent thinking"],
+            correct: 2
+          },
+          {
+            q: "Why does better data improve AI results?",
+            a: ["AI becomes emotional", "AI understands meaning", "Better data improves pattern recognition", "AI becomes human-like"],
+            correct: 2
+          },
+          {
+            q: "What is happening when AI gives an answer?",
+            a: ["AI is thinking independently", "AI is predicting a response based on patterns", "AI is remembering personal experiences", "AI is guessing randomly"],
+            correct: 1
+          },
+          {
+            q: "Why might a vague user request get a poor response?",
+            a: ["AI system failure", "Lack of emotional intelligence", "Weak or unclear input", "AI cannot answer questions"],
+            correct: 2
+          },
+          {
+            q: "What should a user improve first to get better AI results?",
+            a: ["The AI system itself", "Their input and instructions", "The AI's memory", "The device being used"],
+            correct: 1
+          },
+          {
+            q: "A model is best described as what?",
+            a: ["A human brain", "A system that processes input and produces output", "A database only", "A memory system"],
+            correct: 1
+          },
+          {
+            q: "Which statement about AI accuracy is correct?",
+            a: ["AI is always accurate", "AI never makes mistakes", "AI responses depend on data quality and patterns", "AI cannot be wrong"],
+            correct: 2
+          },
+          {
+            q: "What is the correct AI flow?",
+            a: ["Output → Input → Thinking", "Input → Processing → Output", "Thinking → Output → Input", "Processing → Output → Input"],
+            correct: 1
+          },
+          {
+            q: "Why can AI give incorrect answers?",
+            a: ["AI chose to be wrong", "AI has emotions", "Data or pattern limitations", "AI ignored the question"],
+            correct: 2
+          }
+        ]
+      },
+
+      {
+        name: "Module 3: AI Tools in Real Life",
+        lessons: [
+          "AI tools help complete tasks faster and smarter.",
+          "Different tools are used for different purposes.",
+          "AI is already used in daily life and work.",
+          "AI should be used responsibly, not blindly trusted.",
+          "Choosing the right tool is part of AI skill."
+        ],
+        quiz: [
+          {
+            q: "You need help writing a professional email. What is the best use of an AI tool?",
+            a: ["Ignore AI completely", "Use an AI tool to generate a draft and review it", "Let AI send the email without checking", "Copy random information"],
+            correct: 1
+          },
+          {
+            q: "Why can using one AI tool for every task lead to poor results?",
+            a: ["AI tools are broken", "AI tools all work the same", "Different tools are designed for different purposes", "The user should avoid AI"],
+            correct: 2
+          },
+          {
+            q: "What is true about AI tools in everyday life?",
+            a: ["They are only for experts", "They are already part of everyday systems", "They are rarely used", "They are not practical"],
+            correct: 1
+          },
+          {
+            q: "What is the best workplace approach to AI tools?",
+            a: ["Let AI do everything without checking", "Use AI as a support tool and review results", "Avoid AI", "Trust every response automatically"],
+            correct: 1
+          },
+          {
+            q: "Why do businesses use AI for customer responses?",
+            a: ["To slow communication", "To increase efficiency", "To create more manual work", "To reduce productivity"],
+            correct: 1
+          },
+          {
+            q: "What should you do if an AI tool gives inaccurate results?",
+            a: ["Stop using AI completely", "Improve how you use the tool and review output", "Accept all results", "Ignore the problem"],
+            correct: 1
+          },
+          {
+            q: "Which is an example of good AI usage?",
+            a: ["Copying AI results without understanding", "Using AI to assist and improve work", "Avoiding AI completely", "Letting AI make all decisions"],
+            correct: 1
+          },
+          {
+            q: "What should guide your choice between AI tools?",
+            a: ["Which one looks better", "Which one matches your task needs", "Which one is most popular", "Which one is fastest"],
+            correct: 1
+          },
+          {
+            q: "A strong AI user is someone who:",
+            a: ["Uses any tool randomly", "Avoids all tools", "Chooses tools with purpose and reviews results", "Lets AI decide everything"],
+            correct: 2
+          },
+          {
+            q: "You want to create an image using AI. What should you use?",
+            a: ["A writing tool", "An AI tool designed for image creation", "A calculator", "No AI at all"],
+            correct: 1
+          }
+        ]
+      },
+
+      {
+        name: "Module 4: Talking to AI (Prompting)",
+        lessons: [
+          "A prompt is an instruction given to AI.",
+          "Clear prompts produce better results.",
+          "Specific prompts give better output.",
+          "Better input leads to better output.",
+          "Practice improves AI interaction skills."
+        ],
+        quiz: [
+          {
+            q: "You ask AI: 'Help me.' The response is unclear. What is the issue?",
+            a: ["The AI is broken", "The prompt is too vague", "The AI does not work", "The system is offline"],
+            correct: 1
+          },
+          {
+            q: "Which prompt is best for writing a professional email?",
+            a: ["Write something", "Help me", "Write a professional email requesting time off from work", "Do it"],
+            correct: 2
+          },
+          {
+            q: "What should you do first if AI gives a poor response?",
+            a: ["Stop using AI", "Accept the answer", "Improve and refine your prompt", "Ignore the issue"],
+            correct: 2
+          },
+          {
+            q: "Which is a strong prompt?",
+            a: ["Fix this", "Make something", "Rewrite this paragraph to sound more professional and clear", "Do better"],
+            correct: 2
+          },
+          {
+            q: "Why is context important in a prompt?",
+            a: ["It slows the system", "It confuses AI", "It helps AI generate more accurate responses", "It limits output"],
+            correct: 2
+          },
+          {
+            q: "How do you ask AI for a structured answer?",
+            a: ["Say nothing specific", "Ask for a specific format", "Use fewer words", "Avoid details"],
+            correct: 1
+          },
+          {
+            q: "Why do general prompts usually get general answers?",
+            a: ["AI cannot answer", "AI gives random results", "The prompt lacked detail", "The system is broken"],
+            correct: 2
+          },
+          {
+            q: "How do you improve AI responses over time?",
+            a: ["Use the same prompt repeatedly", "Avoid changing prompts", "Practice and refine prompts", "Stop asking questions"],
+            correct: 2
+          },
+          {
+            q: "Which is a refined prompt?",
+            a: ["Explain AI", "Do it again", "Explain AI in simple terms for someone with no technical background", "Help me"],
+            correct: 2
+          },
+          {
+            q: "A skilled AI user understands that:",
+            a: ["AI always knows what you mean", "AI needs clear instructions to perform well", "AI can think independently", "AI replaces communication"],
+            correct: 1
+          }
+        ]
+      },
+
+      {
+        name: "Module 5: AI in Real Life & Responsible Use",
+        lessons: [
+          "AI helps businesses automate and improve efficiency.",
+          "AI supports medical professionals, not replaces them.",
+          "AI exists in daily tools and systems.",
+          "AI creates opportunities for growth and productivity.",
+          "AI must be used ethically and responsibly."
+        ],
+        quiz: [
+          {
+            q: "Why do companies use AI in customer service?",
+            a: ["Slower response times", "Increased efficiency and automation", "Eliminating all employees", "Removing decision-making"],
+            correct: 1
+          },
+          {
+            q: "What is the correct role of AI in healthcare?",
+            a: ["Replace the doctor completely", "Make final medical decisions alone", "Support the doctor’s decision-making", "Ignore human input"],
+            correct: 2
+          },
+          {
+            q: "What do shopping recommendations powered by AI show?",
+            a: ["AI is not used daily", "AI is only for experts", "AI is integrated into everyday systems", "AI is not functional"],
+            correct: 2
+          },
+          {
+            q: "How should someone use AI to improve work performance?",
+            a: ["Avoid AI", "Use AI to support and improve workflow", "Let AI do everything", "Ignore results"],
+            correct: 1
+          },
+          {
+            q: "What is the risk of blindly trusting AI-generated information?",
+            a: ["Increased accuracy", "No risk", "Spreading incorrect or misleading information", "Faster work"],
+            correct: 2
+          },
+          {
+            q: "Which represents responsible AI use?",
+            a: ["Sharing unverified information", "Trusting AI completely", "Verifying results and using judgment", "Ignoring outputs"],
+            correct: 2
+          },
+          {
+            q: "What is the problem with using AI-generated content without reviewing it?",
+            a: ["AI is too fast", "Lack of responsibility and verification", "AI cannot create content", "The system is broken"],
+            correct: 1
+          },
+          {
+            q: "Why does understanding AI create opportunities?",
+            a: ["It reduces productivity", "It limits growth", "It improves efficiency and skill development", "It removes jobs completely"],
+            correct: 2
+          },
+          {
+            q: "What is the benefit of using AI to automate repetitive tasks?",
+            a: ["More manual work", "Increased errors", "Time savings and efficiency", "Slower performance"],
+            correct: 2
+          },
+          {
+            q: "AI should ultimately be viewed as:",
+            a: ["A complete replacement for humans", "A perfect decision-maker", "A tool that supports human decisions", "An independent authority"],
+            correct: 2
+          }
+        ]
+      }
+    ];
+
+    function getTotalSteps() {
+      let total = 0;
+      modules.forEach(module => {
+        total += module.lessons.length + module.quiz.length;
+      });
+      return total;
+    }
+
+    function getCurrentStep() {
+      let step = 0;
+
+      for (let i = 0; i < moduleIndex; i++) {
+        step += modules[i].lessons.length + modules[i].quiz.length;
+      }
+
+      if (mode === "lesson") {
+        step += lessonIndex;
+      } else {
+        step += modules[moduleIndex].lessons.length + quizIndex;
+      }
+
+      return step;
+    }
+
+    function updateProgress() {
+      const progressBar = document.getElementById("progressBar");
+      const totalSteps = getTotalSteps();
+      const currentStep = getCurrentStep();
+      const progressPercent = (currentStep / totalSteps) * 100;
+      progressBar.style.width = progressPercent + "%";
+    }
+
+    function renderQuestion(q) {
+      let html = `<div class="question-text">${q.q}</div>`;
+      q.a.forEach((opt, i) => {
+        html += `<button class="answer-btn" onclick="checkAnswer(${i})">${opt}</button>`;
+      });
+      return html;
+    }
+
+    function load() {
+      const title = document.getElementById("title");
+      const content = document.getElementById("content");
+      const nextBtn = document.getElementById("nextBtn");
+      const moduleLabel = document.getElementById("moduleLabel");
+
+      const module = modules[moduleIndex];
+
+      updateProgress();
+      moduleLabel.innerText = module.name;
+
+      if (mode === "lesson") {
+        title.innerText = "Lesson " + (lessonIndex + 1);
+        content.innerHTML = `<p>${module.lessons[lessonIndex]}</p>`;
+        nextBtn.style.display = "block";
+      }
+
+      if (mode === "quiz") {
+        title.innerText = "Question " + (quizIndex + 1);
+        content.innerHTML = renderQuestion(module.quiz[quizIndex]);
+        nextBtn.style.display = "none";
+      }
+    }
+
+    function checkAnswer(i) {
+      const module = modules[moduleIndex];
+      const correct = module.quiz[quizIndex].correct;
+
+      if (i === correct) {
+        alert("Correct!");
+      } else {
+        alert("Incorrect. Try again.");
+        return;
+      }
+
+      quizIndex++;
+
+      if (quizIndex < module.quiz.length) {
+        load();
+      } else {
+        alert(module.name + " Complete!");
+        moduleIndex++;
+        lessonIndex = 0;
+        quizIndex = 0;
+        mode = "lesson";
+
+        if (moduleIndex >= modules.length) {
+          alert("Congratulations! You completed AI Foundations™. Your certificate has been unlocked.");
+          window.location.href = "certificate-choice.html";
+        } else {
+          load();
+        }
+      }
+    }
+
+    function next() {
+      const module = modules[moduleIndex];
+
+      if (mode === "lesson") {
+        lessonIndex++;
+
+        if (lessonIndex >= module.lessons.length) {
+          mode = "quiz";
+          lessonIndex = 0;
+        }
+
+        load();
+      }
+    }
+
+    load();
+  </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lumi AI Nexus™ Learning Engine</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(180deg, #eaf6ff 0%, #d8efff 100%);
+      color: #173b79;
+    }
+
+    .top-bar {
+      width: 100%;
+      height: 8px;
+      background: #cce6ff;
+    }
+
+    .progress {
+      height: 8px;
+      width: 0%;
+      background: linear-gradient(90deg, #4aa9ff, #215fe5);
+      transition: width 0.35s ease;
+    }
+
+    .wrap {
+      max-width: 920px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 30px 28px;
+      box-shadow: 0 18px 40px rgba(20, 59, 121, 0.12);
+    }
+
+    .module-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #4a78c2;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .lesson-title {
+      font-size: 30px;
+      font-weight: 800;
+      margin-bottom: 18px;
+      color: #173b79;
+      line-height: 1.2;
+    }
+
+    .content {
+      font-size: 18px;
+      line-height: 1.75;
+      color: #355171;
+    }
+
+    .content p {
+      margin: 0 0 14px;
+    }
+
+    .question-text {
+      font-size: 22px;
+      font-weight: 700;
+      color: #173b79;
+      margin-bottom: 18px;
+      line-height: 1.45;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 15px 18px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(180deg, #4aa9ff, #215fe5);
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      box-shadow:
+        0 10px 20px rgba(33, 95, 229, 0.25),
+        inset 0 2px 0 rgba(255,255,255,0.3);
+      transition: transform 0.15s ease, filter 0.15s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.02);
+    }
+
+    .answer-btn {
+      margin: 12px 0;
+      background: #f3f8ff;
+      color: #173b79;
+      box-shadow: none;
+      border: 1px solid #d6e6ff;
+    }
+
+    .answer-btn:hover {
+      background: #e4f1ff;
+      filter: none;
+    }
+
+    .footer-note {
+      margin-top: 22px;
+      text-align: center;
+      font-size: 14px;
+      color: #58739b;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      .wrap {
+        margin: 24px auto;
+        padding: 14px;
+      }
+
+      .card {
+        padding: 22px 18px;
+      }
+
+      .lesson-title {
+        font-size: 24px;
+      }
+
+      .content,
+      .question-text {
+        font-size: 17px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <div class="progress" id="progressBar"></div>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <div class="module-title" id="moduleLabel"></div>
+      <div class="lesson-title" id="title"></div>
+      <div class="content" id="content"></div>
+
+      <button id="nextBtn" onclick="next()">Next</button>
+
+      <div class="footer-note">
+        Lumi AI Nexus™<br>
+        Where AI, People, and Knowledge Meet.<br>
+        AI Governance Powered by HALO™
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let moduleIndex = 0;
+    let lessonIndex = 0;
+    let quizIndex = 0;
+    let mode = "lesson";
+
+    const modules = [
+      {
+        name: "Module 1: What is AI",
+        lessons: [
+          "What is AI? AI processes information and responds using patterns.",
+          "AI is NOT human, emotional, or conscious.",
+          "Types of AI: Narrow AI is what we use today.",
+          "AI is used in business, phones, healthcare.",
+          "AI improves efficiency and productivity."
+        ],
+        quiz: [
+          {
+            q: "You are using AI to answer a question. What is it primarily doing?",
+            a: ["Thinking like a human", "Predicting a response based on patterns in data", "Making emotional decisions", "Creating original thoughts"],
+            correct: 1
+          },
+          {
+            q: "AI responses are based on what?",
+            a: ["Feelings", "Data patterns", "Memory", "Opinions"],
+            correct: 1
+          },
+          {
+            q: "A person believes AI 'knows everything.' What is the correct understanding?",
+            a: ["AI has full knowledge like a human", "AI stores all information permanently", "AI generates responses based on data patterns", "AI is always aware of facts"],
+            correct: 2
+          },
+          {
+            q: "Which explanation of AI is best for a beginner?",
+            a: ["AI is a human-like brain", "AI is a system that processes information and responds using patterns", "AI is a thinking machine", "AI is always intelligent"],
+            correct: 1
+          },
+          {
+            q: "Why should AI responses be verified?",
+            a: ["AI is always perfect", "AI should never be questioned", "AI responses should be checked for accuracy", "AI cannot answer questions"],
+            correct: 2
+          },
+          {
+            q: "What type of AI do we mostly use today?",
+            a: ["General AI", "Emotional AI", "Narrow AI", "Human AI"],
+            correct: 2
+          },
+          {
+            q: "Which statement about AI is correct?",
+            a: ["AI thinks and feels like humans", "AI does not think or feel like humans", "AI is conscious", "AI has emotions"],
+            correct: 1
+          },
+          {
+            q: "Why can AI give different answers to similar questions?",
+            a: ["AI guesses randomly", "AI changes emotions", "AI responds based on patterns and input differences", "AI is broken"],
+            correct: 2
+          },
+          {
+            q: "Which statement is true about AI in daily life?",
+            a: ["AI is rarely used", "AI is already part of many everyday tools and systems", "AI only exists in labs", "AI is only for experts"],
+            correct: 1
+          },
+          {
+            q: "What is the best mindset when using AI?",
+            a: ["Trust everything AI says", "Avoid AI completely", "Use AI as a tool and verify results", "Let AI make all decisions"],
+            correct: 2
+          }
+        ]
+      },
+
+      {
+        name: "Module 2: How AI Works",
+        lessons: [
+          "AI learns using data patterns.",
+          "Data is information AI is trained on.",
+          "Models process input and generate output.",
+          "AI follows input → processing → output.",
+          "AI makes mistakes due to imperfect data."
+        ],
+        quiz: [
+          {
+            q: "How does AI 'learn' most accurately?",
+            a: ["Through emotions and experience", "By memorizing everything exactly", "By identifying patterns in large amounts of data", "By understanding information like humans"],
+            correct: 2
+          },
+          {
+            q: "Strong AI answers are based on what?",
+            a: ["Personal opinions", "Emotional reasoning", "Data patterns and previous examples", "Independent thinking"],
+            correct: 2
+          },
+          {
+            q: "Why does better data improve AI results?",
+            a: ["AI becomes emotional", "AI understands meaning", "Better data improves pattern recognition", "AI becomes human-like"],
+            correct: 2
+          },
+          {
+            q: "What is happening when AI gives an answer?",
+            a: ["AI is thinking independently", "AI is predicting a response based on patterns", "AI is remembering personal experiences", "AI is guessing randomly"],
+            correct: 1
+          },
+          {
+            q: "Why might a vague user request get a poor response?",
+            a: ["AI system failure", "Lack of emotional intelligence", "Weak or unclear input", "AI cannot answer questions"],
+            correct: 2
+          },
+          {
+            q: "What should a user improve first to get better AI results?",
+            a: ["The AI system itself", "Their input and instructions", "The AI's memory", "The device being used"],
+            correct: 1
+          },
+          {
+            q: "A model is best described as what?",
+            a: ["A human brain", "A system that processes input and produces output", "A database only", "A memory system"],
+            correct: 1
+          },
+          {
+            q: "Which statement about AI accuracy is correct?",
+            a: ["AI is always accurate", "AI never makes mistakes", "AI responses depend on data quality and patterns", "AI cannot be wrong"],
+            correct: 2
+          },
+          {
+            q: "What is the correct AI flow?",
+            a: ["Output → Input → Thinking", "Input → Processing → Output", "Thinking → Output → Input", "Processing → Output → Input"],
+            correct: 1
+          },
+          {
+            q: "Why can AI give incorrect answers?",
+            a: ["AI chose to be wrong", "AI has emotions", "Data or pattern limitations", "AI ignored the question"],
+            correct: 2
+          }
+        ]
+      },
+
+      {
+        name: "Module 3: AI Tools in Real Life",
+        lessons: [
+          "AI tools help complete tasks faster and smarter.",
+          "Different tools are used for different purposes.",
+          "AI is already used in daily life and work.",
+          "AI should be used responsibly, not blindly trusted.",
+          "Choosing the right tool is part of AI skill."
+        ],
+        quiz: [
+          {
+            q: "You need help writing a professional email. What is the best use of an AI tool?",
+            a: ["Ignore AI completely", "Use an AI tool to generate a draft and review it", "Let AI send the email without checking", "Copy random information"],
+            correct: 1
+          },
+          {
+            q: "Why can using one AI tool for every task lead to poor results?",
+            a: ["AI tools are broken", "AI tools all work the same", "Different tools are designed for different purposes", "The user should avoid AI"],
+            correct: 2
+          },
+          {
+            q: "What is true about AI tools in everyday life?",
+            a: ["They are only for experts", "They are already part of everyday systems", "They are rarely used", "They are not practical"],
+            correct: 1
+          },
+          {
+            q: "What is the best workplace approach to AI tools?",
+            a: ["Let AI do everything without checking", "Use AI as a support tool and review results", "Avoid AI", "Trust every response automatically"],
+            correct: 1
+          },
+          {
+            q: "Why do businesses use AI for customer responses?",
+            a: ["To slow communication", "To increase efficiency", "To create more manual work", "To reduce productivity"],
+            correct: 1
+          },
+          {
+            q: "What should you do if an AI tool gives inaccurate results?",
+            a: ["Stop using AI completely", "Improve how you use the tool and review output", "Accept all results", "Ignore the problem"],
+            correct: 1
+          },
+          {
+            q: "Which is an example of good AI usage?",
+            a: ["Copying AI results without understanding", "Using AI to assist and improve work", "Avoiding AI completely", "Letting AI make all decisions"],
+            correct: 1
+          },
+          {
+            q: "What should guide your choice between AI tools?",
+            a: ["Which one looks better", "Which one matches your task needs", "Which one is most popular", "Which one is fastest"],
+            correct: 1
+          },
+          {
+            q: "A strong AI user is someone who:",
+            a: ["Uses any tool randomly", "Avoids all tools", "Chooses tools with purpose and reviews results", "Lets AI decide everything"],
+            correct: 2
+          },
+          {
+            q: "You want to create an image using AI. What should you use?",
+            a: ["A writing tool", "An AI tool designed for image creation", "A calculator", "No AI at all"],
+            correct: 1
+          }
+        ]
+      },
+
+      {
+        name: "Module 4: Talking to AI (Prompting)",
+        lessons: [
+          "A prompt is an instruction given to AI.",
+          "Clear prompts produce better results.",
+          "Specific prompts give better output.",
+          "Better input leads to better output.",
+          "Practice improves AI interaction skills."
+        ],
+        quiz: [
+          {
+            q: "You ask AI: 'Help me.' The response is unclear. What is the issue?",
+            a: ["The AI is broken", "The prompt is too vague", "The AI does not work", "The system is offline"],
+            correct: 1
+          },
+          {
+            q: "Which prompt is best for writing a professional email?",
+            a: ["Write something", "Help me", "Write a professional email requesting time off from work", "Do it"],
+            correct: 2
+          },
+          {
+            q: "What should you do first if AI gives a poor response?",
+            a: ["Stop using AI", "Accept the answer", "Improve and refine your prompt", "Ignore the issue"],
+            correct: 2
+          },
+          {
+            q: "Which is a strong prompt?",
+            a: ["Fix this", "Make something", "Rewrite this paragraph to sound more professional and clear", "Do better"],
+            correct: 2
+          },
+          {
+            q: "Why is context important in a prompt?",
+            a: ["It slows the system", "It confuses AI", "It helps AI generate more accurate responses", "It limits output"],
+            correct: 2
+          },
+          {
+            q: "How do you ask AI for a structured answer?",
+            a: ["Say nothing specific", "Ask for a specific format", "Use fewer words", "Avoid details"],
+            correct: 1
+          },
+          {
+            q: "Why do general prompts usually get general answers?",
+            a: ["AI cannot answer", "AI gives random results", "The prompt lacked detail", "The system is broken"],
+            correct: 2
+          },
+          {
+            q: "How do you improve AI responses over time?",
+            a: ["Use the same prompt repeatedly", "Avoid changing prompts", "Practice and refine prompts", "Stop asking questions"],
+            correct: 2
+          },
+          {
+            q: "Which is a refined prompt?",
+            a: ["Explain AI", "Do it again", "Explain AI in simple terms for someone with no technical background", "Help me"],
+            correct: 2
+          },
+          {
+            q: "A skilled AI user understands that:",
+            a: ["AI always knows what you mean", "AI needs clear instructions to perform well", "AI can think independently", "AI replaces communication"],
+            correct: 1
+          }
+        ]
+      },
+
+      {
+        name: "Module 5: AI in Real Life & Responsible Use",
+        lessons: [
+          "AI helps businesses automate and improve efficiency.",
+          "AI supports medical professionals, not replaces them.",
+          "AI exists in daily tools and systems.",
+          "AI creates opportunities for growth and productivity.",
+          "AI must be used ethically and responsibly."
+        ],
+        quiz: [
+          {
+            q: "Why do companies use AI in customer service?",
+            a: ["Slower response times", "Increased efficiency and automation", "Eliminating all employees", "Removing decision-making"],
+            correct: 1
+          },
+          {
+            q: "What is the correct role of AI in healthcare?",
+            a: ["Replace the doctor completely", "Make final medical decisions alone", "Support the doctor’s decision-making", "Ignore human input"],
+            correct: 2
+          },
+          {
+            q: "What do shopping recommendations powered by AI show?",
+            a: ["AI is not used daily", "AI is only for experts", "AI is integrated into everyday systems", "AI is not functional"],
+            correct: 2
+          },
+          {
+            q: "How should someone use AI to improve work performance?",
+            a: ["Avoid AI", "Use AI to support and improve workflow", "Let AI do everything", "Ignore results"],
+            correct: 1
+          },
+          {
+            q: "What is the risk of blindly trusting AI-generated information?",
+            a: ["Increased accuracy", "No risk", "Spreading incorrect or misleading information", "Faster work"],
+            correct: 2
+          },
+          {
+            q: "Which represents responsible AI use?",
+            a: ["Sharing unverified information", "Trusting AI completely", "Verifying results and using judgment", "Ignoring outputs"],
+            correct: 2
+          },
+          {
+            q: "What is the problem with using AI-generated content without reviewing it?",
+            a: ["AI is too fast", "Lack of responsibility and verification", "AI cannot create content", "The system is broken"],
+            correct: 1
+          },
+          {
+            q: "Why does understanding AI create opportunities?",
+            a: ["It reduces productivity", "It limits growth", "It improves efficiency and skill development", "It removes jobs completely"],
+            correct: 2
+          },
+          {
+            q: "What is the benefit of using AI to automate repetitive tasks?",
+            a: ["More manual work", "Increased errors", "Time savings and efficiency", "Slower performance"],
+            correct: 2
+          },
+          {
+            q: "AI should ultimately be viewed as:",
+            a: ["A complete replacement for humans", "A perfect decision-maker", "A tool that supports human decisions", "An independent authority"],
+            correct: 2
+          }
+        ]
+      }
+    ];
+
+    function getTotalSteps() {
+      let total = 0;
+      modules.forEach(module => {
+        total += module.lessons.length + module.quiz.length;
+      });
+      return total;
+    }
+
+    function getCurrentStep() {
+      let step = 0;
+
+      for (let i = 0; i < moduleIndex; i++) {
+        step += modules[i].lessons.length + modules[i].quiz.length;
+      }
+
+      if (mode === "lesson") {
+        step += lessonIndex;
+      } else {
+        step += modules[moduleIndex].lessons.length + quizIndex;
+      }
+
+      return step;
+    }
+
+    function updateProgress() {
+      const progressBar = document.getElementById("progressBar");
+      const totalSteps = getTotalSteps();
+      const currentStep = getCurrentStep();
+      const progressPercent = (currentStep / totalSteps) * 100;
+      progressBar.style.width = progressPercent + "%";
+    }
+
+    function renderQuestion(q) {
+      let html = `<div class="question-text">${q.q}</div>`;
+      q.a.forEach((opt, i) => {
+        html += `<button class="answer-btn" onclick="checkAnswer(${i})">${opt}</button>`;
+      });
+      return html;
+    }
+
+    function load() {
+      const title = document.getElementById("title");
+      const content = document.getElementById("content");
+      const nextBtn = document.getElementById("nextBtn");
+      const moduleLabel = document.getElementById("moduleLabel");
+
+      const module = modules[moduleIndex];
+
+      updateProgress();
+      moduleLabel.innerText = module.name;
+
+      if (mode === "lesson") {
+        title.innerText = "Lesson " + (lessonIndex + 1);
+        content.innerHTML = `<p>${module.lessons[lessonIndex]}</p>`;
+        nextBtn.style.display = "block";
+      }
+
+      if (mode === "quiz") {
+        title.innerText = "Question " + (quizIndex + 1);
+        content.innerHTML = renderQuestion(module.quiz[quizIndex]);
+        nextBtn.style.display = "none";
+      }
+    }
+
+    function checkAnswer(i) {
+      const module = modules[moduleIndex];
+      const correct = module.quiz[quizIndex].correct;
+
+      if (i === correct) {
+        alert("Correct!");
+      } else {
+        alert("Incorrect. Try again.");
+        return;
+      }
+
+      quizIndex++;
+
+      if (quizIndex < module.quiz.length) {
+        load();
+      } else {
+        alert(module.name + " Complete!");
+        moduleIndex++;
+        lessonIndex = 0;
+        quizIndex = 0;
+        mode = "lesson";
+
+        if (moduleIndex >= modules.length) {
+          alert("Congratulations! You completed AI Foundations™. Your certificate has been unlocked.");
+          window.location.href = "certificate-choice.html";
+        } else {
+          load();
+        }
+      }
+    }
+
+    function next() {
+      const module = modules[moduleIndex];
+
+      if (mode === "lesson") {
+        lessonIndex++;
+
+        if (lessonIndex >= module.lessons.length) {
+          mode = "quiz";
+          lessonIndex = 0;
+        }
+
+        load();
+      }
+    }
+
+    load();
+  </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lumi AI Nexus™ Learning Engine</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(180deg, #eaf6ff 0%, #d8efff 100%);
+      color: #173b79;
+    }
+
+    .top-bar {
+      width: 100%;
+      height: 8px;
+      background: #cce6ff;
+    }
+
+    .progress {
+      height: 8px;
+      width: 0%;
+      background: linear-gradient(90deg, #4aa9ff, #215fe5);
+      transition: width 0.35s ease;
+    }
+
+    .wrap {
+      max-width: 920px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 30px 28px;
+      box-shadow: 0 18px 40px rgba(20, 59, 121, 0.12);
+    }
+
+    .module-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #4a78c2;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .lesson-title {
+      font-size: 30px;
+      font-weight: 800;
+      margin-bottom: 18px;
+      color: #173b79;
+      line-height: 1.2;
+    }
+
+    .content {
+      font-size: 18px;
+      line-height: 1.75;
+      color: #355171;
+    }
+
+    .content p {
+      margin: 0 0 14px;
+    }
+
+    .question-text {
+      font-size: 22px;
+      font-weight: 700;
+      color: #173b79;
+      margin-bottom: 18px;
+      line-height: 1.45;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 15px 18px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(180deg, #4aa9ff, #215fe5);
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      box-shadow:
+        0 10px 20px rgba(33, 95, 229, 0.25),
+        inset 0 2px 0 rgba(255,255,255,0.3);
+      transition: transform 0.15s ease, filter 0.15s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.02);
+    }
+
+    .answer-btn {
+      margin: 12px 0;
+      background: #f3f8ff;
+      color: #173b79;
+      box-shadow: none;
+      border: 1px solid #d6e6ff;
+    }
+
+    .answer-btn:hover {
+      background: #e4f1ff;
+      filter: none;
+    }
+
+    .footer-note {
+      margin-top: 22px;
+      text-align: center;
+      font-size: 14px;
+      color: #58739b;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      .wrap {
+        margin: 24px auto;
+        padding: 14px;
+      }
+
+      .card {
+        padding: 22px 18px;
+      }
+
+      .lesson-title {
+        font-size: 24px;
+      }
+
+      .content,
+      .question-text {
+        font-size: 17px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <div class="progress" id="progressBar"></div>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <div class="module-title" id="moduleLabel"></div>
+      <div class="lesson-title" id="title"></div>
+      <div class="content" id="content"></div>
+
+      <button id="nextBtn" onclick="next()">Next</button>
+
+      <div class="footer-note">
+        Lumi AI Nexus™<br>
+        Where AI, People, and Knowledge Meet.<br>
+        AI Governance Powered by HALO™
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let moduleIndex = 0;
+    let lessonIndex = 0;
+    let quizIndex = 0;
+    let mode = "lesson";
+
+    const modules = [
+      {
+        name: "Module 1: What is AI",
+        lessons: [
+          "What is AI? AI processes information and responds using patterns.",
+          "AI is NOT human, emotional, or conscious.",
+          "Types of AI: Narrow AI is what we use today.",
+          "AI is used in business, phones, healthcare.",
+          "AI improves efficiency and productivity."
+        ],
+        quiz: [
+          {
+            q: "You are using AI to answer a question. What is it primarily doing?",
+            a: ["Thinking like a human", "Predicting a response based on patterns in data", "Making emotional decisions", "Creating original thoughts"],
+            correct: 1
+          },
+          {
+            q: "AI responses are based on what?",
+            a: ["Feelings", "Data patterns", "Memory", "Opinions"],
+            correct: 1
+          },
+          {
+            q: "A person believes AI 'knows everything.' What is the correct understanding?",
+            a: ["AI has full knowledge like a human", "AI stores all information permanently", "AI generates responses based on data patterns", "AI is always aware of facts"],
+            correct: 2
+          },
+          {
+            q: "Which explanation of AI is best for a beginner?",
+            a: ["AI is a human-like brain", "AI is a system that processes information and responds using patterns", "AI is a thinking machine", "AI is always intelligent"],
+            correct: 1
+          },
+          {
+            q: "Why should AI responses be verified?",
+            a: ["AI is always perfect", "AI should never be questioned", "AI responses should be checked for accuracy", "AI cannot answer questions"],
+            correct: 2
+          },
+          {
+            q: "What type of AI do we mostly use today?",
+            a: ["General AI", "Emotional AI", "Narrow AI", "Human AI"],
+            correct: 2
+          },
+          {
+            q: "Which statement about AI is correct?",
+            a: ["AI thinks and feels like humans", "AI does not think or feel like humans", "AI is conscious", "AI has emotions"],
+            correct: 1
+          },
+          {
+            q: "Why can AI give different answers to similar questions?",
+            a: ["AI guesses randomly", "AI changes emotions", "AI responds based on patterns and input differences", "AI is broken"],
+            correct: 2
+          },
+          {
+            q: "Which statement is true about AI in daily life?",
+            a: ["AI is rarely used", "AI is already part of many everyday tools and systems", "AI only exists in labs", "AI is only for experts"],
+            correct: 1
+          },
+          {
+            q: "What is the best mindset when using AI?",
+            a: ["Trust everything AI says", "Avoid AI completely", "Use AI as a tool and verify results", "Let AI make all decisions"],
+            correct: 2
+          }
+        ]
+      },
+
+      {
+        name: "Module 2: How AI Works",
+        lessons: [
+          "AI learns using data patterns.",
+          "Data is information AI is trained on.",
+          "Models process input and generate output.",
+          "AI follows input → processing → output.",
+          "AI makes mistakes due to imperfect data."
+        ],
+        quiz: [
+          {
+            q: "How does AI 'learn' most accurately?",
+            a: ["Through emotions and experience", "By memorizing everything exactly", "By identifying patterns in large amounts of data", "By understanding information like humans"],
+            correct: 2
+          },
+          {
+            q: "Strong AI answers are based on what?",
+            a: ["Personal opinions", "Emotional reasoning", "Data patterns and previous examples", "Independent thinking"],
+            correct: 2
+          },
+          {
+            q: "Why does better data improve AI results?",
+            a: ["AI becomes emotional", "AI understands meaning", "Better data improves pattern recognition", "AI becomes human-like"],
+            correct: 2
+          },
+          {
+            q: "What is happening when AI gives an answer?",
+            a: ["AI is thinking independently", "AI is predicting a response based on patterns", "AI is remembering personal experiences", "AI is guessing randomly"],
+            correct: 1
+          },
+          {
+            q: "Why might a vague user request get a poor response?",
+            a: ["AI system failure", "Lack of emotional intelligence", "Weak or unclear input", "AI cannot answer questions"],
+            correct: 2
+          },
+          {
+            q: "What should a user improve first to get better AI results?",
+            a: ["The AI system itself", "Their input and instructions", "The AI's memory", "The device being used"],
+            correct: 1
+          },
+          {
+            q: "A model is best described as what?",
+            a: ["A human brain", "A system that processes input and produces output", "A database only", "A memory system"],
+            correct: 1
+          },
+          {
+            q: "Which statement about AI accuracy is correct?",
+            a: ["AI is always accurate", "AI never makes mistakes", "AI responses depend on data quality and patterns", "AI cannot be wrong"],
+            correct: 2
+          },
+          {
+            q: "What is the correct AI flow?",
+            a: ["Output → Input → Thinking", "Input → Processing → Output", "Thinking → Output → Input", "Processing → Output → Input"],
+            correct: 1
+          },
+          {
+            q: "Why can AI give incorrect answers?",
+            a: ["AI chose to be wrong", "AI has emotions", "Data or pattern limitations", "AI ignored the question"],
+            correct: 2
+          }
+        ]
+      },
+
+      {
+        name: "Module 3: AI Tools in Real Life",
+        lessons: [
+          "AI tools help complete tasks faster and smarter.",
+          "Different tools are used for different purposes.",
+          "AI is already used in daily life and work.",
+          "AI should be used responsibly, not blindly trusted.",
+          "Choosing the right tool is part of AI skill."
+        ],
+        quiz: [
+          {
+            q: "You need help writing a professional email. What is the best use of an AI tool?",
+            a: ["Ignore AI completely", "Use an AI tool to generate a draft and review it", "Let AI send the email without checking", "Copy random information"],
+            correct: 1
+          },
+          {
+            q: "Why can using one AI tool for every task lead to poor results?",
+            a: ["AI tools are broken", "AI tools all work the same", "Different tools are designed for different purposes", "The user should avoid AI"],
+            correct: 2
+          },
+          {
+            q: "What is true about AI tools in everyday life?",
+            a: ["They are only for experts", "They are already part of everyday systems", "They are rarely used", "They are not practical"],
+            correct: 1
+          },
+          {
+            q: "What is the best workplace approach to AI tools?",
+            a: ["Let AI do everything without checking", "Use AI as a support tool and review results", "Avoid AI", "Trust every response automatically"],
+            correct: 1
+          },
+          {
+            q: "Why do businesses use AI for customer responses?",
+            a: ["To slow communication", "To increase efficiency", "To create more manual work", "To reduce productivity"],
+            correct: 1
+          },
+          {
+            q: "What should you do if an AI tool gives inaccurate results?",
+            a: ["Stop using AI completely", "Improve how you use the tool and review output", "Accept all results", "Ignore the problem"],
+            correct: 1
+          },
+          {
+            q: "Which is an example of good AI usage?",
+            a: ["Copying AI results without understanding", "Using AI to assist and improve work", "Avoiding AI completely", "Letting AI make all decisions"],
+            correct: 1
+          },
+          {
+            q: "What should guide your choice between AI tools?",
+            a: ["Which one looks better", "Which one matches your task needs", "Which one is most popular", "Which one is fastest"],
+            correct: 1
+          },
+          {
+            q: "A strong AI user is someone who:",
+            a: ["Uses any tool randomly", "Avoids all tools", "Chooses tools with purpose and reviews results", "Lets AI decide everything"],
+            correct: 2
+          },
+          {
+            q: "You want to create an image using AI. What should you use?",
+            a: ["A writing tool", "An AI tool designed for image creation", "A calculator", "No AI at all"],
+            correct: 1
+          }
+        ]
+      },
+
+      {
+        name: "Module 4: Talking to AI (Prompting)",
+        lessons: [
+          "A prompt is an instruction given to AI.",
+          "Clear prompts produce better results.",
+          "Specific prompts give better output.",
+          "Better input leads to better output.",
+          "Practice improves AI interaction skills."
+        ],
+        quiz: [
+          {
+            q: "You ask AI: 'Help me.' The response is unclear. What is the issue?",
+            a: ["The AI is broken", "The prompt is too vague", "The AI does not work", "The system is offline"],
+            correct: 1
+          },
+          {
+            q: "Which prompt is best for writing a professional email?",
+            a: ["Write something", "Help me", "Write a professional email requesting time off from work", "Do it"],
+            correct: 2
+          },
+          {
+            q: "What should you do first if AI gives a poor response?",
+            a: ["Stop using AI", "Accept the answer", "Improve and refine your prompt", "Ignore the issue"],
+            correct: 2
+          },
+          {
+            q: "Which is a strong prompt?",
+            a: ["Fix this", "Make something", "Rewrite this paragraph to sound more professional and clear", "Do better"],
+            correct: 2
+          },
+          {
+            q: "Why is context important in a prompt?",
+            a: ["It slows the system", "It confuses AI", "It helps AI generate more accurate responses", "It limits output"],
+            correct: 2
+          },
+          {
+            q: "How do you ask AI for a structured answer?",
+            a: ["Say nothing specific", "Ask for a specific format", "Use fewer words", "Avoid details"],
+            correct: 1
+          },
+          {
+            q: "Why do general prompts usually get general answers?",
+            a: ["AI cannot answer", "AI gives random results", "The prompt lacked detail", "The system is broken"],
+            correct: 2
+          },
+          {
+            q: "How do you improve AI responses over time?",
+            a: ["Use the same prompt repeatedly", "Avoid changing prompts", "Practice and refine prompts", "Stop asking questions"],
+            correct: 2
+          },
+          {
+            q: "Which is a refined prompt?",
+            a: ["Explain AI", "Do it again", "Explain AI in simple terms for someone with no technical background", "Help me"],
+            correct: 2
+          },
+          {
+            q: "A skilled AI user understands that:",
+            a: ["AI always knows what you mean", "AI needs clear instructions to perform well", "AI can think independently", "AI replaces communication"],
+            correct: 1
+          }
+        ]
+      },
+
+      {
+        name: "Module 5: AI in Real Life & Responsible Use",
+        lessons: [
+          "AI helps businesses automate and improve efficiency.",
+          "AI supports medical professionals, not replaces them.",
+          "AI exists in daily tools and systems.",
+          "AI creates opportunities for growth and productivity.",
+          "AI must be used ethically and responsibly."
+        ],
+        quiz: [
+          {
+            q: "Why do companies use AI in customer service?",
+            a: ["Slower response times", "Increased efficiency and automation", "Eliminating all employees", "Removing decision-making"],
+            correct: 1
+          },
+          {
+            q: "What is the correct role of AI in healthcare?",
+            a: ["Replace the doctor completely", "Make final medical decisions alone", "Support the doctor’s decision-making", "Ignore human input"],
+            correct: 2
+          },
+          {
+            q: "What do shopping recommendations powered by AI show?",
+            a: ["AI is not used daily", "AI is only for experts", "AI is integrated into everyday systems", "AI is not functional"],
+            correct: 2
+          },
+          {
+            q: "How should someone use AI to improve work performance?",
+            a: ["Avoid AI", "Use AI to support and improve workflow", "Let AI do everything", "Ignore results"],
+            correct: 1
+          },
+          {
+            q: "What is the risk of blindly trusting AI-generated information?",
+            a: ["Increased accuracy", "No risk", "Spreading incorrect or misleading information", "Faster work"],
+            correct: 2
+          },
+          {
+            q: "Which represents responsible AI use?",
+            a: ["Sharing unverified information", "Trusting AI completely", "Verifying results and using judgment", "Ignoring outputs"],
+            correct: 2
+          },
+          {
+            q: "What is the problem with using AI-generated content without reviewing it?",
+            a: ["AI is too fast", "Lack of responsibility and verification", "AI cannot create content", "The system is broken"],
+            correct: 1
+          },
+          {
+            q: "Why does understanding AI create opportunities?",
+            a: ["It reduces productivity", "It limits growth", "It improves efficiency and skill development", "It removes jobs completely"],
+            correct: 2
+          },
+          {
+            q: "What is the benefit of using AI to automate repetitive tasks?",
+            a: ["More manual work", "Increased errors", "Time savings and efficiency", "Slower performance"],
+            correct: 2
+          },
+          {
+            q: "AI should ultimately be viewed as:",
+            a: ["A complete replacement for humans", "A perfect decision-maker", "A tool that supports human decisions", "An independent authority"],
+            correct: 2
+          }
+        ]
+      }
+    ];
+
+    function getTotalSteps() {
+      let total = 0;
+      modules.forEach(module => {
+        total += module.lessons.length + module.quiz.length;
+      });
+      return total;
+    }
+
+    function getCurrentStep() {
+      let step = 0;
+
+      for (let i = 0; i < moduleIndex; i++) {
+        step += modules[i].lessons.length + modules[i].quiz.length;
+      }
+
+      if (mode === "lesson") {
+        step += lessonIndex;
+      } else {
+        step += modules[moduleIndex].lessons.length + quizIndex;
+      }
+
+      return step;
+    }
+
+    function updateProgress() {
+      const progressBar = document.getElementById("progressBar");
+      const totalSteps = getTotalSteps();
+      const currentStep = getCurrentStep();
+      const progressPercent = (currentStep / totalSteps) * 100;
+      progressBar.style.width = progressPercent + "%";
+    }
+
+    function renderQuestion(q) {
+      let html = `<div class="question-text">${q.q}</div>`;
+      q.a.forEach((opt, i) => {
+        html += `<button class="answer-btn" onclick="checkAnswer(${i})">${opt}</button>`;
+      });
+      return html;
+    }
+
+    function load() {
+      const title = document.getElementById("title");
+      const content = document.getElementById("content");
+      const nextBtn = document.getElementById("nextBtn");
+      const moduleLabel = document.getElementById("moduleLabel");
+
+      const module = modules[moduleIndex];
+
+      updateProgress();
+      moduleLabel.innerText = module.name;
+
+      if (mode === "lesson") {
+        title.innerText = "Lesson " + (lessonIndex + 1);
+        content.innerHTML = `<p>${module.lessons[lessonIndex]}</p>`;
+        nextBtn.style.display = "block";
+      }
+
+      if (mode === "quiz") {
+        title.innerText = "Question " + (quizIndex + 1);
+        content.innerHTML = renderQuestion(module.quiz[quizIndex]);
+        nextBtn.style.display = "none";
+      }
+    }
+
+    function checkAnswer(i) {
+      const module = modules[moduleIndex];
+      const correct = module.quiz[quizIndex].correct;
+
+      if (i === correct) {
+        alert("Correct!");
+      } else {
+        alert("Incorrect. Try again.");
+        return;
+      }
+
+      quizIndex++;
+
+      if (quizIndex < module.quiz.length) {
+        load();
+      } else {
+        alert(module.name + " Complete!");
+        moduleIndex++;
+        lessonIndex = 0;
+        quizIndex = 0;
+        mode = "lesson";
+
+        if (moduleIndex >= modules.length) {
+          alert("Congratulations! You completed AI Foundations™. Your certificate has been unlocked.");
+          window.location.href = "certificate-choice.html";
+        } else {
+          load();
+        }
+      }
+    }
+
+    function next() {
+      const module = modules[moduleIndex];
+
+      if (mode === "lesson") {
+        lessonIndex++;
+
+        if (lessonIndex >= module.lessons.length) {
+          mode = "quiz";
+          lessonIndex = 0;
+        }
+
+        load();
+      }
+    }
+
+    load();
+  </script>
+</body>
+</html>
