@@ -1,186 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Certificate Choice | Lumi AI Nexus™</title>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Choose Certificate | Lumi AI Nexus™</title>
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(180deg, #eaf6ff 0%, #d8efff 100%);
-      color: #173b79;
-      padding: 28px 16px 40px;
-    }
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  background: linear-gradient(180deg, #eaf6ff, #d8efff);
+  padding: 30px;
+  color: #173b79;
+}
 
-    .wrap {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
+.container {
+  max-width: 900px;
+  margin: auto;
+  text-align: center;
+}
 
-    .hero {
-      background: linear-gradient(135deg, #8fd0ff, #c8ebff);
-      border-radius: 28px;
-      padding: 36px 28px;
-      box-shadow: 0 18px 38px rgba(15, 45, 95, 0.14);
-      text-align: center;
-      margin-bottom: 24px;
-    }
+h1 {
+  margin-bottom: 10px;
+}
 
-    .hero h1 {
-      margin: 0 0 12px;
-      font-size: clamp(34px, 6vw, 60px);
-      line-height: 1.05;
-      color: #ffffff;
-      text-shadow: 0 3px 10px rgba(20, 59, 121, 0.22);
-    }
+p {
+  color: #355171;
+}
 
-    .hero p {
-      margin: 0 auto;
-      max-width: 780px;
-      font-size: 20px;
-      line-height: 1.6;
-      color: #ffffff;
-      font-weight: 600;
-      text-shadow: 0 2px 8px rgba(20, 59, 121, 0.18);
-    }
+.input-box {
+  margin: 20px 0;
+}
 
-    .info-card {
-      background: #ffffff;
-      border-radius: 22px;
-      padding: 26px 22px;
-      box-shadow: 0 14px 30px rgba(20, 59, 121, 0.08);
-      margin-bottom: 24px;
-      text-align: center;
-    }
+input {
+  padding: 12px;
+  width: 70%;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
 
-    .info-card h2 {
-      margin: 0 0 10px;
-      font-size: 28px;
-      color: #173b79;
-    }
+button {
+  padding: 12px 18px;
+  border-radius: 10px;
+  border: none;
+  background: #215fe5;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 10px;
+}
 
-    .info-card p {
-      margin: 0 auto 18px;
-      max-width: 760px;
-      font-size: 17px;
-      line-height: 1.7;
-      color: #355171;
-    }
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-top: 30px;
+}
 
-    .input-row {
-      max-width: 560px;
-      margin: 0 auto;
-    }
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
 
-    .input-row input {
-      width: 100%;
-      padding: 15px 16px;
-      border-radius: 12px;
-      border: 1px solid #b8cde6;
-      font-size: 18px;
-      margin-bottom: 14px;
-      outline: none;
-    }
+.card h3 {
+  margin-bottom: 10px;
+}
 
-    .input-row input:focus {
-      border-color: #4aa9ff;
-      box-shadow: 0 0 0 3px rgba(74, 169, 255, 0.16);
-    }
+.card a {
+  display: block;
+  margin-top: 15px;
+  padding: 10px;
+  background: #4aa9ff;
+  color: white;
+  border-radius: 10px;
+  text-decoration: none;
+}
+</style>
+</head>
 
-    .save-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 220px;
-      padding: 14px 22px;
-      border: none;
-      border-radius: 999px;
-      background: linear-gradient(180deg, #4aa9ff, #215fe5);
-      color: #fff;
-      font-size: 18px;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow:
-        0 10px 24px rgba(33, 95, 229, 0.25),
-        inset 0 2px 0 rgba(255,255,255,0.28);
-    }
+<body>
 
-    .saved-message {
-      margin-top: 14px;
-      font-size: 15px;
-      color: #3e6394;
-      font-weight: 700;
-      min-height: 20px;
-    }
+<div class="container">
 
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
+  <h1>🎉 Certificate Unlocked</h1>
+  <p>Enter your name and choose your certificate style.</p>
 
-    .card {
-      background: #ffffff;
-      border-radius: 22px;
-      padding: 24px 22px;
-      box-shadow: 0 14px 30px rgba(20, 59, 121, 0.08);
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
+  <div class="input-box">
+    <input type="text" id="name" placeholder="Enter your full name">
+    <button onclick="saveName()">Save</button>
+  </div>
 
-    .card h3 {
-      margin: 0 0 10px;
-      font-size: 24px;
-      color: #173b79;
-    }
+  <div class="cards">
 
-    .card p {
-      margin: 0 0 18px;
-      font-size: 16px;
-      line-height: 1.7;
-      color: #355171;
-      min-height: 120px;
-    }
+    <div class="card">
+      <h3>Branded Certificate</h3>
+      <p>Includes Lumi design and identity</p>
+      <a href="certificate-branded.html">View</a>
+    </div>
 
-    .card a {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 180px;
-      padding: 14px 20px;
-      border-radius: 999px;
-      text-decoration: none;
-      font-size: 18px;
-      font-weight: 700;
-      color: #ffffff;
-      background: linear-gradient(180deg, #4aa9ff, #215fe5);
-      box-shadow:
-        0 10px 24px rgba(33, 95, 229, 0.25),
-        inset 0 2px 0 rgba(255,255,255,0.28);
-    }
+    <div class="card">
+      <h3>Foundations Certificate</h3>
+      <p>Clean structured layout</p>
+      <a href="certificate-foundations.html">View</a>
+    </div>
 
-    .card a:hover,
-    .save-btn:hover {
-      filter: brightness(1.03);
-    }
+    <div class="card">
+      <h3>Professional Certificate</h3>
+      <p>Formal presentation style</p>
+      <a href="certificate-professional.html">View</a>
+    </div>
 
-    .footer-note {
-      margin-top: 24px;
-      text-align: center;
-      font-size: 16px;
-      line-height: 1.7;
-      color: #355171;
-      background: #ffffff;
-      border-radius: 18px;
-      padding: 20px 18px;
-      box-shadow: 0 14px 30px rgba(20, 59, 121, 0.08);
-    }
+  </div>
 
-    @media (max-width
+</div>
+
+<script>
+
+function saveName() {
+  const name = document.getElementById("name").value;
+
+  if (!name) {
+    alert("Enter your name first");
+    return;
+  }
+
+  const date = new Date().toLocaleDateString();
+  const id = "LUMI-" + Math.floor(Math.random() * 100000);
+
+  localStorage.setItem("studentName", name);
+  localStorage.setItem("issueDate", date);
+  localStorage.setItem("certificateId", id);
+  localStorage.setItem("courseName", "AI Foundations™");
+  localStorage.setItem("courseSubtitle", "Completed all modules and assessments");
+
+  alert("Saved! Now choose your certificate.");
+}
+
+</script>
+
+</body>
+</html>
