@@ -23,6 +23,22 @@
       margin: 0 auto;
     }
 
+    .back-row {
+      display: flex;
+      justify-content: flex-start;
+      margin-bottom: 18px;
+    }
+
+    .back-btn {
+      text-decoration: none;
+      background: #eef6ff;
+      color: #173b79;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-weight: 700;
+      border: 1px solid #dbeafe;
+    }
+
     .hero {
       text-align: center;
       margin-bottom: 30px;
@@ -36,7 +52,7 @@
 
     .hero p {
       margin: 0 auto;
-      max-width: 820px;
+      max-width: 860px;
       font-size: 18px;
       line-height: 1.7;
       color: #355171;
@@ -236,6 +252,10 @@
 <body>
   <div class="wrap">
 
+    <div class="back-row">
+      <a href="welcome.html" class="back-btn">← Back</a>
+    </div>
+
     <div class="hero">
       <h1>Lumi AI Nexus™ Course Selection</h1>
       <p>
@@ -246,6 +266,7 @@
 
     <div class="courses">
 
+      <!-- 1 -->
       <div class="course-card">
         <div>
           <div class="card-top">
@@ -266,32 +287,18 @@
           </div>
 
           <div class="module-list">
-            <div class="module-item">
-              <div class="module-name">Module 1: What is AI?</div>
-              <div class="module-meta"><span>5 Lessons</span><span>10 Questions</span></div>
-            </div>
-            <div class="module-item">
-              <div class="module-name">Module 2: How AI Works</div>
-              <div class="module-meta"><span>5 Lessons</span><span>10 Questions</span></div>
-            </div>
-            <div class="module-item">
-              <div class="module-name">Module 3: AI Tools in Real Life</div>
-              <div class="module-meta"><span>5 Lessons</span><span>10 Questions</span></div>
-            </div>
-            <div class="module-item">
-              <div class="module-name">Module 4: Talking to AI (Prompting)</div>
-              <div class="module-meta"><span>5 Lessons</span><span>10 Questions</span></div>
-            </div>
-            <div class="module-item">
-              <div class="module-name">Module 5: AI in Real Life & Responsible Use</div>
-              <div class="module-meta"><span>5 Lessons</span><span>10 Questions</span></div>
-            </div>
+            <div class="module-item"><div class="module-name">Module 1: What is AI?</div><div class="module-meta"><span>5 Lessons</span><span>10 Questions</span></div></div>
+            <div class="module-item"><div class="module-name">Module 2: How AI Works</div><div class="module-meta"><span>5 Lessons</span><span>10 Questions</span></div></div>
+            <div class="module-item"><div class="module-name">Module 3: AI Tools in Real Life</div><div class="module-meta"><span>5 Lessons</span><span>10 Questions</span></div></div>
+            <div class="module-item"><div class="module-name">Module 4: Talking to AI (Prompting)</div><div class="module-meta"><span>5 Lessons</span><span>10 Questions</span></div></div>
+            <div class="module-item"><div class="module-name">Module 5: AI in Real Life & Responsible Use</div><div class="module-meta"><span>5 Lessons</span><span>10 Questions</span></div></div>
           </div>
         </div>
 
         <button class="unlock-btn" onclick="unlockCourse('foundations')">Unlock Course</button>
       </div>
 
+      <!-- 2 -->
       <div class="course-card">
         <div class="special-offer-badge">🔊 LUMI SPECIAL</div>
 
@@ -314,32 +321,18 @@
           </div>
 
           <div class="module-list">
-            <div class="module-item">
-              <div class="module-name">Module 1: Everyday AI Basics</div>
-              <div class="module-meta"><span>5 Lessons</span><span>10 Questions</span></div>
-            </div>
-            <div class="module-item">
-              <div class="module-name">Module 2: AI for Daily Tasks</div>
-              <div class="module-meta"><span>5 Lessons</span><span>10 Questions</span></div>
-            </div>
-            <div class="module-item">
-              <div class="module-name">Module 3: Prompting for Daily Use</div>
-              <div class="module-meta"><span>5 Lessons</span><span>10 Questions</span></div>
-            </div>
-            <div class="module-item">
-              <div class="module-name">Module 4: Choosing the Right Everyday AI Tools</div>
-              <div class="module-meta"><span>5 Lessons</span><span>10 Questions</span></div>
-            </div>
-            <div class="module-item">
-              <div class="module-name">Module 5: Smart & Responsible AI Use</div>
-              <div class="module-meta"><span>5 Lessons</span><span>10 Questions</span></div>
-            </div>
+            <div class="module-item"><div class="module-name">Module 1: Everyday AI Basics</div><div class="module-meta"><span>5 Lessons</span><span>10 Questions</span></div></div>
+            <div class="module-item"><div class="module-name">Module 2: AI for Daily Tasks</div><div class="module-meta"><span>5 Lessons</span><span>10 Questions</span></div></div>
+            <div class="module-item"><div class="module-name">Module 3: Prompting for Daily Use</div><div class="module-meta"><span>5 Lessons</span><span>10 Questions</span></div></div>
+            <div class="module-item"><div class="module-name">Module 4: Choosing the Right Everyday AI Tools</div><div class="module-meta"><span>5 Lessons</span><span>10 Questions</span></div></div>
+            <div class="module-item"><div class="module-name">Module 5: Smart & Responsible AI Use</div><div class="module-meta"><span>5 Lessons</span><span>10 Questions</span></div></div>
           </div>
         </div>
 
         <button class="unlock-btn" onclick="unlockCourse('everyday')">Unlock Course</button>
       </div>
 
+      <!-- 3 -->
       <div class="course-card">
         <div>
           <div class="card-top">
@@ -347,22 +340,22 @@
             <img src="robot-headshot2.png" alt="Lumi head" class="lumi-head">
           </div>
 
-          <div class="course-title">AI Tools & Workflows™</div>
+          <div class="course-title">AI Tools & Workflow Automation™</div>
 
           <div class="course-desc">
-            Advanced practical use of AI systems, workflow thinking, automation support,
-            and using the right tool for the right result.
+            Learn practical AI tool selection, workflow building, automation support,
+            summarization, drafting, and productivity systems.
           </div>
 
           <div class="totals">
-            Coming Soon<br>
-            Future release with advanced workplace AI workflow training
+            5 Modules • Workflow Focus • Productivity Training • Certificate Included
           </div>
         </div>
 
         <button class="unlock-btn locked-btn" disabled>Locked</button>
       </div>
 
+      <!-- 4 -->
       <div class="course-card">
         <div>
           <div class="card-top">
@@ -373,13 +366,127 @@
           <div class="course-title">AI Governance & Verification™</div>
 
           <div class="course-desc">
-            Learn responsible AI use, verification, risk awareness, oversight, and HALO
-            governance principles for stronger real-world application.
+            Learn validation, oversight, safe use, decision accountability,
+            verification methods, and governance principles.
           </div>
 
           <div class="totals">
-            Coming Soon<br>
-            Future release with governance and responsible-use certification
+            5 Modules • Governance Focus • Verification Training • Certificate Included
+          </div>
+        </div>
+
+        <button class="unlock-btn locked-btn" disabled>Locked</button>
+      </div>
+
+      <!-- 5 -->
+      <div class="course-card">
+        <div>
+          <div class="card-top">
+            <div class="price-badge coming-badge">$89</div>
+            <img src="robot-headshot2.png" alt="Lumi head" class="lumi-head">
+          </div>
+
+          <div class="course-title">AI in Healthcare Systems™</div>
+
+          <div class="course-desc">
+            Learn how AI supports healthcare workflows, records, summaries,
+            decision support, and safe patient-centered operations.
+          </div>
+
+          <div class="totals">
+            5 Modules • Healthcare Focus • Clinical/Admin Scenarios • Certificate Included
+          </div>
+        </div>
+
+        <button class="unlock-btn locked-btn" disabled>Locked</button>
+      </div>
+
+      <!-- 6 -->
+      <div class="course-card">
+        <div>
+          <div class="card-top">
+            <div class="price-badge coming-badge">$89</div>
+            <img src="robot-headshot2.png" alt="Lumi head" class="lumi-head">
+          </div>
+
+          <div class="course-title">AI in Industrial & Manufacturing™</div>
+
+          <div class="course-desc">
+            Learn how AI supports production, maintenance, quality inspection,
+            operations monitoring, and manufacturing workflows.
+          </div>
+
+          <div class="totals">
+            5 Modules • Manufacturing Focus • Production Scenarios • Certificate Included
+          </div>
+        </div>
+
+        <button class="unlock-btn locked-btn" disabled>Locked</button>
+      </div>
+
+      <!-- 7 -->
+      <div class="course-card">
+        <div>
+          <div class="card-top">
+            <div class="price-badge coming-badge">$89</div>
+            <img src="robot-headshot2.png" alt="Lumi head" class="lumi-head">
+          </div>
+
+          <div class="course-title">AI in Technology & IT Systems™</div>
+
+          <div class="course-desc">
+            Learn how AI supports IT workflows, documentation, monitoring,
+            technical assistance, and systems-focused productivity.
+          </div>
+
+          <div class="totals">
+            5 Modules • IT Focus • Technical Scenarios • Certificate Included
+          </div>
+        </div>
+
+        <button class="unlock-btn locked-btn" disabled>Locked</button>
+      </div>
+
+      <!-- 8 -->
+      <div class="course-card">
+        <div>
+          <div class="card-top">
+            <div class="price-badge coming-badge">$89</div>
+            <img src="robot-headshot2.png" alt="Lumi head" class="lumi-head">
+          </div>
+
+          <div class="course-title">AI in Finance & Banking™</div>
+
+          <div class="course-desc">
+            Learn how AI is used in banking, risk review, fraud detection,
+            compliance workflows, customer support, and financial operations.
+          </div>
+
+          <div class="totals">
+            5 Modules • Finance Focus • Banking Scenarios • Certificate Included
+          </div>
+        </div>
+
+        <button class="unlock-btn locked-btn" disabled>Locked</button>
+      </div>
+
+      <!-- 9 -->
+      <div class="course-card">
+        <div>
+          <div class="card-top">
+            <div class="price-badge coming-badge">$99</div>
+            <img src="robot-headshot2.png" alt="Lumi head" class="lumi-head">
+          </div>
+
+          <div class="course-title">AI in Marine & Naval Systems™</div>
+
+          <div class="course-desc">
+            Learn how AI supports maritime operations, navigation, logistics,
+            operational awareness, cyber resilience, and mission support.
+          </div>
+
+          <div class="totals">
+            5 Modules • Marine/Naval Focus • Operational Scenarios • Certificate Included
           </div>
         </div>
 
