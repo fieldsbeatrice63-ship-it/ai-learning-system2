@@ -49,6 +49,7 @@
     }
 
     .course-card {
+      position: relative;
       background: #ffffff;
       border-radius: 24px;
       padding: 22px;
@@ -56,7 +57,6 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      position: relative;
     }
 
     .card-top {
@@ -96,6 +96,22 @@
       box-shadow: 0 10px 18px rgba(20, 59, 121, 0.16);
       border: 2px solid #dbeafe;
       background: #eff6ff;
+    }
+
+    .special-offer-badge {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 20px;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.2), 0 0 8px rgba(37, 99, 235, 0.4);
+      letter-spacing: 0.6px;
+      z-index: 2;
     }
 
     .course-title {
@@ -190,20 +206,7 @@
       line-height: 1.7;
       color: #355171;
     }
-.special-offer-badge {
-  position: absolute;
-  top: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: linear-gradient(135deg, #1e3a8a, #2563eb);
-  color: white;
-  font-size: 12px;
-  font-weight: 700;
-  padding: 6px 14px;
-  border-radius: 20px;
-  box-shadow: 0 6px 14px rgba(0,0,0,0.2), 0 0 8px rgba(37, 99, 235, 0.4);
-  letter-spacing: 0.6px;
-}
+
     @media (max-width: 700px) {
       body {
         padding: 16px;
@@ -236,14 +239,13 @@
     <div class="hero">
       <h1>Lumi AI Nexus™ Course Selection</h1>
       <p>
-        Choose the course you want to unlock. Each course is structured with clear modules,
-        guided lessons, real-world questions, and a certificate path through Lumi AI Nexus™.
+        Choose the course you want to unlock. Each course includes guided modules,
+        structured lessons, real-world questions, and certificate completion.
       </p>
     </div>
 
     <div class="courses">
 
-      <!-- AI FOUNDATIONS -->
       <div class="course-card">
         <div>
           <div class="card-top">
@@ -266,42 +268,23 @@
           <div class="module-list">
             <div class="module-item">
               <div class="module-name">Module 1: What is AI?</div>
-              <div class="module-meta">
-                <span>5 Lessons</span>
-                <span>10 Questions</span>
-              </div>
+              <div class="module-meta"><span>5 Lessons</span><span>10 Questions</span></div>
             </div>
-
             <div class="module-item">
               <div class="module-name">Module 2: How AI Works</div>
-              <div class="module-meta">
-                <span>5 Lessons</span>
-                <span>10 Questions</span>
-              </div>
+              <div class="module-meta"><span>5 Lessons</span><span>10 Questions</span></div>
             </div>
-
             <div class="module-item">
               <div class="module-name">Module 3: AI Tools in Real Life</div>
-              <div class="module-meta">
-                <span>5 Lessons</span>
-                <span>10 Questions</span>
-              </div>
+              <div class="module-meta"><span>5 Lessons</span><span>10 Questions</span></div>
             </div>
-
             <div class="module-item">
               <div class="module-name">Module 4: Talking to AI (Prompting)</div>
-              <div class="module-meta">
-                <span>5 Lessons</span>
-                <span>10 Questions</span>
-              </div>
+              <div class="module-meta"><span>5 Lessons</span><span>10 Questions</span></div>
             </div>
-
             <div class="module-item">
               <div class="module-name">Module 5: AI in Real Life & Responsible Use</div>
-              <div class="module-meta">
-                <span>5 Lessons</span>
-                <span>10 Questions</span>
-              </div>
+              <div class="module-meta"><span>5 Lessons</span><span>10 Questions</span></div>
             </div>
           </div>
         </div>
@@ -309,11 +292,10 @@
         <button class="unlock-btn" onclick="unlockCourse('foundations')">Unlock Course</button>
       </div>
 
-      <!-- AI EVERYDAY APPLICATIONS -->
       <div class="course-card">
-        <div class="special-offer-badge">
- 🔥 SPECIAL OFFER
-</div>
+        <div class="special-offer-badge">🔊 LUMI SPECIAL</div>
+
+        <div>
           <div class="card-top">
             <div class="price-badge">$49</div>
             <img src="robot-headshot2.png" alt="Lumi head" class="lumi-head">
@@ -334,42 +316,23 @@
           <div class="module-list">
             <div class="module-item">
               <div class="module-name">Module 1: Everyday AI Basics</div>
-              <div class="module-meta">
-                <span>5 Lessons</span>
-                <span>10 Questions</span>
-              </div>
+              <div class="module-meta"><span>5 Lessons</span><span>10 Questions</span></div>
             </div>
-
             <div class="module-item">
               <div class="module-name">Module 2: AI for Daily Tasks</div>
-              <div class="module-meta">
-                <span>5 Lessons</span>
-                <span>10 Questions</span>
-              </div>
+              <div class="module-meta"><span>5 Lessons</span><span>10 Questions</span></div>
             </div>
-
             <div class="module-item">
               <div class="module-name">Module 3: Prompting for Daily Use</div>
-              <div class="module-meta">
-                <span>5 Lessons</span>
-                <span>10 Questions</span>
-              </div>
+              <div class="module-meta"><span>5 Lessons</span><span>10 Questions</span></div>
             </div>
-
             <div class="module-item">
               <div class="module-name">Module 4: Choosing the Right Everyday AI Tools</div>
-              <div class="module-meta">
-                <span>5 Lessons</span>
-                <span>10 Questions</span>
-              </div>
+              <div class="module-meta"><span>5 Lessons</span><span>10 Questions</span></div>
             </div>
-
             <div class="module-item">
               <div class="module-name">Module 5: Smart & Responsible AI Use</div>
-              <div class="module-meta">
-                <span>5 Lessons</span>
-                <span>10 Questions</span>
-              </div>
+              <div class="module-meta"><span>5 Lessons</span><span>10 Questions</span></div>
             </div>
           </div>
         </div>
@@ -377,7 +340,6 @@
         <button class="unlock-btn" onclick="unlockCourse('everyday')">Unlock Course</button>
       </div>
 
-      <!-- AI TOOLS & WORKFLOWS -->
       <div class="course-card">
         <div>
           <div class="card-top">
@@ -401,7 +363,6 @@
         <button class="unlock-btn locked-btn" disabled>Locked</button>
       </div>
 
-      <!-- GOVERNANCE -->
       <div class="course-card">
         <div>
           <div class="card-top">
