@@ -295,12 +295,10 @@
 
         <div class="center-content">
           <div class="certifies">This certifies that</div>
-          <div class="student-name">Your Name</div>
-          <div class="summary">
-            has successfully completed the AI Foundations Level 1:
-            Basic Training of AI, demonstrating introductory understanding of AI tools,
-            systems, and foundational practical use.
-          </div>
+          <div class="student-name" id="studentName">Your Name</div>
+          <div class="summary" id="courseSummary">
+  has successfully completed AI Foundations™, including completed modules and assessments.
+</div>
         </div>
 
         <div class="robot-panel">
@@ -310,9 +308,8 @@
 
       <div class="meta-row">
         <div class="meta-box">
-          <div class="meta-label">Certificate ID</div>
-          <div class="meta-value">ABCD-1234-EFGH-5678</div>
-        </div>
+          <div class="meta-value" id="certificateId">LUMI-00000</div>
+          <div class="meta-value" id="issueDate">00/00/0000</div>
 
         <div class="meta-box">
           <div class="meta-label">Issue Date</div>
@@ -320,7 +317,7 @@
         </div>
 
         <div class="meta-box">
-          <div class="signature">Tyler Randall</div>
+          <span id="studentName">Your Name</span>
           <div class="sig-sub">AI Foundations Instructor</div>
         </div>
       </div>
@@ -339,5 +336,26 @@
     AI Governance Powered by HALO™
   </div>
 </div>
+
+ <script>
+  const studentName = localStorage.getItem("studentName") || "Your Name";
+  const issueDate = localStorage.getItem("issueDate") || "00/00/0000";
+  const certificateId = localStorage.getItem("certificateId") || "LUMI-00000";
+  const courseName = localStorage.getItem("courseName") || "AI Foundations™";
+  const courseSubtitle = localStorage.getItem("courseSubtitle") || "Completed all modules and assessments";
+
+  const studentNameEl = document.getElementById("studentName");
+  const courseSummaryEl = document.getElementById("courseSummary");
+  const certificateIdEl = document.getElementById("certificateId");
+  const issueDateEl = document.getElementById("issueDate");
+
+  if (studentNameEl) studentNameEl.innerText = studentName;
+  if (courseSummaryEl) {
+    courseSummaryEl.innerText =
+      "has successfully completed " + courseName + ", " + courseSubtitle + ".";
+  }
+  if (certificateIdEl) certificateIdEl.innerText = certificateId;
+  if (issueDateEl) issueDateEl.innerText = issueDate;
+</script>       
 </body>
 </html>
