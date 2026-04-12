@@ -56,6 +56,7 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      position: relative;
     }
 
     .card-top {
@@ -189,7 +190,19 @@
       line-height: 1.7;
       color: #355171;
     }
-
+.special-offer-badge {
+  position: absolute;
+  top: -12px;
+  left: 15px;
+  background: linear-gradient(135deg, #1e3a8a, #2563eb);
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  letter-spacing: 0.5px;
+}
     @media (max-width: 700px) {
       body {
         padding: 16px;
@@ -297,7 +310,9 @@
 
       <!-- AI EVERYDAY APPLICATIONS -->
       <div class="course-card">
-        <div>
+        <div class="special-offer-badge">
+  🔊 LUMI SPECIAL
+</div>
           <div class="card-top">
             <div class="price-badge">$49</div>
             <img src="robot-headshot2.png" alt="Lumi head" class="lumi-head">
