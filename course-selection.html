@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Course Selection | Lumi AI Nexus™</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(180deg, #eaf6ff 0%, #d8efff 100%);
+      color: #173b79;
+      padding: 24px;
+    }
+
+    .wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .hero h1 {
+      margin: 0 0 10px;
+      font-size: clamp(34px, 5vw, 54px);
+      color: #173b79;
+    }
+
+    .hero p {
+      margin: 0 auto;
+      max-width: 820px;
+      font-size: 18px;
+      line-height: 1.7;
+      color: #355171;
+    }
+
+    .courses {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 22px;
+    }
+
+    .course-card {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 22px;
+      box-shadow: 0 16px 34px rgba(20, 59, 121, 0.10);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .price-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 90px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #4aa9ff, #215fe5);
+      color: #ffffff;
+      font-size: 22px;
+      font-weight: 800;
+      box-shadow:
+        0 10px 20px rgba(33, 95, 229, 0.22),
+        inset 0 2px 0 rgba(255,255,255,0.28);
+    }
+
+    .coming-badge {
+      background: #94a3b8;
+      box-shadow: none;
+    }
+
+    .lumi-head {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 10px 18px rgba(20, 59, 121, 0.16);
+      border: 2px solid #dbeafe;
+      background: #eff6ff;
+    }
+
+    .course-title {
+      font-size: 28px;
+      font-weight: 800;
+      color: #173b79;
+      margin: 6px 0 10px;
+      line-height: 1.2;
+    }
+
+    .course-desc {
+      font-size: 16px;
+      line-height: 1.7;
+      color: #355171;
+      margin-bottom: 16px;
+    }
+
+    .totals {
+      background: #f3f8ff;
+      border: 1px solid #dbeafe;
+      border-radius: 16px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+      color: #214a96;
+      font-size: 15px;
+      line-height: 1.7;
+      font-weight: 700;
+    }
+
+    .module-list {
+      margin-bottom: 18px;
+    }
+
+    .module-item {
+      background: #ffffff;
+      border: 1px solid #dbeafe;
+      border-radius: 16px;
+      padding: 14px 14px 12px;
+      margin-bottom: 12px;
+    }
+
+    .module-name {
+      font-size: 17px;
+      font-weight: 800;
+      color: #173b79;
+      margin-bottom: 6px;
+    }
+
+    .module-meta {
+      font-size: 15px;
+      color: #355171;
+      line-height: 1.6;
+    }
+
+    .module-meta span {
+      display: inline-block;
+      margin-right: 14px;
+      font-weight: 700;
+      color: #214a96;
+    }
+
+    .unlock-btn {
+      width: 100%;
+      padding: 15px 18px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(180deg, #4aa9ff, #215fe5);
+      color: #ffffff;
+      font-size: 17px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow:
+        0 10px 20px rgba(33, 95, 229, 0.22),
+        inset 0 2px 0 rgba(255,255,255,0.28);
+    }
+
+    .unlock-btn:hover {
+      filter: brightness(1.03);
+    }
+
+    .locked-btn {
+      background: #cbd5e1;
+      color: #64748b;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+
+    .footer {
+      margin-top: 30px;
+      text-align: center;
+      font-size: 14px;
+      line-height: 1.7;
+      color: #355171;
+    }
+
+    @media (max-width: 700px) {
+      body {
+        padding: 16px;
+      }
+
+      .course-card {
+        padding: 18px;
+      }
+
+      .course-title {
+        font-size: 24px;
+      }
+
+      .price-badge {
+        min-width: 80px;
+        font-size: 20px;
+      }
+
+      .lumi-head {
+        width: 56px;
+        height: 56px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+
+    <div class="hero">
+      <h1>Lumi AI Nexus™ Course Selection</h1>
+      <p>
+        Choose the course you want to unlock. Each course is structured with clear modules,
+        guided lessons, real-world questions, and a certificate path through Lumi AI Nexus™.
+      </p>
+    </div>
+
+    <div class="courses">
+
+      <!-- AI FOUNDATIONS -->
+      <div class="course-card">
+        <div>
+          <div class="card-top">
+            <div class="price-badge">$59</div>
+            <img src="robot.full3.png" alt="Lumi head" class="lumi-head">
+          </div>
+
+          <div class="course-title">AI Foundations™</div>
+
+          <div class="course-desc">
+            Learn what AI is, how it works, how people use it, how to talk to it,
+            and how to use it responsibly in real-world environments.
+          </div>
+
+          <div class="totals">
+            Total Course Includes:<br>
+            5 Modules • 25 Lessons • 50 Questions • Certificate Included
+          </div>
+
+          <div class="module-list">
+            <div class="module-item">
+              <div class="module-name">Module 1: What is AI?</div>
+              <div class="module-meta">
+                <span>5 Lessons</span>
+                <span>10 Questions</span>
+              </div>
+            </div>
+
+            <div class="module-item">
+              <div class="module-name">Module 2: How AI Works</div>
+              <div class="module-meta">
+                <span>5 Lessons</span>
+                <span>10 Questions</span>
+              </div>
+            </div>
+
+            <div class="module-item">
+              <div class="module-name">Module 3: AI Tools in Real Life</div>
+              <div class="module-meta">
+                <span>5 Lessons</span>
+                <span>10 Questions</span>
+              </div>
+            </div>
+
+            <div class="module-item">
+              <div class="module-name">Module 4: Talking to AI (Prompting)</div>
+              <div class="module-meta">
+                <span>5 Lessons</span>
+                <span>10 Questions</span>
+              </div>
+            </div>
+
+            <div class="module-item">
+              <div class="module-name">Module 5: AI in Real Life & Responsible Use</div>
+              <div class="module-meta">
+                <span>5 Lessons</span>
+                <span>10 Questions</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button class="unlock-btn" onclick="unlockCourse('foundations')">Unlock Course</button>
+      </div>
+
+      <!-- AI EVERYDAY APPLICATIONS -->
+      <div class="course-card">
+        <div>
+          <div class="card-top">
+            <div class="price-badge">$49</div>
+            <img src="robot.full3.png" alt="Lumi head" class="lumi-head">
+          </div>
+
+          <div class="course-title">AI Everyday Applications™</div>
+
+          <div class="course-desc">
+            Learn how to use AI in day-to-day life for productivity, prompts, writing,
+            organization, planning, and choosing the right tools for everyday needs.
+          </div>
+
+          <div class="totals">
+            Total Course Includes:<br>
+            5 Modules • 25 Lessons • 50 Questions • Certificate Included
+          </div>
+
+          <div class="module-list">
+            <div class="module-item">
+              <div class="module-name">Module 1: Everyday AI Basics</div>
+              <div class="module-meta">
+                <span>5 Lessons</span>
+                <span>10 Questions</span>
+              </div>
+            </div>
+
+            <div class="module-item">
+              <div class="module-name">Module 2: AI for Daily Tasks</div>
+              <div class="module-meta">
+                <span>5 Lessons</span>
+                <span>10 Questions</span>
+              </div>
+            </div>
+
+            <div class="module-item">
+              <div class="module-name">Module 3: Prompting for Daily Use</div>
+              <div class="module-meta">
+                <span>5 Lessons</span>
+                <span>10 Questions</span>
+              </div>
+            </div>
+
+            <div class="module-item">
+              <div class="module-name">Module 4: Choosing the Right Everyday AI Tools</div>
+              <div class="module-meta">
+                <span>5 Lessons</span>
+                <span>10 Questions</span>
+              </div>
+            </div>
+
+            <div class="module-item">
+              <div class="module-name">Module 5: Smart & Responsible AI Use</div>
+              <div class="module-meta">
+                <span>5 Lessons</span>
+                <span>10 Questions</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button class="unlock-btn" onclick="unlockCourse('everyday')">Unlock Course</button>
+      </div>
+
+      <!-- AI TOOLS & WORKFLOWS -->
+      <div class="course-card">
+        <div>
+          <div class="card-top">
+            <div class="price-badge coming-badge">$69</div>
+            <img src="robot.full3.png" alt="Lumi head" class="lumi-head">
+          </div>
+
+          <div class="course-title">AI Tools & Workflows™</div>
+
+          <div class="course-desc">
+            Advanced practical use of AI systems, workflow thinking, automation support,
+            and using the right tool for the right result.
+          </div>
+
+          <div class="totals">
+            Coming Soon<br>
+            Future release with advanced workplace AI workflow training
+          </div>
+        </div>
+
+        <button class="unlock-btn locked-btn" disabled>Locked</button>
+      </div>
+
+      <!-- GOVERNANCE -->
+      <div class="course-card">
+        <div>
+          <div class="card-top">
+            <div class="price-badge coming-badge">$79</div>
+            <img src="robot.full3.png" alt="Lumi head" class="lumi-head">
+          </div>
+
+          <div class="course-title">AI Governance & Verification™</div>
+
+          <div class="course-desc">
+            Learn responsible AI use, verification, risk awareness, oversight, and HALO
+            governance principles for stronger real-world application.
+          </div>
+
+          <div class="totals">
+            Coming Soon<br>
+            Future release with governance and responsible-use certification
+          </div>
+        </div>
+
+        <button class="unlock-btn locked-btn" disabled>Locked</button>
+      </div>
+
+    </div>
+
+    <div class="footer">
+      Lumi AI Nexus™ — Where AI, People, and Knowledge Meet<br>
+      AI Governance Powered by HALO™
+    </div>
+  </div>
+
+  <script>
+    function unlockCourse(courseType) {
+      alert("Course unlocked. Redirecting...");
+
+      if (courseType === "foundations") {
+        window.location.href = "lesson-engine.html";
+      }
+
+      if (courseType === "everyday") {
+        window.location.href = "lesson-engine.html";
+      }
+    }
+  </script>
+</body>
+</html>
