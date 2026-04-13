@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lumi AI Nexus™ | AI in Healthcare & Clinical Support™</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(180deg, #eaf6ff 0%, #d8efff 100%);
+      color: #173b79;
+    }
+
+    .top-bar {
+      width: 100%;
+      height: 8px;
+      background: #cce6ff;
+    }
+
+    .progress {
+      height: 8px;
+      width: 0%;
+      background: linear-gradient(90deg, #4aa9ff, #215fe5);
+      transition: width 0.35s ease;
+    }
+
+    .wrap {
+      max-width: 920px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 30px 28px;
+      box-shadow: 0 18px 40px rgba(20, 59, 121, 0.12);
+    }
+
+    .module-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #4a78c2;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .lesson-title {
+      font-size: 30px;
+      font-weight: 800;
+      margin-bottom: 18px;
+      color: #173b79;
+      line-height: 1.2;
+    }
+
+    .content {
+      font-size: 18px;
+      line-height: 1.75;
+      color: #355171;
+    }
+
+    .content p {
+      margin: 0 0 14px;
+    }
+
+    .question-text {
+      font-size: 22px;
+      font-weight: 700;
+      color: #173b79;
+      margin-bottom: 18px;
+      line-height: 1.45;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 15px 18px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(180deg, #4aa9ff, #215fe5);
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      box-shadow:
+        0 10px 20px rgba(33, 95, 229, 0.25),
+        inset 0 2px 0 rgba(255,255,255,0.3);
+      transition: transform 0.15s ease, filter 0.15s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.02);
+    }
+
+    .answer-btn {
+      margin: 12px 0;
+      background: #f3f8ff;
+      color: #173b79;
+      box-shadow: none;
+      border: 1px solid #d6e6ff;
+    }
+
+    .answer-btn:hover {
+      background: #e4f1ff;
+      filter: none;
+    }
+
+    .footer-note {
+      margin-top: 22px;
+      text-align: center;
+      font-size: 14px;
+      color: #58739b;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      .wrap {
+        margin: 24px auto;
+        padding: 14px;
+      }
+
+      .card {
+        padding: 22px 18px;
+      }
+
+      .lesson-title {
+        font-size: 24px;
+      }
+
+      .content,
+      .question-text {
+        font-size: 17px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <div class="progress" id="progressBar"></div>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+
+      <div style="display:flex; justify-content:flex-end; margin-bottom:14px;">
+        <a href="course-selection.html" style="text-decoration:none; background:#eef6ff; color:#173b79; padding:10px 14px; border-radius:10px; font-weight:700; border:1px solid #dbeafe;">
+          ← Back to Courses
+        </a>
+      </div>
+
+      <div class="module-title" id="moduleLabel"></div>
+      <div class="lesson-title" id="title"></div>
+      <div class="content" id="content"></div>
+
+      <button id="nextBtn" onclick="next()">Next</button>
+
+      <div class="footer-note">
+        Lumi AI Nexus™<br>
+        Where AI, People, and Knowledge Meet.<br>
+        AI Governance Powered by HALO™
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let moduleIndex = 0;
+    let lessonIndex = 0;
+    let quizIndex = 0;
+    let mode = "lesson";
+
+    const modules = [
+      {
+        name: "Module 1: AI in Healthcare Basics",
+        lessons: [
+          "AI in healthcare is best understood as a support system, not a replacement for licensed judgment. It can help organize information, draft summaries, assist with workflows, and support communication, but a person is still responsible for the final action.",
+          "Healthcare settings include hospitals, clinics, long-term care, rehabilitation, therapy, urgent care, emergency departments, home health, and administrative offices. AI may be used differently in each setting, but the need for review and responsibility stays the same.",
+          "A strong healthcare AI user understands that patients, records, instructions, and communication can all be affected by mistakes. That is why accuracy, privacy, and review matter in every environment.",
+          "AI can be useful for helping staff move faster, document more clearly, organize tasks, and reduce repeated work. It should improve workflow without weakening safety or accountability.",
+          "The purpose of this course is to help users understand how AI supports healthcare work across many settings while keeping people, records, and decisions protected."
+        ],
+        quiz: [
+          {
+            q: "In healthcare, what is the best role of AI?",
+            a: ["A replacement for all licensed judgment", "A support tool that still requires human review and responsibility", "A final medical decision-maker", "A system that should act without oversight"],
+            correct: 1
+          },
+          {
+            q: "Why does AI use in healthcare require extra care?",
+            a: ["Because healthcare tasks can affect patients, records, and decisions", "Because AI cannot be used in healthcare at all", "Because healthcare never uses software", "Because only managers should review output"],
+            correct: 0
+          },
+          {
+            q: "Which setting can benefit from responsible AI support?",
+            a: ["Hospitals only", "Only therapy offices", "Only long-term care", "Hospitals, clinics, therapy, long-term care, and admin settings"],
+            correct: 3
+          },
+          {
+            q: "What should stay the same across every healthcare setting when using AI?",
+            a: ["The exact same software layout", "Human responsibility, review, and accuracy", "No need for verification", "Automatic trust in output"],
+            correct: 1
+          },
+          {
+            q: "A strong healthcare AI user understands that:",
+            a: ["Speed matters more than patient safety", "AI should always be treated as final", "AI can support workflow, but responsibility stays with the user", "Review is only needed in emergencies"],
+            correct: 2
+          },
+          {
+            q: "Why is this course broad across many care settings?",
+            a: ["Because healthcare work happens in many environments, but safe AI habits still apply", "Because one hospital workflow fits all settings", "Because only emergency departments matter", "Because software never changes"],
+            correct: 0
+          },
+          {
+            q: "Which is the best mindset for healthcare AI use?",
+            a: ["Use AI to speed work while still protecting safety and accuracy", "Use AI to avoid all responsibility", "Use AI only when no one is available", "Trust any output that sounds clinical"],
+            correct: 0
+          },
+          {
+            q: "Why should healthcare staff learn AI support principles?",
+            a: ["To remove all human judgment", "To work more clearly and responsibly with technology", "To avoid all documentation", "To replace professional training"],
+            correct: 1
+          },
+          {
+            q: "What is one major risk of careless healthcare AI use?",
+            a: ["Inaccurate information affecting real care or records", "Better accuracy every time", "Automatic safety", "Faster decisions with no downside"],
+            correct: 0
+          },
+          {
+            q: "A responsible healthcare AI platform should help users:",
+            a: ["Move faster without any review", "Support workflow while keeping accountability in place", "Avoid checking records", "Ignore communication accuracy"],
+            correct: 1
+          }
+        ]
+      },
+
+      {
+        name: "Module 2: Clinical Documentation Support",
+        lessons: [
+          "Clinical documentation support means using AI to help organize or draft notes, summaries, reports, shift updates, or communication drafts. It does not mean the system should save inaccurate or unreviewed content into records.",
+          "In healthcare, documentation matters because records guide communication, care continuity, compliance, and decision-making. A small mistake in wording, timing, or detail can create larger problems later.",
+          "AI can help with structure, wording, summaries, and first drafts. But the person using it must make sure the information actually matches what happened, what was observed, and what should be communicated.",
+          "This applies across clinical settings, including long-term care notes, therapy updates, shift summaries, front-desk intake notes, and discharge or follow-up communication drafts.",
+          "A strong healthcare user knows that AI can support documentation speed, but accuracy must come before convenience."
+        ],
+        quiz: [
+          {
+            q: "A nurse uses AI to help draft a shift summary. What must happen before the summary is saved?",
+            a: ["It should be saved immediately because AI drafted it", "It should be reviewed to confirm it matches what actually occurred", "It should be printed before being read", "It should be copied into every record automatically"],
+            correct: 1
+          },
+          {
+            q: "Why is documentation support a sensitive healthcare task?",
+            a: ["Because records influence communication, continuity, and decisions", "Because notes are never important", "Because summaries are only for billing", "Because AI always gets documentation correct"],
+            correct: 0
+          },
+          {
+            q: "What is AI best used for in documentation support?",
+            a: ["Helping organize and draft information that still requires review", "Replacing all record review", "Finalizing records without oversight", "Ignoring missing details"],
+            correct: 0
+          },
+          {
+            q: "Which statement is strongest?",
+            a: ["A fast summary is enough", "A structured draft is useful, but it still must be checked", "All clinical drafts should be trusted automatically", "Review only matters when the note is long"],
+            correct: 1
+          },
+          {
+            q: "A therapy assistant uses AI to help summarize a progress note. What is the correct responsibility?",
+            a: ["Confirm the summary reflects the actual session before use", "Assume the AI understood the session perfectly", "Skip checking if the wording sounds professional", "Use the same summary for every patient"],
+            correct: 0
+          },
+          {
+            q: "What is one danger of unreviewed documentation?",
+            a: ["Incorrect details can enter important records", "It always improves care quality", "It automatically fixes missing context", "It reduces the need for communication"],
+            correct: 0
+          },
+          {
+            q: "AI documentation support can be useful in:",
+            a: ["Long-term care only", "Hospitals only", "Many healthcare settings that use notes, summaries, and communication", "Only imaging departments"],
+            correct: 2
+          },
+          {
+            q: "What should matter most before documentation is used?",
+            a: ["How polished it sounds", "Whether it is accurate and fits the real situation", "Whether it was fast", "Whether the text is long enough"],
+            correct: 1
+          },
+          {
+            q: "If a drafted note appears incomplete, what should happen?",
+            a: ["It should be corrected before being saved or shared", "It should still be used because AI created it", "It should be ignored", "It should be automatically sent to the patient"],
+            correct: 0
+          },
+          {
+            q: "Clinical documentation support is strongest when:",
+            a: ["It improves structure while keeping human review in place", "It removes the need for checking", "It replaces observation", "It eliminates workflow responsibility"],
+            correct: 0
+          }
+        ]
+      },
+
+      {
+        name: "Module 3: Patient Data & Privacy",
+        lessons: [
+          "Patient data must be handled carefully. AI can be useful, but users must stay aware of what information is sensitive, what should be protected, and how to avoid unnecessary exposure of personal details.",
+          "Not every task requires full patient detail. In many cases, AI can help with drafting or structure without revealing more information than necessary. Safe use starts with limiting exposure.",
+          "Healthcare work often involves names, identifiers, private histories, billing details, care details, and protected information. Responsible AI use means thinking before entering any data into a system.",
+          "Privacy is not just a technical issue. It is a trust issue. Patients, families, and organizations rely on staff to handle information responsibly.",
+          "Strong healthcare AI users know how to ask for help, improve workflow, and still protect private information."
+        ],
+        quiz: [
+          {
+            q: "What is one of the most important responsibilities in healthcare AI use?",
+            a: ["Protecting sensitive patient information", "Entering as much data as possible", "Avoiding all technology", "Skipping documentation"],
+            correct: 0
+          },
+          {
+            q: "Why should healthcare staff think carefully before entering information into AI tools?",
+            a: ["Because some information is private, protected, or unnecessary to share", "Because AI only works with full records", "Because privacy has no effect on trust", "Because review only matters after submission"],
+            correct: 0
+          },
+          {
+            q: "What is a safer approach when using AI to help draft a message?",
+            a: ["Include every protected detail to improve the output", "Use only the information necessary for the task", "Paste the entire record every time", "Ignore privacy concerns if the task is urgent"],
+            correct: 1
+          },
+          {
+            q: "Why is privacy a trust issue in healthcare?",
+            a: ["Because people rely on staff to handle information responsibly", "Because trust has nothing to do with records", "Because only hospitals need privacy", "Because patients never care how data is handled"],
+            correct: 0
+          },
+          {
+            q: "A healthcare worker wants AI help rewriting a patient reminder. What is the best mindset?",
+            a: ["Use the minimum necessary information", "Enter the full chart to be safe", "Assume the system protects everything automatically", "Ignore the sensitivity of the information"],
+            correct: 0
+          },
+          {
+            q: "What does responsible data awareness include?",
+            a: ["Thinking before entering sensitive information", "Sharing complete details first", "Trusting every software request automatically", "Skipping privacy if the output is useful"],
+            correct: 0
+          },
+          {
+            q: "Which statement is strongest?",
+            a: ["AI support should still respect patient privacy", "Privacy slows work and should be ignored", "Protected information should always be entered for better answers", "Only billing information matters"],
+            correct: 0
+          },
+          {
+            q: "Why is limiting exposure important?",
+            a: ["Because not every task needs full patient detail", "Because AI cannot write anything unless it has full records", "Because privacy rules only apply in therapy", "Because exposure makes the tool smarter"],
+            correct: 0
+          },
+          {
+            q: "A worker uses AI to help organize a task list. What is safest?",
+            a: ["Use general task language instead of unnecessary private detail", "Paste all patient identifiers into the task list", "Share everything to save time", "Let the tool decide what is safe"],
+            correct: 0
+          },
+          {
+            q: "Strong healthcare AI users know how to:",
+            a: ["Protect privacy while still using tools effectively", "Ignore privacy to improve speed", "Treat all information the same", "Use AI without thinking about trust"],
+            correct: 0
+          }
+        ]
+      },
+
+      {
+        name: "Module 4: Verification in Clinical Settings",
+        lessons: [
+          "Verification in clinical settings means checking whether an AI-supported output is accurate, complete, clear, and safe before it is saved, shared, or acted on.",
+          "This can apply to discharge instructions, patient reminders, intake summaries, staff notes, task lists, therapy updates, or administrative communication. Verification protects both workflow and people.",
+          "In healthcare, a wrong detail can affect timing, medication understanding, follow-up instructions, communication quality, or record accuracy. That is why verification cannot be optional.",
+          "Verification is strongest when it is built into the workflow. The user pauses, checks, confirms, and then proceeds.",
+          "The strongest healthcare AI users are not the fastest ones. They are the ones who move carefully enough to protect people, records, and outcomes."
+        ],
+        quiz: [
+          {
+            q: "What does verification mean in healthcare AI use?",
+            a: ["Checking that AI-supported output is accurate and safe before use", "Trusting AI output immediately", "Ignoring unclear wording if the output is fast", "Printing the output before reading it"],
+            correct: 0
+          },
+          {
+            q: "Why is verification especially important in clinical settings?",
+            a: ["Because incorrect details can affect care, communication, or records", "Because clinical settings never use software", "Because AI should replace review", "Because speed matters more than accuracy"],
+            correct: 0
+          },
+          {
+            q: "A worker uses AI to draft discharge instructions. What must happen before they are given to a patient?",
+            a: ["They must be reviewed and confirmed for accuracy", "They should be given immediately to save time", "They should be assumed correct if they sound clear", "They should only be checked for spelling"],
+            correct: 0
+          },
+          {
+            q: "What is the strongest workflow habit for verification?",
+            a: ["Pause, check, confirm, then proceed", "Act first and review later", "Trust output if it is short", "Skip review when the shift is busy"],
+            correct: 0
+          },
+          {
+            q: "A therapy office uses AI to draft a patient follow-up reminder. What should be verified?",
+            a: ["Dates, details, and wording before sending", "Only the font", "Only that the message is short", "Nothing if it sounds polite"],
+            correct: 0
+          },
+          {
+            q: "Which statement is strongest?",
+            a: ["Verification protects workflow and people", "Verification only matters in surgery", "Verification is optional for routine communication", "Verification slows work too much to matter"],
+            correct: 0
+          },
+          {
+            q: "What should happen if AI output appears incomplete?",
+            a: ["It should be corrected before use", "It should still be used because the tool created it", "It should be ignored if it looks professional", "It should be forwarded without review"],
+            correct: 0
+          },
+          {
+            q: "In a clinical setting, what is one reason a small mistake matters?",
+            a: ["It can affect timing, understanding, or record accuracy", "It never matters if the rest looks correct", "It is only a style problem", "It disappears once the output is printed"],
+            correct: 0
+          },
+          {
+            q: "What makes a healthcare AI user strong?",
+            a: ["Using AI quickly without checking", "Combining support from AI with careful verification", "Trusting every result automatically", "Avoiding all responsibility"],
+            correct: 1
+          },
+          {
+            q: "Verification should be treated as:",
+            a: ["A regular part of the process", "An optional extra step", "Something only leaders do", "A task only needed when output is long"],
+            correct: 0
+          }
+        ]
+      },
+
+      {
+        name: "Module 5: Real Clinical Scenarios",
+        lessons: [
+          "Real healthcare AI skill shows up in scenarios. A person sees a draft, summary, or workflow suggestion and then decides how to verify, correct, or safely use it.",
+          "Healthcare staff across settings face different situations, but the same principles apply: protect privacy, verify details, keep people safe, and use judgment before acting.",
+          "A long-term care worker may need to review care notes. A front desk worker may need to check appointment wording. A therapy office may need to confirm progress summaries. An emergency setting may need fast but accurate shift documentation.",
+          "The strongest healthcare AI users do not simply know the words. They know how to respond when a real situation appears in front of them.",
+          "This final module focuses on professional decision-making using AI support in real clinical and administrative settings."
+        ],
+        quiz: [
+          {
+            q: "A long-term care worker uses AI to draft resident care notes for the next shift. Some wording seems too general. What is the best action?",
+            a: ["Personalize and correct the note before it is used", "Leave it as-is because AI created it", "Delete all notes entirely", "Send it without reading to save time"],
+            correct: 0
+          },
+          {
+            q: "A front desk worker uses AI to help rewrite appointment reminders. What should be checked before sending them?",
+            a: ["That dates, times, and wording are correct", "Only that the message looks professional", "Nothing, if the text is short", "Whether the AI generated it quickly"],
+            correct: 0
+          },
+          {
+            q: "An emergency department worker uses AI to draft a fast shift note, but one event appears inaccurate. What should happen?",
+            a: ["Correct the note before it is finalized", "Submit it because the shift is busy", "Assume the system knows best", "Wait and hope someone else notices later"],
+            correct: 0
+          },
+          {
+            q: "A therapy assistant uses AI to summarize a session update. What is the right next step?",
+            a: ["Compare the summary to what actually happened in the session", "Save it because it sounds organized", "Use it for every patient", "Skip the review if the day is busy"],
+            correct: 0
+          },
+          {
+            q: "A worker wants AI help drafting a patient communication message. What is the safest approach?",
+            a: ["Use only what is necessary and review the result before sending", "Paste every sensitive detail into the tool", "Assume AI will handle privacy automatically", "Send the first output immediately"],
+            correct: 0
+          },
+          {
+            q: "What is the strongest response when an AI draft sounds polished but contains unclear information?",
+            a: ["Review and clarify it before use", "Trust it because it sounds professional", "Ignore the unclear parts", "Use it only because it saved time"],
+            correct: 0
+          },
+          {
+            q: "Why do real healthcare AI scenarios matter in training?",
+            a: ["Because workers need to know how to respond in practical situations", "Because definitions are the only thing that matter", "Because real settings never use workflow", "Because decision-making should be avoided"],
+            correct: 0
+          },
+          {
+            q: "A strong healthcare AI user shows skill by:",
+            a: ["Protecting privacy, verifying details, and using judgment", "Using AI without reviewing it", "Skipping checks when under pressure", "Treating AI as the final authority"],
+            correct: 0
+          },
+          {
+            q: "What stays the same across hospital, clinic, long-term care, therapy, and admin settings?",
+            a: ["The need for verification and responsibility", "The exact same software screen", "The same patient record wording", "The same staffing structure"],
+            correct: 0
+          },
+          {
+            q: "The purpose of real clinical AI training is to help users:",
+            a: ["Make responsible decisions in practical healthcare situations", "Depend on AI without review", "Avoid documentation", "Ignore privacy and workflow"],
+            correct: 0
+          }
+        ]
+      }
+    ];
+
+    function getTotalSteps() {
+      let total = 0;
+      modules.forEach(module => {
+        total += module.lessons.length + module.quiz.length;
+      });
+      return total;
+    }
+
+    function getCurrentStep() {
+      let step = 0;
+
+      for (let i = 0; i < moduleIndex; i++) {
+        step += modules[i].lessons.length + modules[i].quiz.length;
+      }
+
+      if (mode === "lesson") {
+        step += lessonIndex;
+      } else {
+        step += modules[moduleIndex].lessons.length + quizIndex;
+      }
+
+      return step;
+    }
+
+    function updateProgress() {
+      const progressBar = document.getElementById("progressBar");
+      const totalSteps = getTotalSteps();
+      const currentStep = getCurrentStep();
+      const progressPercent = (currentStep / totalSteps) * 100;
+      progressBar.style.width = progressPercent + "%";
+    }
+
+    function renderQuestion(q) {
+      let html = `<div class="question-text">${q.q}</div>`;
+      q.a.forEach((opt, i) => {
+        html += `<button class="answer-btn" onclick="checkAnswer(${i})">${opt}</button>`;
+      });
+      return html;
+    }
+
+    function load() {
+      const title = document.getElementById("title");
+      const content = document.getElementById("content");
+      const nextBtn = document.getElementById("nextBtn");
+      const moduleLabel = document.getElementById("moduleLabel");
+
+      const module = modules[moduleIndex];
+
+      updateProgress();
+      moduleLabel.innerText = module.name;
+
+      if (mode === "lesson") {
+        title.innerText = "Lesson " + (lessonIndex + 1);
+        content.innerHTML = `<p>${module.lessons[lessonIndex]}</p>`;
+        nextBtn.style.display = "block";
+      }
+
+      if (mode === "quiz") {
+        title.innerText = "Question " + (quizIndex + 1);
+        content.innerHTML = renderQuestion(module.quiz[quizIndex]);
+        nextBtn.style.display = "none";
+      }
+    }
+
+    function checkAnswer(i) {
+      const module = modules[moduleIndex];
+      const correct = module.quiz[quizIndex].correct;
+
+      if (i === correct) {
+        alert("Correct!");
+      } else {
+        alert("Incorrect. Try again.");
+        return;
+      }
+
+      quizIndex++;
+
+      if (quizIndex < module.quiz.length) {
+        load();
+      } else {
+        alert(module.name + " Complete!");
+        moduleIndex++;
+        lessonIndex = 0;
+        quizIndex = 0;
+        mode = "lesson";
+
+        if (moduleIndex >= modules.length) {
+          localStorage.setItem("courseName", "AI in Healthcare & Clinical Support™");
+          localStorage.setItem("courseSubtitle", "Completed all modules and assessments");
+          localStorage.setItem("issueDate", new Date().toLocaleDateString());
+          localStorage.setItem("certificateId", "LUMI-" + Math.floor(10000 + Math.random() * 90000));
+
+          window.location.href = "certificate-choice.html";
+        } else {
+          load();
+        }
+      }
+    }
+
+    function next() {
+      const module = modules[moduleIndex];
+
+      if (mode === "lesson") {
+        lessonIndex++;
+
+        if (lessonIndex >= module.lessons.length) {
+          mode = "quiz";
+          lessonIndex = 0;
+        }
+
+        load();
+      }
+    }
+
+    load();
+  </script>
+</body>
+</html>
