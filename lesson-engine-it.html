@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lumi AI Nexus™ | AI in Technology & IT Systems™</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(180deg, #eaf6ff 0%, #d8efff 100%);
+      color: #173b79;
+    }
+
+    .top-bar {
+      width: 100%;
+      height: 8px;
+      background: #cce6ff;
+    }
+
+    .progress {
+      height: 8px;
+      width: 0%;
+      background: linear-gradient(90deg, #4aa9ff, #215fe5);
+      transition: width 0.35s ease;
+    }
+
+    .wrap {
+      max-width: 920px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 30px 28px;
+      box-shadow: 0 18px 40px rgba(20, 59, 121, 0.12);
+    }
+
+    .module-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #4a78c2;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .lesson-title {
+      font-size: 30px;
+      font-weight: 800;
+      margin-bottom: 18px;
+      color: #173b79;
+      line-height: 1.2;
+    }
+
+    .content {
+      font-size: 18px;
+      line-height: 1.75;
+      color: #355171;
+    }
+
+    .content p {
+      margin: 0 0 14px;
+    }
+
+    .question-text {
+      font-size: 22px;
+      font-weight: 700;
+      color: #173b79;
+      margin-bottom: 18px;
+      line-height: 1.45;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 15px 18px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(180deg, #4aa9ff, #215fe5);
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      box-shadow:
+        0 10px 20px rgba(33, 95, 229, 0.25),
+        inset 0 2px 0 rgba(255,255,255,0.3);
+      transition: transform 0.15s ease, filter 0.15s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.02);
+    }
+
+    .answer-btn {
+      margin: 12px 0;
+      background: #f3f8ff;
+      color: #173b79;
+      box-shadow: none;
+      border: 1px solid #d6e6ff;
+    }
+
+    .answer-btn:hover {
+      background: #e4f1ff;
+      filter: none;
+    }
+
+    .footer-note {
+      margin-top: 22px;
+      text-align: center;
+      font-size: 14px;
+      color: #58739b;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      .wrap {
+        margin: 24px auto;
+        padding: 14px;
+      }
+
+      .card {
+        padding: 22px 18px;
+      }
+
+      .lesson-title {
+        font-size: 24px;
+      }
+
+      .content,
+      .question-text {
+        font-size: 17px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <div class="progress" id="progressBar"></div>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+
+      <div style="display:flex; justify-content:flex-end; margin-bottom:14px;">
+        <a href="course-selection.html" style="text-decoration:none; background:#eef6ff; color:#173b79; padding:10px 14px; border-radius:10px; font-weight:700; border:1px solid #dbeafe;">
+          ← Back to Courses
+        </a>
+      </div>
+
+      <div class="module-title" id="moduleLabel"></div>
+      <div class="lesson-title" id="title"></div>
+      <div class="content" id="content"></div>
+
+      <button id="nextBtn" onclick="next()">Next</button>
+
+      <div class="footer-note">
+        Lumi AI Nexus™<br>
+        Where AI, People, and Knowledge Meet.<br>
+        AI Governance Powered by HALO™
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let moduleIndex = 0;
+    let lessonIndex = 0;
+    let quizIndex = 0;
+    let mode = "lesson";
+
+    const modules = [
+      {
+        name: "Module 1: AI in IT Support Basics",
+        lessons: [
+          "AI in IT support is used to assist technicians with recurring issues, user requests, ticket triage, and basic troubleshooting guidance. It is a support layer, not a replacement for verification, identity control, or technician judgment.",
+          "In real IT environments, support teams work inside structured systems. Tickets are logged, prioritized, assigned, and documented. AI can help sort, suggest, and summarize, but technicians still remain responsible for the final action taken.",
+          "One of the most important parts of IT support is user access. Password resets, access requests, and account recovery are common support tasks, but they can also create risk if handled carelessly or without proper verification.",
+          "IT support is not only about solving technical problems. It is also about protecting systems, following process, documenting clearly, and making sure the right solution is applied to the right environment.",
+          "The strongest IT support workers use AI to move faster and think more clearly, but they do not let speed replace security, documentation, or responsibility."
+        ],
+        quiz: [
+          {
+            q: "A user submits a support ticket stating they are locked out of their account and must regain access immediately to continue work. An AI assistant suggests an automatic password reset based on the wording of the request. The technician has not yet confirmed that the person requesting the change is actually the authorized user. What is the most appropriate first step?",
+            a: ["Reset the password immediately to reduce downtime", "Verify the user's identity through approved company procedures before changing the account", "Close the ticket because the request is incomplete", "Provide temporary admin credentials to solve the issue faster"],
+            correct: 1
+          },
+          {
+            q: "An AI system summarizes a support request and classifies it as a simple login issue. However, when the technician reviews the message, it appears the user may actually be reporting a broader access problem involving multiple systems. What is the best action before proceeding?",
+            a: ["Follow the AI summary exactly as written", "Review the full user request and confirm the actual scope of the issue before acting", "Ignore the ticket because the summary may be wrong", "Escalate the issue without reviewing any details"],
+            correct: 1
+          },
+          {
+            q: "A technician receives a support request that appears routine, and AI suggests a standard solution used in many previous tickets. The technician notices, however, that the user has a different role and permission level than the previous cases. What should happen next?",
+            a: ["Apply the standard solution anyway because it usually works", "Confirm whether the user's role changes the appropriate solution before applying it", "Close the ticket because the case is no longer standard", "Ask the user to try the same fix without further review"],
+            correct: 1
+          },
+          {
+            q: "An employee reports they cannot access a department-specific application. AI suggests granting broader access because that solved a similar issue before. The technician knows broad access can create security exposure if given without review. What is the most responsible next step?",
+            a: ["Grant broader access immediately because productivity is important", "Review the minimum access actually required and verify approval before making changes", "Ignore the issue until a manager complains", "Remove the user's existing access and start over completely"],
+            correct: 1
+          },
+          {
+            q: "A help desk technician is using AI to help draft a response to a frustrated user. The AI-generated message is technically correct but sounds too casual and may not reflect the company's support tone. What should the technician do before sending it?",
+            a: ["Send it because the technical content is correct", "Adjust the message so it is accurate, professional, and appropriate for the situation", "Delete it and refuse to use AI for responses", "Send a shorter version without reading it carefully"],
+            correct: 1
+          },
+          {
+            q: "A support worker receives multiple user issues at once, and AI prioritizes them in a suggested order. One ticket marked as moderate impact involves access to a system used by executives before a scheduled meeting. What is the best decision?",
+            a: ["Follow the AI order without question", "Reassess priority based on actual business impact and timing before responding", "Ignore the flagged priority and solve tickets randomly", "Close lower-priority tickets so only one issue remains"],
+            correct: 1
+          },
+          {
+            q: "A user asks a technician to bypass verification because they are 'in a hurry' and have submitted many tickets before. AI suggests that the request appears familiar and likely legitimate. What should the technician do?",
+            a: ["Trust the pattern and bypass verification this one time", "Follow normal identity and access procedures before taking any account action", "Close the ticket because the user is impatient", "Let the user verify themselves later after the change is made"],
+            correct: 1
+          },
+          {
+            q: "A technician notices that AI often gives useful first suggestions for recurring issues, but sometimes misses environment-specific context. What is the best understanding of AI's role in frontline IT support?",
+            a: ["AI should replace technicians for repeated tickets", "AI is useful for support, but technicians must still verify and apply judgment", "AI should only be used for complex engineering work", "AI should never be used in user support settings"],
+            correct: 1
+          },
+          {
+            q: "A support ticket includes just enough information for AI to suggest a likely fix, but not enough information for the technician to confirm the user's device type and access level. What is the strongest next step?",
+            a: ["Apply the suggested fix immediately to save time", "Request or confirm the missing details before applying the solution", "Ignore the AI recommendation completely", "Escalate the case without gathering any more information"],
+            correct: 1
+          },
+          {
+            q: "A new IT support employee starts relying heavily on AI-generated answers and stops checking internal procedures. Over time, they begin applying incorrect solutions in the wrong contexts. What is the most important lesson from this situation?",
+            a: ["AI should be avoided completely", "AI support is valuable, but process and verification still matter in real IT work", "New employees should never use support tools", "Internal procedures are less important than fast response time"],
+            correct: 1
+          }
+        ]
+      },
+
+      {
+        name: "Module 2: Ticketing, ITSM, and Knowledge Systems",
+        lessons: [
+          "IT service environments rely on ticketing and IT service management systems to document incidents, requests, escalations, approvals, and resolutions. These systems help teams work in an organized way instead of solving issues without records or process.",
+          "AI can assist inside ticketing systems by categorizing requests, suggesting likely resolutions, summarizing ticket history, or surfacing knowledge-base articles. These suggestions can save time, but they still need technician review.",
+          "Knowledge systems are useful because they preserve solutions from prior incidents. However, a solution from a previous ticket is only helpful if it actually matches the current environment, device, permissions, software version, and user context.",
+          "Inaccurate ticket handling creates larger problems. If a ticket is miscategorized, closed too early, routed incorrectly, or resolved with the wrong assumption, the issue may continue while the records falsely show completion.",
+          "Strong IT workers understand that ticket systems are not just administrative tools. They are operational records that affect service quality, workflow clarity, and future troubleshooting."
+        ],
+        quiz: [
+          {
+            q: "A technician is assigned a ticket involving application failure after a software update. The AI system suggests a fix from a previous resolved ticket, but that earlier case involved a different operating system version and a different application build. What is the best next step before applying the fix?",
+            a: ["Apply the previous fix immediately because it resolved a similar issue before", "Compare the current environment against the earlier case and verify compatibility before applying the solution", "Ignore the suggestion and close the ticket until more cases appear", "Forward the fix to the user and ask them to try it on their own"],
+            correct: 1
+          },
+          {
+            q: "An AI-enabled ticketing platform classifies a request as low priority because it only affects one user. The technician notices, however, that the affected user manages a system required for an upcoming executive presentation. What should the technician do?",
+            a: ["Accept the low priority because AI categorized it that way", "Review the actual business impact and adjust the priority if needed before proceeding", "Delete the ticket and wait for a manager to open a new one", "Leave the ticket untouched until the presentation fails"],
+            correct: 1
+          },
+          {
+            q: "A knowledge-base article recommended by AI appears to solve the same issue reported in the current ticket. After reviewing the user's device information, the technician realizes the hardware model differs from the documented case. What is the strongest response?",
+            a: ["Apply the article anyway because the symptoms look similar", "Use the article as a reference, but confirm whether the device difference changes the correct solution", "Ignore the knowledge base because it is never reliable", "Tell the user to wait until someone with the same hardware reports the issue"],
+            correct: 1
+          },
+          {
+            q: "A technician uses AI to summarize a long ticket thread for faster review. The summary is concise, but it leaves out one escalation note showing that the user already tried a recommended fix. What should the technician do before proceeding?",
+            a: ["Use the summary alone because it saves time", "Review the original ticket history and confirm no critical details were omitted", "Close the ticket because the issue was already touched", "Restart the troubleshooting from the beginning without reading the thread"],
+            correct: 1
+          },
+          {
+            q: "A support worker notices AI is routing many tickets to the same resolution group, even when some involve different infrastructure layers. What is the best operational concern in this situation?",
+            a: ["The routing pattern should be trusted because automation improves speed", "Incorrect routing can delay resolution and create inaccurate operational records", "Routing does not matter if tickets remain open", "The support worker should disable all routing immediately without review"],
+            correct: 1
+          },
+          {
+            q: "A technician resolves a user issue, and AI suggests automatically closing the ticket because the response matches a resolved pattern. The user has not yet confirmed service restoration. What should happen next?",
+            a: ["Close the ticket automatically because AI recognized the pattern", "Confirm that the issue is actually resolved before final ticket closure", "Delete the ticket to avoid duplicate records", "Mark the issue as escalated to keep it open longer"],
+            correct: 1
+          },
+          {
+            q: "A ticket contains incomplete information, but AI still offers a likely solution and suggests a standard closure path. What is the strongest technician response in a real ITSM environment?",
+            a: ["Follow the standard closure path to reduce backlog", "Gather the missing details needed to verify the issue before applying or documenting a resolution", "Ignore the ticket entirely because it is incomplete", "Close the ticket and ask the user to open a new one later"],
+            correct: 1
+          },
+          {
+            q: "A manager reviews support records and finds several tickets marked as resolved even though users reopened them later. AI had suggested the original resolutions based on previous patterns. What does this show about ticket system use?",
+            a: ["AI should never be used in ticketing", "Suggested solutions still require validation before tickets are marked resolved", "Users should not be allowed to reopen tickets", "Ticket records are not important if the team is moving quickly"],
+            correct: 1
+          },
+          {
+            q: "An IT support team depends heavily on AI-assisted summaries and recommended ticket actions. A senior technician warns that overreliance without ticket review may weaken troubleshooting quality. Why is that warning valid?",
+            a: ["Because ticketing systems are only for managers", "Because summaries and recommendations can miss context, history, or environment-specific detail", "Because AI cannot read any support language", "Because all ticket actions should be done manually from memory"],
+            correct: 1
+          },
+          {
+            q: "A ticket was categorized by AI as a password issue, but the technician sees from the details that the user may actually be reporting a broader authentication-system outage. What should the technician do?",
+            a: ["Handle it as a password reset to stay within the ticket category", "Review the symptoms carefully and reclassify or escalate if the issue appears larger than the original label", "Ignore the possibility of a broader issue because the AI already categorized it", "Close the ticket and wait to see if more users complain"],
+            correct: 1
+          }
+        ]
+      },
+
+      {
+        name: "Module 3: Monitoring, Troubleshooting, and Escalation",
+        lessons: [
+          "Monitoring systems help IT teams detect unusual activity, declining performance, outages, and recurring anomalies across devices, servers, networks, and applications. AI may help identify patterns faster, but the alerts still require interpretation.",
+          "Troubleshooting is not random guessing. It is a structured process of reviewing symptoms, checking logs, validating assumptions, and narrowing possible causes before taking action.",
+          "An alert does not automatically mean disaster, but it also should not be ignored simply because the user says everything appears normal. Good technicians investigate before deciding whether a signal is low-risk or serious.",
+          "Escalation matters when the issue exceeds the technician's role, authority, or available evidence. Strong support workers know when to continue analysis and when to move the issue up to the correct team.",
+          "AI can accelerate troubleshooting by surfacing patterns and likely causes. The technician, however, still decides whether the suggestion fits the actual environment and whether action is safe."
+        ],
+        quiz: [
+          {
+            q: "A monitoring platform reports unusual workstation behavior shortly after a new software deployment. The end user says the system seems fine, but AI flags the activity as potentially abnormal compared with baseline behavior. What is the most appropriate next step for the technician?",
+            a: ["Ignore the alert because the user is not complaining", "Investigate the flagged behavior before deciding whether it is benign or requires action", "Shut down all related systems immediately without further review", "Disable alerts on that workstation to reduce noise"],
+            correct: 1
+          },
+          {
+            q: "A technician is reviewing repeated intermittent disconnections affecting one department's systems. AI suggests several possible causes based on previous incidents, but none are confirmed. What is the best troubleshooting approach?",
+            a: ["Select the first suggested cause and apply the fix broadly", "Use the AI suggestions as leads, then verify each possibility step by step against current evidence", "Ignore the suggestions and wait for the issue to become constant", "Escalate immediately without reviewing logs or symptoms"],
+            correct: 1
+          },
+          {
+            q: "A server monitoring system shows a gradual rise in resource usage over several days. AI highlights the pattern and suggests it may become a service issue soon. The service is still online, and no users have yet reported a problem. What should the technician do?",
+            a: ["Wait until the service fails so the cause becomes obvious", "Review the trend and investigate before the resource issue turns into an outage", "Turn off alerting to avoid unnecessary concern", "Restart the server without documenting the pattern"],
+            correct: 1
+          },
+          {
+            q: "An AI troubleshooting assistant suggests that a recurring issue likely comes from network instability. The technician notices, however, that the affected systems are all tied to one recent application patch. What is the strongest response?",
+            a: ["Follow the network explanation because AI suggested it", "Compare the network theory against the patch timing and other evidence before deciding on the cause", "Ignore all AI input from that point forward", "Escalate to management before reviewing any more details"],
+            correct: 1
+          },
+          {
+            q: "A monitoring alert appears during peak business hours on a system that supports customer transactions. The alert is not yet confirmed as a failure, but waiting too long could increase impact if the warning is accurate. What is the best technician mindset?",
+            a: ["Ignore the alert unless the system fully stops", "Treat the alert as something to investigate quickly and responsibly before service impact grows", "Restart all connected services immediately without review", "Close the alert because the system is still online"],
+            correct: 1
+          },
+          {
+            q: "A technician keeps seeing the same device alert over multiple days. AI labels it low severity because the system recovers each time without user complaints. What is the best action?",
+            a: ["Ignore it because recovery means it is harmless", "Investigate the repeated pattern because recurring low-severity issues can still indicate underlying instability", "Delete the alert history to reduce noise", "Assume the monitoring system is overreacting and turn it off"],
+            correct: 1
+          },
+          {
+            q: "An AI system recommends restarting a production service to resolve an issue quickly. The technician knows a restart would interrupt active users and has not yet confirmed root cause. What should happen first?",
+            a: ["Restart immediately because AI identified a likely fix", "Assess service impact and verify whether the restart is appropriate before taking action", "Ignore the issue completely", "Push the restart decision to the end user"],
+            correct: 1
+          },
+          {
+            q: "A junior technician receives an alert involving infrastructure outside their authority to change. AI provides several likely remediation steps. What is the most professional action?",
+            a: ["Apply the remediation anyway to show initiative", "Collect evidence, document findings, and escalate appropriately if the issue is outside their scope", "Ignore the alert because they cannot fix it personally", "Forward only the AI text without context to another team"],
+            correct: 1
+          },
+          {
+            q: "A team uses AI to summarize daily monitoring anomalies. One summary incorrectly states that a device was offline, when the raw monitoring data shows degraded performance but not full outage. Why does this matter?",
+            a: ["Because the wording difference is unimportant if people understand the general idea", "Because inaccurate summaries can lead to the wrong troubleshooting path and poor operational records", "Because summaries should never be used in IT operations", "Because raw monitoring data should never be reviewed by technicians"],
+            correct: 1
+          },
+          {
+            q: "A technician is troubleshooting a user complaint, but no obvious system error appears. AI suggests reviewing related systems and recent changes rather than only the user's device. Why is that good troubleshooting practice?",
+            a: ["Because real issues may come from connected systems or recent changes, not only the device where the complaint was noticed", "Because user devices almost never cause problems", "Because AI should always expand the issue scope whether needed or not", "Because it is better to avoid checking the user's environment directly"],
+            correct: 0
+          }
+        ]
+      },
+
+      {
+        name: "Module 4: Security, Access, and Data Awareness",
+        lessons: [
+          "Security in IT environments is not separate from support work. Access control, credential handling, internal system data, and troubleshooting detail all carry security implications when handled carelessly.",
+          "AI tools can be helpful, but technicians must stay aware of what data is appropriate to enter, what information is confidential, and what company policy allows. Helpful output is not worth exposing sensitive systems or user information.",
+          "Access requests, password resets, troubleshooting artifacts, internal logs, and administrative notes can all include data that should not be shared casually or pasted into uncontrolled tools.",
+          "A strong IT professional does not assume that faster is safer. They understand that responsible use means verifying identity, protecting credentials, and limiting exposure of sensitive information while still solving the problem.",
+          "Security-aware IT support protects users, systems, workflows, and business trust at the same time."
+        ],
+        quiz: [
+          {
+            q: "A technician copies internal server logs, system identifiers, and user-specific details into an external AI tool to speed up troubleshooting. The tool may provide a useful answer quickly, but what is the primary concern with this action?",
+            a: ["The answer may arrive too slowly to be useful", "Sensitive company and user information may be exposed outside approved systems", "The troubleshooting process may become too detailed", "The ticket may be classified incorrectly afterward"],
+            correct: 1
+          },
+          {
+            q: "A support worker receives an urgent email asking for administrative credentials so another employee can quickly fix a system problem after hours. The message sounds professional and includes some correct internal language. What is the correct response?",
+            a: ["Provide the credentials because the request sounds legitimate", "Refuse to share credentials and follow approved security procedures instead", "Send only part of the password to reduce risk", "Forward the credentials through AI for review first"],
+            correct: 1
+          },
+          {
+            q: "A technician wants AI help rewriting a user communication about a security incident. The draft can be improved without including sensitive system information. What is the strongest approach?",
+            a: ["Paste every internal detail into the tool so the message is more precise", "Use only the necessary non-sensitive context needed to improve the communication", "Avoid using any tool at all even if a safe approach exists", "Send the original unreviewed message because privacy matters more than clarity"],
+            correct: 1
+          },
+          {
+            q: "An employee requests access to a restricted folder because a manager verbally said it was approved. AI suggests that the request matches previous approved access patterns. What should the technician do?",
+            a: ["Grant the access based on the verbal explanation and AI pattern match", "Verify the approval through the proper access process before granting permissions", "Ignore the request and let the employee solve it directly", "Give temporary access first and document it later if needed"],
+            correct: 1
+          },
+          {
+            q: "A technician uses AI to help understand a complex troubleshooting error. To get a better answer, they consider pasting configuration details from a production environment into the tool. What should guide the decision?",
+            a: ["Whether the tool gives faster answers than coworkers", "Whether sharing that information is allowed, necessary, and safe under company practice", "Whether the text is too long for the AI system", "Whether the issue is frustrating enough to justify extra exposure"],
+            correct: 1
+          },
+          {
+            q: "A support worker is asked to reset a password for a user whose account has access to financial systems. AI indicates the request looks similar to many past reset requests. Why is extra caution still needed?",
+            a: ["Because AI does not remove the need for identity verification and access control on sensitive accounts", "Because financial-system users should never reset passwords", "Because AI cannot process password requests at all", "Because only managers can respond to financial-system tickets"],
+            correct: 0
+          },
+          {
+            q: "A technician notices that a coworker regularly pastes internal error details into public AI tools for convenience. The coworker argues that the output helps solve issues faster. What is the strongest concern?",
+            a: ["The coworker may be exposing internal data in a way that creates security and compliance risk", "The coworker may finish tickets too quickly", "The coworker may create overly clear documentation", "The coworker may reduce the team's need for meetings"],
+            correct: 0
+          },
+          {
+            q: "An AI tool recommends storing commonly used admin actions in a shared note to help speed up support work. The note would include sensitive internal procedures. What should the technician consider first?",
+            a: ["Whether the shared storage method is secure and appropriate for that level of information", "Whether the note looks professionally organized", "Whether the team likes written notes", "Whether the AI suggestion is popular in other companies"],
+            correct: 0
+          },
+          {
+            q: "A technician receives a request from a senior employee asking for a bypass to normal approval because the issue is urgent. AI marks the requester as high priority. What should the technician do?",
+            a: ["Bypass the process because urgency overrides procedure", "Follow the required security and approval process even when the requester has status or urgency", "Grant limited access without any record", "Ignore the request entirely because it involves a senior employee"],
+            correct: 1
+          },
+          {
+            q: "A strong IT professional uses AI responsibly by doing which of the following?",
+            a: ["Balancing helpful tool use with access control, privacy protection, and policy-aware judgment", "Using AI for every security decision without review", "Avoiding all documentation so sensitive data is never recorded", "Trusting that good intentions are enough to prevent exposure"],
+            correct: 0
+          }
+        ]
+      },
+
+      {
+        name: "Module 5: Change Management and Real IT Scenarios",
+        lessons: [
+          "Change management is the controlled process of introducing updates, fixes, and system changes without creating unnecessary disruption or risk. In real environments, good changes are reviewed, tested, documented, and approved appropriately.",
+          "AI may recommend configuration changes, likely fixes, or workflow improvements. These suggestions can be useful, but they still need validation before being applied broadly to real systems.",
+          "Technicians must consider environment fit, business impact, timing, rollback risk, and approval requirements before applying changes, especially in production settings.",
+          "Real IT work involves balancing service speed with stability and control. A fast answer is not always the right answer if it creates outage risk, security exposure, or undocumented change history.",
+          "The strongest IT workers know how to use AI support inside structured operational judgment. They do not reject helpful tools, but they also do not let suggestions bypass process."
+        ],
+        quiz: [
+          {
+            q: "An AI system recommends a configuration update that could improve performance across several devices in production. The recommendation is based on similar environments, but it has not yet been tested in the current one. What is the most responsible next step?",
+            a: ["Apply the update immediately to gain performance benefits quickly", "Review, test, and follow the appropriate change process before broad deployment", "Ignore the recommendation permanently", "Apply it only to the most critical systems first without documentation"],
+            correct: 1
+          },
+          {
+            q: "A technician is handling several alerts, and AI suggests restarting a critical service during business hours because it may clear the issue. The technician knows a restart could disrupt users if the problem has another cause. What should happen before restarting?",
+            a: ["Restart immediately because AI already analyzed the pattern", "Assess user impact, verify the likely cause, and determine whether a restart is appropriate before acting", "Delay all action until the next day", "Ignore the issue completely unless the system crashes"],
+            correct: 1
+          },
+          {
+            q: "A recommended AI solution appears to work in a test environment, but the production environment includes extra integrations and dependencies not present in the test system. What is the strongest operational concern?",
+            a: ["If it worked once, it should be safe everywhere", "Production-specific dependencies may change the impact of the solution and must be considered before rollout", "Test environments are never useful for IT decisions", "Only the user-facing interface matters in production"],
+            correct: 1
+          },
+          {
+            q: "A technician is under pressure to resolve a recurring issue quickly. AI recommends a workaround that avoids formal change approval but may alter a monitored service. What is the best professional response?",
+            a: ["Use the workaround immediately to reduce ticket volume", "Evaluate whether the workaround requires formal change review before applying it", "Ignore the issue until approval can be avoided", "Apply the change quietly and document it later if needed"],
+            correct: 1
+          },
+          {
+            q: "A change was applied based on an AI recommendation, and the issue appears resolved. The technician considers skipping documentation because the result was successful. Why is that a bad idea?",
+            a: ["Because successful changes still need records for accountability, future troubleshooting, and operational clarity", "Because documentation is only needed when a change fails", "Because AI should generate all records automatically without review", "Because documentation slows every technical team equally"],
+            correct: 0
+          },
+          {
+            q: "An AI tool suggests combining several smaller updates into one large change window to save time. The technician knows the combined change would make rollback harder if something goes wrong. What is the strongest consideration?",
+            a: ["Larger changes are always better when time is limited", "Rollback complexity and operational risk should be considered before combining changes", "Rollback planning only matters for security teams", "The technician should let AI determine whether rollback matters"],
+            correct: 1
+          },
+          {
+            q: "A user issue appears solved after a local fix, but AI recommends making a broader policy change across the environment because similar issues were reported before. What should the technician do next?",
+            a: ["Roll out the broader change immediately since the fix worked locally", "Treat the broader change as a separate decision requiring review, validation, and proper approval", "Ignore the pattern because the current ticket is closed", "Apply the policy change only to users who complain"],
+            correct: 1
+          },
+          {
+            q: "A technician receives AI-generated guidance for a recurring server issue and notices that one recommendation conflicts with established internal procedure. What is the strongest next step?",
+            a: ["Follow the AI guidance because it is newer than internal process", "Review the conflict and follow approved internal procedure unless a formal change justifies updating it", "Ignore internal procedure if AI sounds more confident", "Use whichever option is faster without notifying the team"],
+            correct: 1
+          },
+          {
+            q: "A junior technician wants to apply an AI-recommended network change to prove initiative and reduce recurring complaints. The change affects multiple users, and the technician is not authorized to approve it alone. What is the correct action?",
+            a: ["Apply the change to show leadership", "Document findings and escalate through the proper approval path", "Ask one user for permission and then proceed", "Test it in production quietly before anyone notices"],
+            correct: 1
+          },
+          {
+            q: "What best describes strong real-world AI use in IT operations?",
+            a: ["Using AI recommendations as direct commands whenever they save time", "Using AI as support within controlled troubleshooting, security awareness, and change-management judgment", "Avoiding all AI because real IT work should stay manual", "Letting AI replace process so teams can move faster"],
+            correct: 1
+          }
+        ]
+      }
+    ];
+
+    function getTotalSteps() {
+      let total = 0;
+      modules.forEach(module => {
+        total += module.lessons.length + module.quiz.length;
+      });
+      return total;
+    }
+
+    function getCurrentStep() {
+      let step = 0;
+
+      for (let i = 0; i < moduleIndex; i++) {
+        step += modules[i].lessons.length + modules[i].quiz.length;
+      }
+
+      if (mode === "lesson") {
+        step += lessonIndex;
+      } else {
+        step += modules[moduleIndex].lessons.length + quizIndex;
+      }
+
+      return step;
+    }
+
+    function updateProgress() {
+      const progressBar = document.getElementById("progressBar");
+      const totalSteps = getTotalSteps();
+      const currentStep = getCurrentStep();
+      const progressPercent = (currentStep / totalSteps) * 100;
+      progressBar.style.width = progressPercent + "%";
+    }
+
+    function renderQuestion(q) {
+      let html = `<div class="question-text">${q.q}</div>`;
+      q.a.forEach((opt, i) => {
+        html += `<button class="answer-btn" onclick="checkAnswer(${i})">${opt}</button>`;
+      });
+      return html;
+    }
+
+    function load() {
+      const title = document.getElementById("title");
+      const content = document.getElementById("content");
+      const nextBtn = document.getElementById("nextBtn");
+      const moduleLabel = document.getElementById("moduleLabel");
+
+      const module = modules[moduleIndex];
+
+      updateProgress();
+      moduleLabel.innerText = module.name;
+
+      if (mode === "lesson") {
+        title.innerText = "Lesson " + (lessonIndex + 1);
+        content.innerHTML = `<p>${module.lessons[lessonIndex]}</p>`;
+        nextBtn.style.display = "block";
+      }
+
+      if (mode === "quiz") {
+        title.innerText = "Question " + (quizIndex + 1);
+        content.innerHTML = renderQuestion(module.quiz[quizIndex]);
+        nextBtn.style.display = "none";
+      }
+    }
+
+    function checkAnswer(i) {
+      const module = modules[moduleIndex];
+      const correct = module.quiz[quizIndex].correct;
+
+      if (i === correct) {
+        alert("Correct!");
+      } else {
+        alert("Incorrect. Try again.");
+        return;
+      }
+
+      quizIndex++;
+
+      if (quizIndex < module.quiz.length) {
+        load();
+      } else {
+        alert(module.name + " Complete!");
+        moduleIndex++;
+        lessonIndex = 0;
+        quizIndex = 0;
+        mode = "lesson";
+
+        if (moduleIndex >= modules.length) {
+          localStorage.setItem("courseName", "AI in Technology & IT Systems™");
+          localStorage.setItem("courseSubtitle", "Completed all modules and assessments");
+          localStorage.setItem("issueDate", new Date().toLocaleDateString());
+          localStorage.setItem("certificateId", "LUMI-" + Math.floor(10000 + Math.random() * 90000));
+
+          window.location.href = "certificate-choice.html";
+        } else {
+          load();
+        }
+      }
+    }
+
+    function next() {
+      const module = modules[moduleIndex];
+
+      if (mode === "lesson") {
+        lessonIndex++;
+
+        if (lessonIndex >= module.lessons.length) {
+          mode = "quiz";
+          lessonIndex = 0;
+        }
+
+        load();
+      }
+    }
+
+    load();
+  </script>
+</body>
+</html>
