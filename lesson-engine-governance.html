@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lumi AI Nexus™ | AI Governance & Verification™</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(180deg, #eaf6ff 0%, #d8efff 100%);
+      color: #173b79;
+    }
+
+    .top-bar {
+      width: 100%;
+      height: 8px;
+      background: #cce6ff;
+    }
+
+    .progress {
+      height: 8px;
+      width: 0%;
+      background: linear-gradient(90deg, #4aa9ff, #215fe5);
+      transition: width 0.35s ease;
+    }
+
+    .wrap {
+      max-width: 920px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 30px 28px;
+      box-shadow: 0 18px 40px rgba(20, 59, 121, 0.12);
+    }
+
+    .module-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #4a78c2;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .lesson-title {
+      font-size: 30px;
+      font-weight: 800;
+      margin-bottom: 18px;
+      color: #173b79;
+      line-height: 1.2;
+    }
+
+    .content {
+      font-size: 18px;
+      line-height: 1.75;
+      color: #355171;
+    }
+
+    .content p {
+      margin: 0 0 14px;
+    }
+
+    .question-text {
+      font-size: 22px;
+      font-weight: 700;
+      color: #173b79;
+      margin-bottom: 18px;
+      line-height: 1.45;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 15px 18px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(180deg, #4aa9ff, #215fe5);
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      box-shadow:
+        0 10px 20px rgba(33, 95, 229, 0.25),
+        inset 0 2px 0 rgba(255,255,255,0.3);
+      transition: transform 0.15s ease, filter 0.15s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.02);
+    }
+
+    .answer-btn {
+      margin: 12px 0;
+      background: #f3f8ff;
+      color: #173b79;
+      box-shadow: none;
+      border: 1px solid #d6e6ff;
+    }
+
+    .answer-btn:hover {
+      background: #e4f1ff;
+      filter: none;
+    }
+
+    .footer-note {
+      margin-top: 22px;
+      text-align: center;
+      font-size: 14px;
+      color: #58739b;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      .wrap {
+        margin: 24px auto;
+        padding: 14px;
+      }
+
+      .card {
+        padding: 22px 18px;
+      }
+
+      .lesson-title {
+        font-size: 24px;
+      }
+
+      .content,
+      .question-text {
+        font-size: 17px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <div class="progress" id="progressBar"></div>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+
+      <div style="display:flex; justify-content:flex-end; margin-bottom:14px;">
+        <a href="course-selection.html" style="text-decoration:none; background:#eef6ff; color:#173b79; padding:10px 14px; border-radius:10px; font-weight:700; border:1px solid #dbeafe;">
+          ← Back to Courses
+        </a>
+      </div>
+
+      <div class="module-title" id="moduleLabel"></div>
+      <div class="lesson-title" id="title"></div>
+      <div class="content" id="content"></div>
+
+      <button id="nextBtn" onclick="next()">Next</button>
+
+      <div class="footer-note">
+        Lumi AI Nexus™<br>
+        Where AI, People, and Knowledge Meet.<br>
+        AI Governance Powered by HALO™
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let moduleIndex = 0;
+    let lessonIndex = 0;
+    let quizIndex = 0;
+    let mode = "lesson";
+
+    const modules = [
+      {
+        name: "Module 1: Understanding AI Limitations",
+        lessons: [
+          "AI can be useful, fast, and supportive, but it still has limits. It does not truly understand every situation, and it can still produce incomplete, unclear, or incorrect output.",
+          "A confident answer from AI is not the same thing as a correct answer. The way an answer sounds should never be the only reason it is trusted.",
+          "AI can miss context, misunderstand wording, or generate information that sounds reasonable but should still be checked before use, especially in work settings.",
+          "The more important the decision, message, or document, the more important it is to review what AI gives you before relying on it.",
+          "Strong AI users understand that the value of AI comes from support and speed, but responsibility still stays with the human using it."
+        ],
+        quiz: [
+          {
+            q: "Why should a confident AI answer still be reviewed?",
+            a: ["Because confident wording does not guarantee accuracy", "Because AI is never useful", "Because all answers are false", "Because review is only for experts"],
+            correct: 0
+          },
+          {
+            q: "What is one important limit of AI?",
+            a: ["It always knows local context perfectly", "It can still miss details or produce unclear output", "It replaces human judgment automatically", "It never makes mistakes"],
+            correct: 1
+          },
+          {
+            q: "A worker receives an AI response that sounds polished and professional. What is the correct next step?",
+            a: ["Send it immediately without reading", "Review it for clarity and accuracy", "Assume it is correct because it sounds strong", "Delete it every time"],
+            correct: 1
+          },
+          {
+            q: "What should determine whether AI output is used?",
+            a: ["How fast it appeared", "How confident it sounds", "Whether it has been reviewed and fits the real situation", "Whether the screen color looks right"],
+            correct: 2
+          },
+          {
+            q: "Why is context important when using AI?",
+            a: ["Because AI may not fully understand the real situation without it", "Because context slows the system", "Because context makes review unnecessary", "Because AI ignores all context anyway"],
+            correct: 0
+          },
+          {
+            q: "When is it most important to review AI output?",
+            a: ["When it affects work, communication, records, or people", "Only when using the internet at home", "Only when the output is short", "Never, if the answer looks clean"],
+            correct: 0
+          },
+          {
+            q: "What is the best view of AI in important work?",
+            a: ["A support tool that still requires human responsibility", "A replacement for all workplace decisions", "A final authority", "A system that should never be checked"],
+            correct: 0
+          },
+          {
+            q: "Which statement is true?",
+            a: ["A good-looking answer is always a correct one", "AI can produce useful support, but it still has limits", "AI fully understands all consequences", "AI removes the need for human judgment"],
+            correct: 1
+          },
+          {
+            q: "If AI misunderstands a request, what does that show?",
+            a: ["That the tool may still need clearer input and review", "That all AI should be thrown away", "That people should never ask detailed questions", "That the output should still be trusted"],
+            correct: 0
+          },
+          {
+            q: "A strong AI user understands that:",
+            a: ["Speed matters, but review still matters too", "Fast output is enough", "Human review is optional", "Confident output means final approval"],
+            correct: 0
+          }
+        ]
+      },
+
+      {
+        name: "Module 2: Verifying AI Output",
+        lessons: [
+          "Verification means checking whether AI output is accurate, useful, complete, and appropriate before using it. This is one of the most important real-world AI skills.",
+          "Verification can include rereading the output, comparing it to known facts, checking tone, reviewing numbers, confirming instructions, and making sure it fits the real task.",
+          "In everyday work, verification may mean checking a drafted email before sending it, confirming a checklist before using it, or reviewing a summary before sharing it.",
+          "Verification is not about distrusting every output. It is about understanding that support tools still need review before they become action.",
+          "The stronger the impact of the output, the stronger the verification process should be."
+        ],
+        quiz: [
+          {
+            q: "What does verification mean in AI use?",
+            a: ["Accepting output immediately", "Checking whether the output is accurate and appropriate", "Ignoring the details", "Only looking at spelling"],
+            correct: 1
+          },
+          {
+            q: "Which is a real example of AI verification?",
+            a: ["Sending a draft without reading it", "Checking an AI-written email before sending it", "Ignoring the final text", "Letting AI choose the audience"],
+            correct: 1
+          },
+          {
+            q: "Why is verification important?",
+            a: ["Because AI output may still need review before it becomes action", "Because AI can never be used", "Because review removes all usefulness", "Because only managers are allowed to verify"],
+            correct: 0
+          },
+          {
+            q: "Which of these is part of verification?",
+            a: ["Checking numbers, tone, and fit", "Skipping review if the output is quick", "Trusting it because it is formatted nicely", "Sending it if the font looks good"],
+            correct: 0
+          },
+          {
+            q: "A worker uses AI to summarize shift notes. What should they verify before sharing it?",
+            a: ["That the summary reflects the actual notes and context", "Only that the paragraph is short", "Only that it sounds professional", "Nothing, because AI did the work"],
+            correct: 0
+          },
+          {
+            q: "What should happen before AI output becomes workplace action?",
+            a: ["Verification", "Automatic distribution", "Blind trust", "No review at all"],
+            correct: 0
+          },
+          {
+            q: "Verification gets more important when:",
+            a: ["The output could affect people, records, or decisions", "The output is blue", "The device is new", "The task is unimportant"],
+            correct: 0
+          },
+          {
+            q: "Which statement is strongest?",
+            a: ["Verification is a waste of time", "Verification is part of responsible AI use", "Verification is only for lawyers", "Verification means AI is useless"],
+            correct: 1
+          },
+          {
+            q: "If AI gives a checklist for a real workplace task, what should happen first?",
+            a: ["Use it immediately", "Review it for completeness and accuracy", "Assume it is already approved", "Print it without reading"],
+            correct: 1
+          },
+          {
+            q: "A smart verifier looks at:",
+            a: ["Accuracy, clarity, and fit for the task", "Only whether it looks polished", "Only whether it was fast", "Only whether AI created it"],
+            correct: 0
+          }
+        ]
+      },
+
+      {
+        name: "Module 3: Risk & Responsibility",
+        lessons: [
+          "Risk in AI use means understanding that output can have consequences if it is wrong, incomplete, badly timed, or used carelessly. Responsibility means the person using the tool remains accountable.",
+          "AI risk is not only about technology. It is also about the human decision to trust, send, share, approve, or act on output without proper thought.",
+          "For example, a worker who sends an unchecked customer response, uses an inaccurate summary, or relies on AI for a sensitive decision is still responsible for that choice.",
+          "Responsible AI use means asking: what happens if this is wrong, who is affected, and what should be reviewed before I use it?",
+          "The strongest professionals use AI in ways that reduce risk, not increase it."
+        ],
+        quiz: [
+          {
+            q: "What is AI risk in daily or workplace use?",
+            a: ["Only the speed of the system", "The possibility of harm or error if output is used carelessly", "A design color problem", "The size of the screen"],
+            correct: 1
+          },
+          {
+            q: "Who remains responsible for using AI output?",
+            a: ["The user", "Only the software", "Nobody", "Only the internet provider"],
+            correct: 0
+          },
+          {
+            q: "What is the best question before acting on AI output?",
+            a: ["How fast was it generated?", "What happens if this is wrong?", "Does it look formal?", "Can I skip reading it?"],
+            correct: 1
+          },
+          {
+            q: "Which action increases AI risk?",
+            a: ["Checking output before sending", "Using AI blindly in sensitive tasks", "Comparing it with real information", "Reviewing the tone and message"],
+            correct: 1
+          },
+          {
+            q: "A worker uses AI to draft a customer response containing policy information. What creates the biggest risk?",
+            a: ["Reviewing the draft", "Sending it without checking accuracy", "Improving the wording", "Confirming the details first"],
+            correct: 1
+          },
+          {
+            q: "Responsible AI use includes:",
+            a: ["Reviewing output before it affects people or decisions", "Skipping verification if the answer is fast", "Assuming AI understands your workplace fully", "Letting AI replace judgment"],
+            correct: 0
+          },
+          {
+            q: "If an AI-generated answer is incomplete, who is responsible for catching that before use?",
+            a: ["The user or reviewer", "Only the browser", "No one", "The file name"],
+            correct: 0
+          },
+          {
+            q: "The strongest AI professionals focus on:",
+            a: ["Reducing risk and increasing reliability", "Using as many tools as possible", "Avoiding all review", "Sending output quickly without context"],
+            correct: 0
+          },
+          {
+            q: "What can happen when people rely on AI without review?",
+            a: ["Nothing ever happens", "Errors can affect records, people, or decisions", "All results become stronger", "Risk disappears automatically"],
+            correct: 1
+          },
+          {
+            q: "Which is the best understanding of responsibility?",
+            a: ["AI becomes responsible once it gives an answer", "People are still accountable for what they use and send", "Responsibility only applies to managers", "Output has no consequences"],
+            correct: 1
+          }
+        ]
+      },
+
+      {
+        name: "Module 4: Data Awareness & Privacy",
+        lessons: [
+          "Data awareness means understanding that not all information should be entered into AI systems. Some data is sensitive, private, protected, or inappropriate to share carelessly.",
+          "In personal use, this may include full account details, private identifiers, legal matters, or health information. In workplace use, this may include internal records, confidential notes, customer data, or sensitive business details.",
+          "AI can be useful without exposing sensitive information. A strong user learns how to ask for help in a safe way without giving away more than necessary.",
+          "Data awareness is part of professional trust. People who use AI responsibly do not overshare. They know how to protect privacy while still using the tool effectively.",
+          "Good AI use is not only about getting answers. It is also about protecting people, records, and information along the way."
+        ],
+        quiz: [
+          {
+            q: "What does data awareness mean in AI use?",
+            a: ["Knowing that some information should not be shared carelessly", "Sharing everything for better answers", "Ignoring privacy completely", "Only checking spelling"],
+            correct: 0
+          },
+          {
+            q: "Which type of information should be handled carefully before entering into AI tools?",
+            a: ["Sensitive or private information", "Only public weather details", "Generic task lists", "Basic grocery notes"],
+            correct: 0
+          },
+          {
+            q: "What is one sign of responsible AI use?",
+            a: ["Oversharing private details", "Protecting sensitive information while still using the tool", "Posting customer records freely", "Using real data every time without review"],
+            correct: 1
+          },
+          {
+            q: "Why is privacy important when using AI?",
+            a: ["Because trust, safety, and responsibility matter", "Because privacy slows work too much", "Because all information is public anyway", "Because tools should always know everything"],
+            correct: 0
+          },
+          {
+            q: "A worker needs help drafting a message about a customer issue. What is the safest approach?",
+            a: ["Include every private detail", "Describe the situation without exposing unnecessary sensitive information", "Paste the full private record into AI automatically", "Skip all caution"],
+            correct: 1
+          },
+          {
+            q: "Which statement is strongest?",
+            a: ["AI is useful, but data still needs protection", "All data should be entered for better results", "Privacy is optional if the output looks good", "Protected information is safe to share everywhere"],
+            correct: 0
+          },
+          {
+            q: "Data awareness in workplace AI use helps protect:",
+            a: ["People, records, and internal information", "Only the logo", "Only internet speed", "Only screen brightness"],
+            correct: 0
+          },
+          {
+            q: "A strong AI user knows how to:",
+            a: ["Ask for help without oversharing sensitive information", "Ignore all privacy concerns", "Depend on AI to protect everything automatically", "Avoid all tool use forever"],
+            correct: 0
+          },
+          {
+            q: "What is the safest mindset for data in AI systems?",
+            a: ["Share first, think later", "Use only what is necessary and appropriate", "Paste everything to save time", "Never review what you enter"],
+            correct: 1
+          },
+          {
+            q: "Good AI use includes protecting information because:",
+            a: ["Answers are not the only thing that matters", "Privacy has no connection to professionalism", "Only executives need to care", "Data never affects trust"],
+            correct: 0
+          }
+        ]
+      },
+
+      {
+        name: "Module 5: Real-World Verification Scenarios",
+        lessons: [
+          "Real-world AI verification means knowing how to respond when the output is useful but still needs checking. This is where AI literacy becomes practical and professional.",
+          "A customer service worker may need to review tone and policy accuracy. A manager may need to confirm scheduling language. An admin may need to verify dates and names. A team lead may need to confirm summaries before sharing them.",
+          "Verification is strongest when it is built into the workflow. That means not waiting until something goes wrong, but reviewing output before it is sent, saved, or acted on.",
+          "A responsible AI user knows how to pause, review, confirm, and then decide. That habit builds trust and protects quality.",
+          "Real-world AI governance is not about fear. It is about using AI with care, accuracy, and accountability."
+        ],
+        quiz: [
+          {
+            q: "A customer service worker uses AI to draft a refund message. What should be checked before sending it?",
+            a: ["Policy accuracy and tone", "Only the font size", "Only whether it is long enough", "Nothing if AI wrote it"],
+            correct: 0
+          },
+          {
+            q: "An office assistant uses AI to summarize meeting notes for leadership. What is the correct next step?",
+            a: ["Share immediately without reading", "Verify that the summary matches what was actually discussed", "Delete the notes", "Assume AI captured everything perfectly"],
+            correct: 1
+          },
+          {
+            q: "A supervisor uses AI to help rewrite a schedule update. What matters most before posting it?",
+            a: ["That the timing, names, and instructions are correct", "That it sounds advanced", "That it was quick", "That it includes more words than needed"],
+            correct: 0
+          },
+          {
+            q: "What does it mean to build verification into the workflow?",
+            a: ["Review output before it is sent or acted on", "Wait until a mistake happens", "Skip checks on busy days", "Let AI verify itself in every case"],
+            correct: 0
+          },
+          {
+            q: "A worker uses AI to create a task checklist for a live shift. What should they do before handing it out?",
+            a: ["Review it for completeness and accuracy", "Print it immediately", "Assume every task is already right", "Ignore missing steps"],
+            correct: 0
+          },
+          {
+            q: "Which habit best supports real-world governance?",
+            a: ["Pause, review, confirm, then decide", "Act first, verify later", "Skip reading output if it looks clean", "Use AI without context"],
+            correct: 0
+          },
+          {
+            q: "A team lead notices an AI draft includes wording that could be misunderstood. What is the best response?",
+            a: ["Edit and clarify it before use", "Send it because it sounds formal", "Ignore the risk", "Blame the tool and send it anyway"],
+            correct: 0
+          },
+          {
+            q: "What is the strongest sign of professional AI use?",
+            a: ["Using AI with accountability and review", "Using AI for every decision", "Letting speed replace accuracy", "Avoiding all structure"],
+            correct: 0
+          },
+          {
+            q: "Why is real-world verification valuable?",
+            a: ["It protects people, quality, and decisions", "It only slows everything down", "It removes the need for judgment", "It makes AI unnecessary"],
+            correct: 0
+          },
+          {
+            q: "AI governance in real work is best described as:",
+            a: ["Careful, accountable use of AI in real situations", "Fear of all technology", "Automatic trust in every output", "Only a technical department issue"],
+            correct: 0
+          }
+        ]
+      }
+    ];
+
+    function getTotalSteps() {
+      let total = 0;
+      modules.forEach(module => {
+        total += module.lessons.length + module.quiz.length;
+      });
+      return total;
+    }
+
+    function getCurrentStep() {
+      let step = 0;
+
+      for (let i = 0; i < moduleIndex; i++) {
+        step += modules[i].lessons.length + modules[i].quiz.length;
+      }
+
+      if (mode === "lesson") {
+        step += lessonIndex;
+      } else {
+        step += modules[moduleIndex].lessons.length + quizIndex;
+      }
+
+      return step;
+    }
+
+    function updateProgress() {
+      const progressBar = document.getElementById("progressBar");
+      const totalSteps = getTotalSteps();
+      const currentStep = getCurrentStep();
+      const progressPercent = (currentStep / totalSteps) * 100;
+      progressBar.style.width = progressPercent + "%";
+    }
+
+    function renderQuestion(q) {
+      let html = `<div class="question-text">${q.q}</div>`;
+      q.a.forEach((opt, i) => {
+        html += `<button class="answer-btn" onclick="checkAnswer(${i})">${opt}</button>`;
+      });
+      return html;
+    }
+
+    function load() {
+      const title = document.getElementById("title");
+      const content = document.getElementById("content");
+      const nextBtn = document.getElementById("nextBtn");
+      const moduleLabel = document.getElementById("moduleLabel");
+
+      const module = modules[moduleIndex];
+
+      updateProgress();
+      moduleLabel.innerText = module.name;
+
+      if (mode === "lesson") {
+        title.innerText = "Lesson " + (lessonIndex + 1);
+        content.innerHTML = `<p>${module.lessons[lessonIndex]}</p>`;
+        nextBtn.style.display = "block";
+      }
+
+      if (mode === "quiz") {
+        title.innerText = "Question " + (quizIndex + 1);
+        content.innerHTML = renderQuestion(module.quiz[quizIndex]);
+        nextBtn.style.display = "none";
+      }
+    }
+
+    function checkAnswer(i) {
+      const module = modules[moduleIndex];
+      const correct = module.quiz[quizIndex].correct;
+
+      if (i === correct) {
+        alert("Correct!");
+      } else {
+        alert("Incorrect. Try again.");
+        return;
+      }
+
+      quizIndex++;
+
+      if (quizIndex < module.quiz.length) {
+        load();
+      } else {
+        alert(module.name + " Complete!");
+        moduleIndex++;
+        lessonIndex = 0;
+        quizIndex = 0;
+        mode = "lesson";
+
+        if (moduleIndex >= modules.length) {
+          localStorage.setItem("courseName", "AI Governance & Verification™");
+          localStorage.setItem("courseSubtitle", "Completed all modules and assessments");
+          localStorage.setItem("issueDate", new Date().toLocaleDateString());
+          localStorage.setItem("certificateId", "LUMI-" + Math.floor(10000 + Math.random() * 90000));
+
+          window.location.href = "certificate-choice.html";
+        } else {
+          load();
+        }
+      }
+    }
+
+    function next() {
+      const module = modules[moduleIndex];
+
+      if (mode === "lesson") {
+        lessonIndex++;
+
+        if (lessonIndex >= module.lessons.length) {
+          mode = "quiz";
+          lessonIndex = 0;
+        }
+
+        load();
+      }
+    }
+
+    load();
+  </script>
+</body>
+</html>
