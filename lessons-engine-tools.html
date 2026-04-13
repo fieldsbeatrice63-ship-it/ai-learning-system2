@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lumi AI Nexus™ | AI Tools & Workflow Automation™</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(180deg, #eaf6ff 0%, #d8efff 100%);
+      color: #173b79;
+    }
+
+    .top-bar {
+      width: 100%;
+      height: 8px;
+      background: #cce6ff;
+    }
+
+    .progress {
+      height: 8px;
+      width: 0%;
+      background: linear-gradient(90deg, #4aa9ff, #215fe5);
+      transition: width 0.35s ease;
+    }
+
+    .wrap {
+      max-width: 920px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 30px 28px;
+      box-shadow: 0 18px 40px rgba(20, 59, 121, 0.12);
+    }
+
+    .module-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #4a78c2;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .lesson-title {
+      font-size: 30px;
+      font-weight: 800;
+      margin-bottom: 18px;
+      color: #173b79;
+      line-height: 1.2;
+    }
+
+    .content {
+      font-size: 18px;
+      line-height: 1.75;
+      color: #355171;
+    }
+
+    .content p {
+      margin: 0 0 14px;
+    }
+
+    .question-text {
+      font-size: 22px;
+      font-weight: 700;
+      color: #173b79;
+      margin-bottom: 18px;
+      line-height: 1.45;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 15px 18px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(180deg, #4aa9ff, #215fe5);
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      box-shadow:
+        0 10px 20px rgba(33, 95, 229, 0.25),
+        inset 0 2px 0 rgba(255,255,255,0.3);
+      transition: transform 0.15s ease, filter 0.15s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.02);
+    }
+
+    .answer-btn {
+      margin: 12px 0;
+      background: #f3f8ff;
+      color: #173b79;
+      box-shadow: none;
+      border: 1px solid #d6e6ff;
+    }
+
+    .answer-btn:hover {
+      background: #e4f1ff;
+      filter: none;
+    }
+
+    .footer-note {
+      margin-top: 22px;
+      text-align: center;
+      font-size: 14px;
+      color: #58739b;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      .wrap {
+        margin: 24px auto;
+        padding: 14px;
+      }
+
+      .card {
+        padding: 22px 18px;
+      }
+
+      .lesson-title {
+        font-size: 24px;
+      }
+
+      .content,
+      .question-text {
+        font-size: 17px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <div class="progress" id="progressBar"></div>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+
+      <div style="display:flex; justify-content:flex-end; margin-bottom:14px;">
+        <a href="course-selection.html" style="text-decoration:none; background:#eef6ff; color:#173b79; padding:10px 14px; border-radius:10px; font-weight:700; border:1px solid #dbeafe;">
+          ← Back to Courses
+        </a>
+      </div>
+
+      <div class="module-title" id="moduleLabel"></div>
+      <div class="lesson-title" id="title"></div>
+      <div class="content" id="content"></div>
+
+      <button id="nextBtn" onclick="next()">Next</button>
+
+      <div class="footer-note">
+        Lumi AI Nexus™<br>
+        Where AI, People, and Knowledge Meet.<br>
+        AI Governance Powered by HALO™
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let moduleIndex = 0;
+    let lessonIndex = 0;
+    let quizIndex = 0;
+    let mode = "lesson";
+
+    const modules = [
+      {
+        name: "Module 1: Choosing the Right AI Tool",
+        lessons: [
+          "Choosing the right AI tool starts with understanding the task. A writing assistant is not the same as an image generator, a spreadsheet tool, or a workflow system. Strong users match the tool to the problem instead of forcing one tool to do everything.",
+          "In daily work, some tools are best for drafting messages, summarizing long notes, rewriting documents, planning schedules, or organizing ideas. Other tools are better for forms, tables, task tracking, or visuals. Good tool choice saves time and reduces frustration.",
+          "For example, if a restaurant manager needs a training checklist, a writing tool may help create it. If that same manager wants to track inventory and staff assignments, a structured spreadsheet or workflow tool may be more effective.",
+          "A hotel supervisor may use an AI writing tool to draft room inspection notes, but a task management or spreadsheet-based system is better for assigning rooms and tracking completed work. Tool selection depends on output type and workflow needs.",
+          "The goal is not to know every AI tool in the world. The goal is to understand categories of tools and choose the one that best supports the result you need."
+        ],
+        quiz: [
+          {
+            q: "A hotel supervisor needs to assign rooms, track which ones are cleaned, and monitor staff progress. Which tool type is most appropriate?",
+            a: ["An image-generation tool", "A workflow or spreadsheet-style tracking tool", "A music generator", "A random chatbot without structure"],
+            correct: 1
+          },
+          {
+            q: "A restaurant owner wants to create a written employee policy update. Which tool type would help most?",
+            a: ["A writing-focused AI tool", "A map app", "A photo editor only", "A weather app"],
+            correct: 0
+          },
+          {
+            q: "What is the strongest habit when choosing an AI tool?",
+            a: ["Use the most popular one every time", "Match the tool to the task", "Avoid using any tool", "Choose by color and design"],
+            correct: 1
+          },
+          {
+            q: "Why can one AI tool for every task create poor results?",
+            a: ["Because all tools are identical", "Because different tasks need different tool strengths", "Because AI cannot help at work", "Because users should avoid structure"],
+            correct: 1
+          },
+          {
+            q: "If you need help creating a visual flyer, which type of tool is most useful?",
+            a: ["Image/design tool", "Payroll system only", "Calculator only", "Browser refresh button"],
+            correct: 0
+          },
+          {
+            q: "A strong AI user understands tool categories because:",
+            a: ["It reduces wasted time and improves results", "It makes work harder", "It replaces all planning", "It removes human judgment"],
+            correct: 0
+          },
+          {
+            q: "A worker wants AI to rewrite a professional email more clearly. What kind of tool is best?",
+            a: ["A writing and language AI tool", "A route navigation tool", "A photo-only editor", "A printer driver"],
+            correct: 0
+          },
+          {
+            q: "What should come first before choosing an AI tool?",
+            a: ["The task and output you need", "The loudest advertisement", "The most expensive plan", "The newest logo"],
+            correct: 0
+          },
+          {
+            q: "Which example shows poor tool selection?",
+            a: ["Using a writing tool for a draft letter", "Using a workflow tool to track tasks", "Using an image generator to manage payroll records", "Using a planning tool for schedules"],
+            correct: 2
+          },
+          {
+            q: "The purpose of tool selection is to:",
+            a: ["Increase confusion", "Support the right result with the right system", "Avoid all workflow planning", "Make every task longer"],
+            correct: 1
+          }
+        ]
+      },
+
+      {
+        name: "Module 2: Workflow Thinking",
+        lessons: [
+          "A workflow is the order in which a task moves from start to finish. AI becomes far more useful when you think in steps instead of isolated tasks. Good workflow thinking means asking: what starts the task, what happens next, and what result is needed at the end?",
+          "For example, a front desk process may begin with a guest request, move to scheduling, then assignment, then confirmation. AI can support parts of that workflow, but the person still needs to understand the sequence.",
+          "A workflow can include intake, classification, drafting, review, approval, and completion. AI may help with summaries, communication drafts, reminders, or sorting, but it should be placed into the right step of the workflow.",
+          "When people do not understand the workflow, they often use AI in the wrong place. They may ask it to solve a problem that really depends on missing steps, poor communication, or lack of structure.",
+          "Workflow thinking makes AI more powerful because it puts the tool inside a system. Systems create consistency, and consistency creates stronger results."
+        ],
+        quiz: [
+          {
+            q: "What is a workflow?",
+            a: ["A random list of ideas", "The order a task follows from start to finish", "A single answer from AI", "A decorative layout only"],
+            correct: 1
+          },
+          {
+            q: "Why is workflow thinking important when using AI?",
+            a: ["Because AI should replace the whole process", "Because AI works better inside a clear task sequence", "Because steps do not matter", "Because structure slows everything down"],
+            correct: 1
+          },
+          {
+            q: "A front desk process includes request, scheduling, assignment, and confirmation. This is an example of:",
+            a: ["A workflow", "A spreadsheet error", "A chatbot only", "A broken process"],
+            correct: 0
+          },
+          {
+            q: "Which of the following is a workflow step?",
+            a: ["Intake and review", "Random guessing", "Avoiding structure", "Ignoring the result"],
+            correct: 0
+          },
+          {
+            q: "Why do people sometimes use AI in the wrong place?",
+            a: ["Because they do not understand the process steps", "Because AI always fails", "Because workflows are unnecessary", "Because task order never matters"],
+            correct: 0
+          },
+          {
+            q: "A strong workflow helps AI by:",
+            a: ["Making every task random", "Creating consistency and better results", "Removing all human judgment", "Stopping communication"],
+            correct: 1
+          },
+          {
+            q: "Which is the best first step in workflow thinking?",
+            a: ["Understand what starts the process", "Buy more tools first", "Skip the sequence", "Ignore the final result"],
+            correct: 0
+          },
+          {
+            q: "AI in workflows should be used:",
+            a: ["In the correct step where it adds value", "Everywhere at once", "Only at the end", "Only before the task starts"],
+            correct: 0
+          },
+          {
+            q: "A person asks AI to fix a messy process without understanding the process. What is the real problem?",
+            a: ["The AI color is wrong", "The process itself is unclear", "The keyboard is too loud", "The internet is always the cause"],
+            correct: 1
+          },
+          {
+            q: "Workflow thinking improves:",
+            a: ["Confusion", "Structure, speed, and repeatability", "Mistakes on purpose", "Task avoidance"],
+            correct: 1
+          }
+        ]
+      },
+
+      {
+        name: "Module 3: Automation in Daily Work",
+        lessons: [
+          "Automation in daily work means reducing repeated effort. AI can support repetitive communication, recurring reports, checklist creation, response drafting, and task reminders. The point is not to remove people. The point is to reduce friction in repeated work.",
+          "In a hotel environment, automation support may include shift notes, room assignment drafts, task lists, or common guest-response templates. In a restaurant, it may include schedule drafts, checklist creation, supply reminders, or standard response language.",
+          "In an office or admin environment, automation may support appointment reminders, follow-up drafts, summaries, task categorization, or template generation. AI works best when it supports repeated tasks people already understand.",
+          "Automation should always be reviewed. If a repeated task affects people, records, scheduling, or customer communication, a human should confirm the output before relying on it.",
+          "Strong workers use automation to improve speed and consistency, not to abandon responsibility."
+        ],
+        quiz: [
+          {
+            q: "What is the main purpose of automation in daily work?",
+            a: ["To increase repeated manual effort", "To reduce friction in repeated tasks", "To remove all workers", "To avoid all review"],
+            correct: 1
+          },
+          {
+            q: "Which hotel task is a strong example of AI-supported automation?",
+            a: ["Drafting standard guest responses", "Replacing building maintenance entirely", "Driving the shuttle without training", "Ignoring room status tracking"],
+            correct: 0
+          },
+          {
+            q: "Which restaurant task could AI support well?",
+            a: ["Creating checklist drafts and reminder templates", "Cooking without staff", "Ignoring inventory", "Replacing health code review"],
+            correct: 0
+          },
+          {
+            q: "AI automation is strongest when:",
+            a: ["It supports repeated tasks people already understand", "It replaces all human review", "It runs without any oversight", "It is used only once"],
+            correct: 0
+          },
+          {
+            q: "Why should automation still be reviewed?",
+            a: ["Because repeated tasks often affect real people and real decisions", "Because automation is always useless", "Because review never matters", "Because AI should not be used at work"],
+            correct: 0
+          },
+          {
+            q: "A good office use for AI automation is:",
+            a: ["Appointment reminder drafts", "Random data deletion", "Ignoring follow-ups", "Replacing all management decisions"],
+            correct: 0
+          },
+          {
+            q: "Strong automation use creates:",
+            a: ["More inconsistency", "Better speed and consistency", "Less structure", "More confusion"],
+            correct: 1
+          },
+          {
+            q: "What should humans keep when using automation?",
+            a: ["Responsibility and review", "No involvement at all", "Only blind trust", "No final judgment"],
+            correct: 0
+          },
+          {
+            q: "Which task is best suited for AI-assisted automation?",
+            a: ["Repeated response drafting", "Emergency surgery", "Licensed legal judgment", "Random guessing"],
+            correct: 0
+          },
+          {
+            q: "The smartest use of automation is to:",
+            a: ["Support workflow without removing accountability", "Eliminate all staff thinking", "Ignore the output", "Avoid process design"],
+            correct: 0
+          }
+        ]
+      },
+
+      {
+        name: "Module 4: AI + Human Decision Making",
+        lessons: [
+          "AI can support decisions, but it should not replace human judgment in important situations. A useful AI output is still only one part of the decision process.",
+          "In real workplaces, AI may help sort information, summarize notes, draft options, or highlight patterns. The person still decides what is appropriate, accurate, safe, and necessary.",
+          "For example, AI may draft a customer response, but a manager still decides whether the tone is right. AI may summarize maintenance notes, but a supervisor still decides what action comes next.",
+          "Human decision making matters because context matters. AI does not fully understand relationships, local conditions, workplace culture, urgency, or consequences the way a responsible human must.",
+          "The strongest AI users know how to combine speed from AI with judgment from people."
+        ],
+        quiz: [
+          {
+            q: "What is the best role of AI in decision-making?",
+            a: ["Replace judgment completely", "Support people by organizing and drafting useful information", "Remove all accountability", "Make final decisions alone"],
+            correct: 1
+          },
+          {
+            q: "Why should people still review AI-supported decisions?",
+            a: ["Because context and consequences still matter", "Because AI is decoration only", "Because decisions never affect people", "Because review is optional in all settings"],
+            correct: 0
+          },
+          {
+            q: "A manager uses AI to draft a customer response. Who decides whether it should be sent?",
+            a: ["The AI", "The manager or responsible human", "The browser", "Nobody"],
+            correct: 1
+          },
+          {
+            q: "What does AI often do well in support of decisions?",
+            a: ["Sort and summarize information", "Take legal responsibility", "Replace all context", "Eliminate the need for review"],
+            correct: 0
+          },
+          {
+            q: "Why is human judgment still important?",
+            a: ["Because context, safety, and consequences require it", "Because AI never provides anything useful", "Because systems should stay disorganized", "Because people should ignore all tools"],
+            correct: 0
+          },
+          {
+            q: "A supervisor uses AI to summarize shift notes. What still belongs to the supervisor?",
+            a: ["Deciding what action to take", "Letting the summary act alone", "Ignoring the result", "Deleting the workflow"],
+            correct: 0
+          },
+          {
+            q: "The strongest AI users combine:",
+            a: ["Speed from AI and judgment from people", "No review and fast clicks", "Tools without structure", "Automation without accountability"],
+            correct: 0
+          },
+          {
+            q: "Which statement is true?",
+            a: ["AI fully understands workplace culture and consequences", "AI can assist, but people must still decide responsibly", "AI should replace every supervisor", "AI removes the need for context"],
+            correct: 1
+          },
+          {
+            q: "AI is most helpful in decisions when it:",
+            a: ["Supports thinking without replacing responsibility", "Blocks human review", "Makes every choice automatically", "Ignores safety"],
+            correct: 0
+          },
+          {
+            q: "Human review is most important when:",
+            a: ["The result affects real people or real operations", "The task is meaningless", "The answer looks stylish", "The output is never used"],
+            correct: 0
+          }
+        ]
+      },
+
+      {
+        name: "Module 5: Real-World Workflow Scenarios",
+        lessons: [
+          "Real-world AI skill shows up when a person can look at a situation, identify the task, choose the right tool, understand the workflow, and apply judgment. That is what separates random use from professional use.",
+          "A housekeeper may need help organizing task order and shift notes. A restaurant manager may need help with inventory reminders and training checklists. An office admin may need help with meeting notes and message drafts. These are all workflow situations.",
+          "The right question is not 'Can AI do this?' The right question is 'Where in this process can AI help without reducing responsibility or quality?'",
+          "Workflows become stronger when the tool, the task, and the human role are aligned. When those three are aligned, AI becomes practical and beneficial.",
+          "Real AI skill means using the tool with purpose, not just using it because it exists."
+        ],
+        quiz: [
+          {
+            q: "A hotel manager wants to standardize room inspection notes across all shifts. What is the best AI use?",
+            a: ["Use AI to draft a consistent inspection note template", "Use AI to ignore inspections", "Use AI to replace all staff meetings", "Use AI to remove room tracking"],
+            correct: 0
+          },
+          {
+            q: "A restaurant owner wants a cleaner process for restocking supplies. What is the best AI-supported step?",
+            a: ["Create a checklist and reminder workflow", "Avoid tracking inventory", "Use only random messages", "Stop reviewing stock"],
+            correct: 0
+          },
+          {
+            q: "An office assistant needs to summarize meeting notes and create next-step reminders. Which workflow use is strongest?",
+            a: ["Use AI to summarize and draft follow-up actions", "Use AI to skip the meeting", "Use AI to send unchecked legal notices", "Use AI to replace all leadership decisions"],
+            correct: 0
+          },
+          {
+            q: "What is the best question to ask before using AI in a workflow?",
+            a: ["Can AI do everything for me?", "Where can AI help this process without reducing responsibility?", "How many tools can I add?", "How can I avoid review?"],
+            correct: 1
+          },
+          {
+            q: "What makes AI practical in real work?",
+            a: ["Random use", "Alignment between tool, task, and human role", "Removing structure", "Ignoring the workflow"],
+            correct: 1
+          },
+          {
+            q: "A worker uses AI only because it sounds advanced, not because it fits the task. This shows:",
+            a: ["Professional judgment", "Purposeful AI use", "Weak tool judgment", "Strong workflow alignment"],
+            correct: 2
+          },
+          {
+            q: "Which example shows real AI skill?",
+            a: ["Choosing the tool that fits the workflow need", "Using the loudest app ad", "Skipping the task definition", "Avoiding structure"],
+            correct: 0
+          },
+          {
+            q: "Why is workflow alignment important?",
+            a: ["Because it helps AI produce more useful results", "Because it removes the need for thinking", "Because tool choice never matters", "Because structure makes work worse"],
+            correct: 0
+          },
+          {
+            q: "The best AI-supported workflow is one that:",
+            a: ["Still keeps a human responsible for the result", "Runs without oversight in every case", "Avoids all checks", "Eliminates the need for people entirely"],
+            correct: 0
+          },
+          {
+            q: "Real-world AI training should help people:",
+            a: ["Use tools with purpose in real situations", "Memorize random words only", "Avoid decision-making", "Depend blindly on output"],
+            correct: 0
+          }
+        ]
+      }
+    ];
+
+    function getTotalSteps() {
+      let total = 0;
+      modules.forEach(module => {
+        total += module.lessons.length + module.quiz.length;
+      });
+      return total;
+    }
+
+    function getCurrentStep() {
+      let step = 0;
+
+      for (let i = 0; i < moduleIndex; i++) {
+        step += modules[i].lessons.length + modules[i].quiz.length;
+      }
+
+      if (mode === "lesson") {
+        step += lessonIndex;
+      } else {
+        step += modules[moduleIndex].lessons.length + quizIndex;
+      }
+
+      return step;
+    }
+
+    function updateProgress() {
+      const progressBar = document.getElementById("progressBar");
+      const totalSteps = getTotalSteps();
+      const currentStep = getCurrentStep();
+      const progressPercent = (currentStep / totalSteps) * 100;
+      progressBar.style.width = progressPercent + "%";
+    }
+
+    function renderQuestion(q) {
+      let html = `<div class="question-text">${q.q}</div>`;
+      q.a.forEach((opt, i) => {
+        html += `<button class="answer-btn" onclick="checkAnswer(${i})">${opt}</button>`;
+      });
+      return html;
+    }
+
+    function load() {
+      const title = document.getElementById("title");
+      const content = document.getElementById("content");
+      const nextBtn = document.getElementById("nextBtn");
+      const moduleLabel = document.getElementById("moduleLabel");
+
+      const module = modules[moduleIndex];
+
+      updateProgress();
+      moduleLabel.innerText = module.name;
+
+      if (mode === "lesson") {
+        title.innerText = "Lesson " + (lessonIndex + 1);
+        content.innerHTML = `<p>${module.lessons[lessonIndex]}</p>`;
+        nextBtn.style.display = "block";
+      }
+
+      if (mode === "quiz") {
+        title.innerText = "Question " + (quizIndex + 1);
+        content.innerHTML = renderQuestion(module.quiz[quizIndex]);
+        nextBtn.style.display = "none";
+      }
+    }
+
+    function checkAnswer(i) {
+      const module = modules[moduleIndex];
+      const correct = module.quiz[quizIndex].correct;
+
+      if (i === correct) {
+        alert("Correct!");
+      } else {
+        alert("Incorrect. Try again.");
+        return;
+      }
+
+      quizIndex++;
+
+      if (quizIndex < module.quiz.length) {
+        load();
+      } else {
+        alert(module.name + " Complete!");
+        moduleIndex++;
+        lessonIndex = 0;
+        quizIndex = 0;
+        mode = "lesson";
+
+        if (moduleIndex >= modules.length) {
+          localStorage.setItem("courseName", "AI Tools & Workflow Automation™");
+          localStorage.setItem("courseSubtitle", "Completed all modules and assessments");
+          localStorage.setItem("issueDate", new Date().toLocaleDateString());
+          localStorage.setItem("certificateId", "LUMI-" + Math.floor(10000 + Math.random() * 90000));
+
+          window.location.href = "certificate-choice.html";
+        } else {
+          load();
+        }
+      }
+    }
+
+    function next() {
+      const module = modules[moduleIndex];
+
+      if (mode === "lesson") {
+        lessonIndex++;
+
+        if (lessonIndex >= module.lessons.length) {
+          mode = "quiz";
+          lessonIndex = 0;
+        }
+
+        load();
+      }
+    }
+
+    load();
+  </script>
+</body>
+</html>
