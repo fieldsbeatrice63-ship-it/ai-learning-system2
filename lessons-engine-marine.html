@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lumi AI Nexus™ | AI in Marine & Naval Systems™</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(180deg, #eaf6ff 0%, #d8efff 100%);
+      color: #173b79;
+    }
+
+    .top-bar {
+      width: 100%;
+      height: 8px;
+      background: #cce6ff;
+    }
+
+    .progress {
+      height: 8px;
+      width: 0%;
+      background: linear-gradient(90deg, #4aa9ff, #215fe5);
+      transition: width 0.35s ease;
+    }
+
+    .wrap {
+      max-width: 920px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 30px 28px;
+      box-shadow: 0 18px 40px rgba(20, 59, 121, 0.12);
+    }
+
+    .module-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #4a78c2;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .lesson-title {
+      font-size: 30px;
+      font-weight: 800;
+      margin-bottom: 18px;
+      color: #173b79;
+      line-height: 1.2;
+    }
+
+    .content {
+      font-size: 18px;
+      line-height: 1.75;
+      color: #355171;
+    }
+
+    .content p {
+      margin: 0 0 14px;
+    }
+
+    .question-text {
+      font-size: 22px;
+      font-weight: 700;
+      color: #173b79;
+      margin-bottom: 18px;
+      line-height: 1.45;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 15px 18px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(180deg, #4aa9ff, #215fe5);
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      box-shadow:
+        0 10px 20px rgba(33, 95, 229, 0.25),
+        inset 0 2px 0 rgba(255,255,255,0.3);
+      transition: transform 0.15s ease, filter 0.15s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.02);
+    }
+
+    .answer-btn {
+      margin: 12px 0;
+      background: #f3f8ff;
+      color: #173b79;
+      box-shadow: none;
+      border: 1px solid #d6e6ff;
+    }
+
+    .answer-btn:hover {
+      background: #e4f1ff;
+      filter: none;
+    }
+
+    .footer-note {
+      margin-top: 22px;
+      text-align: center;
+      font-size: 14px;
+      color: #58739b;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      .wrap {
+        margin: 24px auto;
+        padding: 14px;
+      }
+
+      .card {
+        padding: 22px 18px;
+      }
+
+      .lesson-title {
+        font-size: 24px;
+      }
+
+      .content,
+      .question-text {
+        font-size: 17px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <div class="progress" id="progressBar"></div>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+
+      <div style="display:flex; justify-content:flex-end; margin-bottom:14px;">
+        <a href="course-selection.html" style="text-decoration:none; background:#eef6ff; color:#173b79; padding:10px 14px; border-radius:10px; font-weight:700; border:1px solid #dbeafe;">
+          ← Back to Courses
+        </a>
+      </div>
+
+      <div class="module-title" id="moduleLabel"></div>
+      <div class="lesson-title" id="title"></div>
+      <div class="content" id="content"></div>
+
+      <button id="nextBtn" onclick="next()">Next</button>
+
+      <div class="footer-note">
+        Lumi AI Nexus™<br>
+        Where AI, People, and Knowledge Meet.<br>
+        AI Governance Powered by HALO™
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let moduleIndex = 0;
+    let lessonIndex = 0;
+    let quizIndex = 0;
+    let mode = "lesson";
+
+    const modules = [
+      {
+        name: "Module 1: AI in Navigation & Route Support",
+        lessons: [
+          "AI in marine and naval environments is often used to support navigation, route planning, situational awareness, and movement efficiency. These systems analyze weather, traffic, hazards, and operational conditions faster than a person can process manually, but they still require human review before action is taken.",
+          "Navigation support systems do not replace professional judgment. A recommended route may appear efficient, but operators must still review safety, mission priorities, environmental conditions, and operational constraints before adjusting course.",
+          "Marine and naval systems often rely on real-time inputs from radar, charts, weather feeds, vessel traffic data, and onboard systems. AI helps organize and interpret those data streams, but it does not remove responsibility from the operator or command team.",
+          "Route optimization can improve time, fuel use, and mission efficiency, but incorrect or poorly reviewed changes can introduce risk. That is why AI-generated route recommendations should always be treated as decision support, not automatic direction.",
+          "The strongest marine and naval professionals understand how to use AI for awareness and planning without allowing the system to replace safety verification, chain of command, or operational judgment."
+        ],
+        quiz: [
+          {
+            q: "An AI-assisted navigation system recommends a route adjustment because current weather and traffic data suggest the vessel can avoid delay by changing course. The operator notices, however, that the suggested route is longer and passes through an area with different operational constraints than the current plan. What is the most appropriate next step?",
+            a: ["Ignore the recommendation because the current route was planned earlier", "Accept the new route immediately because AI processed more data", "Review the recommendation against safety, mission, and operational conditions before changing course", "Disable route recommendations for the rest of the operation"],
+            correct: 2
+          },
+          {
+            q: "A marine operator receives an AI-generated warning that projected sea conditions may affect the current route within the next several hours. The current route is still open, and the crew has not yet observed visible danger. What should the operator do before deciding whether to change course?",
+            a: ["Wait for conditions to become severe before reviewing the alert", "Evaluate the AI warning against current navigation data, forecast conditions, and mission requirements", "Ignore the warning because no immediate hazard is visible", "Automatically reroute without informing the command chain"],
+            correct: 1
+          },
+          {
+            q: "An AI route support tool suggests a new path based on efficiency gains, but the recommendation conflicts with a previously briefed operational plan. The system does not explain the full operational tradeoff. What is the strongest response?",
+            a: ["Follow the AI recommendation because efficiency is usually the priority", "Treat the AI output as guidance and verify how the recommendation fits the existing operational plan before acting", "Reject all future AI route support because it created a conflict once", "Allow a junior crew member to decide whether the change should be made"],
+            correct: 1
+          },
+          {
+            q: "A navigation-support AI highlights increasing vessel traffic in the current operating area and recommends spacing adjustments. The watch team is already following standard procedures and believes no change is necessary. What is the best action?",
+            a: ["Ignore the AI because the team already has a procedure", "Review the recommendation against the current traffic picture and determine whether an adjustment adds safety value", "Change course immediately without reviewing the traffic data", "Turn off the traffic-analysis function to reduce interruptions"],
+            correct: 1
+          },
+          {
+            q: "An AI system recommends a route change that reduces transit time, but one segment would place the vessel closer to environmental conditions that have historically increased operational risk. What should happen before that recommendation is accepted?",
+            a: ["The shorter route should be used because speed is the clearest metric", "The environmental and operational risks should be reviewed before approving the change", "The recommendation should be ignored because AI should not influence navigation", "The system should be reset and the original route kept without further discussion"],
+            correct: 1
+          },
+          {
+            q: "A naval operations team uses AI route analysis to compare multiple paths during a time-sensitive movement. One route is faster, one is safer, and one is operationally familiar. What is the strongest understanding of the AI system’s role in this situation?",
+            a: ["The AI should choose the route automatically because it can process the most variables", "The AI should support the team by organizing route tradeoffs, while command still makes the final decision", "The familiar route should always be selected regardless of analysis", "Route systems should only be used after movement decisions are already made"],
+            correct: 1
+          },
+          {
+            q: "A marine logistics vessel receives an AI route update that accounts for weather and port congestion. The operator notices the recommendation would alter arrival timing enough to affect downstream coordination. What should the operator do?",
+            a: ["Approve the route change immediately because the system optimized for current conditions", "Review how the route change affects coordination, timing, and mission impact before approving", "Ignore the route update because arrival timing was already scheduled", "Delay all movement until new manual routing is created from scratch"],
+            correct: 1
+          },
+          {
+            q: "An AI navigation tool has been highly accurate in recent operations, and the watch team is becoming increasingly dependent on it. During one transit, the system provides a recommendation based on incomplete external feed data. What is the operational risk in overrelying on the system?",
+            a: ["The team may stop applying independent judgment and miss that the recommendation was based on incomplete input", "The system may become too efficient and shorten routes unnecessarily", "The team may lose interest in route planning altogether", "The recommendation will always remain correct if prior outputs were accurate"],
+            correct: 0
+          },
+          {
+            q: "A coastal navigation AI system suggests a change that would improve efficiency, but the recommendation uses updated traffic data not yet confirmed by the bridge team. What is the best next step?",
+            a: ["Approve the change because live data should always override manual review", "Verify the traffic information and assess the route change before acting", "Ignore the updated traffic picture and continue as planned without review", "Allow the system to apply the route change automatically"],
+            correct: 1
+          },
+          {
+            q: "What best describes strong AI use in marine and naval navigation support?",
+            a: ["Using AI to replace the operator’s situational judgment", "Using AI to provide route insight while operators and command verify safety and operational fit", "Using AI only after a route is already fully executed", "Using AI only when manual navigation fails completely"],
+            correct: 1
+          }
+        ]
+      },
+
+      {
+        name: "Module 2: AI in Equipment Monitoring & Predictive Maintenance",
+        lessons: [
+          "Marine and naval systems depend on reliable engines, sensors, propulsion systems, electrical components, and mission-critical equipment. AI is increasingly used to monitor performance patterns and identify potential failures before those failures become visible or disruptive.",
+          "Predictive maintenance systems analyze vibration, temperature, pressure, performance drift, fault histories, and other technical signals. These systems help maintenance teams act earlier, but they do not remove the need for inspection, verification, and operational judgment.",
+          "An AI maintenance alert does not always mean an immediate shutdown is required. It does mean that the signal should be evaluated carefully, especially if continued operation could increase the severity of the issue.",
+          "Maintenance-related AI is valuable because it helps reduce downtime, improve readiness, and prevent failures from occurring unexpectedly. However, acting on a false or misunderstood recommendation without review can also create unnecessary disruption.",
+          "The strongest operators and maintenance teams understand how to balance AI alerts, equipment condition, mission tempo, and safety before deciding how to respond."
+        ],
+        quiz: [
+          {
+            q: "A predictive maintenance AI system flags a possible engine issue based on vibration patterns and rising sensor irregularities, but the system is still operating within normal visible limits. The crew is under pressure to continue operations without delay. What is the most appropriate next step?",
+            a: ["Ignore the alert because the equipment is still functioning", "Shut down the system immediately without further review", "Investigate and verify the equipment condition before deciding whether continued operation is acceptable", "Disable maintenance alerts so operations can continue without interruption"],
+            correct: 2
+          },
+          {
+            q: "An AI maintenance tool indicates that a component may fail within the next operational cycle if stress patterns continue. The equipment has no outward signs of malfunction, and replacing the component now would affect mission timing. What should the responsible team do?",
+            a: ["Wait until failure occurs to confirm the system was correct", "Evaluate the alert, inspect the component, and weigh risk before deciding how to proceed", "Ignore the prediction because visible performance still looks normal", "Replace the entire system immediately without technical verification"],
+            correct: 1
+          },
+          {
+            q: "A naval maintenance team receives repeated AI alerts tied to one subsystem, but each inspection so far has found no obvious defect. Some team members begin assuming the system is oversensitive. What is the strongest operational concern with that assumption?",
+            a: ["Repeated alerts can indicate developing patterns even if an issue is not yet fully visible", "Oversensitive systems should always be turned off after several alerts", "If no visible defect appears, the AI system should never be trusted again", "Repeated alerts are mainly administrative and do not affect readiness"],
+            correct: 0
+          },
+          {
+            q: "An AI diagnostic tool recommends servicing a propulsion-related component based on trend data. A supervisor considers delaying action because the next mission window is short and the component is still operating. What should guide the decision?",
+            a: ["Only mission timing should matter because service can happen later", "The recommendation should be ignored unless failure is guaranteed", "The maintenance risk, equipment condition, and operational impact should all be reviewed before deciding", "The component should be replaced only if the AI can explain every data point"],
+            correct: 2
+          },
+          {
+            q: "A maintenance system flags inconsistent sensor readings on a vessel subsystem after environmental conditions changed significantly. The operator suspects the alert may reflect temporary external factors rather than actual equipment degradation. What is the best response?",
+            a: ["Ignore the alert completely because external conditions changed", "Review the system data and inspect whether the readings reflect environmental variation or true equipment risk", "Replace the subsystem immediately to be safe", "Disable the sensor and continue normal operation"],
+            correct: 1
+          },
+          {
+            q: "A marine operator receives an AI-generated recommendation to reduce equipment load due to detected performance drift. The issue is not yet critical, but continued strain may worsen the condition before maintenance can be performed. What is the best next step?",
+            a: ["Continue operating normally until the equipment fails", "Evaluate whether operational adjustment can reduce risk while maintenance is arranged", "Ignore the recommendation because drift is not failure", "Shut down all related systems immediately without review"],
+            correct: 1
+          },
+          {
+            q: "An AI maintenance platform highlights that a recurring issue has appeared across several vessels using the same component type. The local crew has not yet experienced failure. What is the strongest interpretation of this alert?",
+            a: ["The issue should be ignored until local failure occurs", "The broader pattern may indicate preventive action or review is needed even before local failure appears", "Other vessels do not matter if the current vessel is still operating", "The platform should only be used for after-action maintenance records"],
+            correct: 1
+          },
+          {
+            q: "A technician wants to act on every AI maintenance alert immediately to avoid any chance of equipment failure. Why can that approach still be problematic?",
+            a: ["Because every alert means nothing unless equipment stops working", "Because immediate action without verification can create unnecessary downtime or misallocate resources", "Because predictive maintenance should only be used in civilian operations", "Because maintenance systems work best when ignored until a pattern repeats many times"],
+            correct: 1
+          },
+          {
+            q: "A shipboard AI system recommends replacing a component, while manual inspection suggests the component may have remaining service life. What is the strongest next step?",
+            a: ["Trust only the manual inspection and ignore the AI recommendation", "Trust only the AI because it uses more data", "Compare the AI recommendation with inspection findings and determine whether additional verification is needed before deciding", "Delay all action indefinitely because the sources conflict"],
+            correct: 2
+          },
+          {
+            q: "What best describes strong use of AI in marine and naval maintenance?",
+            a: ["Using AI alerts as automatic orders without inspection", "Using AI to support earlier awareness while maintenance decisions are still reviewed and validated by responsible personnel", "Using AI only after failures are confirmed", "Using AI to replace technical judgment on all equipment conditions"],
+            correct: 1
+          }
+        ]
+      },
+
+      {
+        name: "Module 3: AI in Surveillance, Threat Detection, and Situational Awareness",
+        lessons: [
+          "Marine and naval operations rely heavily on awareness of surrounding movement, radar information, traffic patterns, sensor data, and environmental conditions. AI systems help process large amounts of information and highlight patterns or anomalies that deserve closer review.",
+          "Threat-detection systems do not confirm every event as hostile. Instead, they help teams recognize unusual behavior, inconsistent movement, unexpected signatures, or activity that differs from expected patterns.",
+          "Situational awareness is strongest when AI helps organize information while trained personnel verify what the alert means in operational context. A flagged anomaly may reflect a threat, a harmless irregularity, or incomplete data that needs additional review.",
+          "In military-adjacent and maritime security settings, AI may support radar interpretation, surface tracking, anomaly detection, and surveillance workflow. The system’s value comes from faster detection, but human analysis remains essential.",
+          "The strongest operators know how to use AI-supported alerts without overreacting, underreacting, or treating every signal as either meaningless or confirmed threat."
+        ],
+        quiz: [
+          {
+            q: "A surveillance AI system detects an unusual movement pattern in a monitored maritime zone and flags it as a potential threat. The behavior does not match known routine traffic, but it has not yet been confirmed as hostile. What is the most appropriate next step?",
+            a: ["Treat the flagged movement as confirmed hostile activity immediately", "Ignore the alert because AI systems often overflag unusual patterns", "Investigate and verify the behavior before escalating the threat level", "Disable the surveillance alert because it is not yet proven"],
+            correct: 2
+          },
+          {
+            q: "An AI radar analysis system highlights a surface track that changes speed and direction in a way that differs from surrounding traffic. The operator has incomplete visual confirmation and limited additional context. What should happen next?",
+            a: ["Dismiss the alert until visual confirmation is perfect", "Review the track more closely and compare it with other available operational data before deciding on response", "Assume the track is harmless because surrounding traffic looks normal", "Escalate to maximum threat automatically because AI detected an anomaly"],
+            correct: 1
+          },
+          {
+            q: "A maritime security team uses AI to filter large volumes of surveillance data. One analyst begins ignoring low-confidence alerts entirely because they rarely turn into incidents. What is the main risk in that habit?",
+            a: ["Low-confidence alerts can still contain early indicators that deserve informed review", "Low-confidence alerts are administrative only and never matter operationally", "AI systems should only produce high-confidence outputs if they are valid", "Analysts should not review any AI outputs unless command requests it directly"],
+            correct: 0
+          },
+          {
+            q: "An AI system detects abnormal vessel behavior near a restricted zone and recommends closer monitoring. The watch team is already handling several other tasks and believes the pattern is probably harmless. What is the strongest response?",
+            a: ["Ignore the recommendation unless the vessel crosses into the zone", "Assign closer review based on the flagged behavior before assuming it is harmless", "Treat the vessel as hostile without verification", "Disable monitoring for that target to reduce workload"],
+            correct: 1
+          },
+          {
+q:"A threat detection platform connected to radar and maritime surveillance systems flags an unusual movement pattern in a monitored zone. The contact does not match known vessel behavior, but there is not yet enough evidence to confirm hostile intent. What is the most appropriate next step for the operator before escalating the situation?",
+a:["Ignore the radar alert until visual confirmation is available","Treat the contact as confirmed hostile and respond immediately","Investigate the flagged pattern further and verify additional data before making a final threat determination","Disable the radar alert because the system may be overreacting"],
+correct:2
+},
+
+{
+q:"An AI-assisted surveillance system identifies repeated course changes from a vessel moving near a restricted operational area. The radar signature remains inconsistent with typical commercial traffic, but the vessel has not yet entered a prohibited zone. What should the watch team do next?",
+a:["Continue monitoring and verify the pattern before deciding whether the activity requires escalation","Ignore the behavior because no boundary has been crossed yet","Assume it is harmless because the vessel has not communicated any threat","Order an immediate full operational response without further confirmation"],
+correct:0
+},
+
+{
+q:"A naval operator is reviewing an AI-generated surveillance alert that combines radar, thermal, and movement-pattern analysis. The system recommends classifying the activity as suspicious, but one sensor feed appears incomplete. What is the best decision before acting on the alert?",
+a:["Follow the AI recommendation immediately because multiple systems were involved","Verify the incomplete sensor input and review the alert using the full available picture before classifying the threat","Ignore the alert because one feed is missing","Delete the alert and wait for the next scan cycle"],
+correct:1
+},
+
+{
+q:"A marine operations team receives an AI-generated anomaly alert showing that a tracked object is moving against the expected traffic flow in a monitored channel. The team is under pressure to make a rapid decision because nearby assets could be affected if the alert is real. What is the strongest response?",
+a:["Investigate the anomaly quickly but verify the operational context before deciding on a response","Assume the object is hostile because the traffic pattern is unusual","Ignore the system because pressure can lead to mistakes","Shut down all nearby movement immediately without confirming the alert"],
+correct:0
+},
+
+{
+q:"An AI surveillance system flags radar activity that appears to suggest a small fast-moving object has changed speed and direction multiple times in a short period. The object could represent harmless irregular movement or possible suspicious activity. What should the operator understand about the AI output before making a decision?",
+a:["The alert is only useful if the object has already been identified visually","The AI output is a support signal that still requires interpretation and verification before action","The radar flag alone is enough to confirm intent","The object should be ignored unless it crosses directly into a restricted zone"],
+correct:1
+},
+
+{
+q:"A maritime security analyst notices that an AI threat model has increased the risk score of a vessel after combining radar behavior, route deviation, and proximity to restricted waters. However, recent weather conditions may also explain some movement irregularities. What is the most appropriate next step?",
+a:["Escalate immediately without review because the score increased","Review environmental conditions alongside the AI findings before deciding whether the activity is truly suspicious","Ignore the risk score because weather always causes false alerts","Reduce the score manually and clear the case without documentation"],
+correct:1
+},
+
+{
+name:"Module 4: AI in Logistics, Supply Chain & Operational Readiness",
+lessons:[
+"AI systems in military and naval operations are heavily used in logistics to track supplies, predict shortages, and optimize delivery routes across complex environments.",
+"Operational readiness depends on having the right equipment, fuel, personnel, and supplies available at the right time. AI helps forecast needs, but decisions must still be verified.",
+"AI logistics systems analyze movement patterns, environmental conditions, and mission timelines to recommend adjustments to supply routes and distribution plans.",
+"Supply chain disruptions can occur due to weather, equipment failure, or unexpected operational changes. AI can detect these risks early but does not automatically resolve them.",
+"Effective use of AI in logistics requires understanding both the system’s recommendations and the real-world impact of decisions across multiple operations."
+],
+quiz:[
+
+{
+q:"An AI logistics system predicts a delay in critical supply delivery due to changing environmental conditions and route congestion. The system recommends rerouting supplies through an alternate path that may affect another scheduled operation. What is the most appropriate next step for the operator?",
+a:["Reroute supplies immediately without review","Ignore the AI system and continue with the original plan","Evaluate the impact of the reroute on all operations before making a decision","Cancel all supply movement"],
+correct:2
+},
+
+{
+q:"A naval logistics AI system flags that fuel consumption rates are higher than expected based on current mission activity. The system suggests adjusting supply distribution to compensate. What should the logistics officer do next?",
+a:["Ignore the alert since operations are ongoing","Immediately redistribute fuel without verification","Review consumption data and confirm the accuracy before making adjustments","Shut down operations"],
+correct:2
+},
+
+{
+q:"An AI supply chain system identifies a potential shortage of critical equipment based on projected mission timelines. The current inventory appears sufficient for now. What is the most responsible action?",
+a:["Ignore the projection because current inventory is stable","Order excessive supplies immediately","Review projections and verify demand before adjusting inventory","Cancel missions"],
+correct:2
+},
+
+{
+q:"A logistics AI platform recommends consolidating supply shipments to improve efficiency. However, doing so could delay delivery to certain units. What should be considered before following the recommendation?",
+a:["Only efficiency","The impact of delays on operational readiness","Ignoring the recommendation","Reducing all shipments"],
+correct:1
+},
+
+{
+q:"An AI system flags irregular supply movement patterns that could indicate a disruption or misallocation of resources. The data is incomplete but suggests potential inefficiencies. What should the operator do?",
+a:["Ignore incomplete data","Investigate the pattern further before taking action","Shut down supply movement","Approve all shipments"],
+correct:1
+},
+
+{
+q:"A military logistics AI system suggests reallocating resources from one operation to support another higher-priority mission. What is the correct approach?",
+a:["Reallocate immediately","Ignore priority changes","Evaluate the impact on both operations before making a decision","Cancel both missions"],
+correct:2
+},
+
+{
+q:"An AI-driven logistics system recommends a faster delivery route, but the route passes through an area with uncertain environmental conditions. What should the decision-maker do?",
+a:["Approve route immediately","Ignore route suggestion","Assess risks and verify route safety before proceeding","Delay all deliveries"],
+correct:2
+},
+
+{
+q:"A supply chain AI system predicts delays due to weather disruptions. The system suggests preemptive redistribution of supplies. What is the most appropriate response?",
+a:["Ignore prediction","Redistribute supplies immediately","Verify forecast and impact before making changes","Cancel shipments"],
+correct:2
+},
+
+{
+q:"An AI system monitors inventory levels and suggests reducing stock to optimize storage efficiency. What is the potential risk?",
+a:["Improved efficiency","Possible shortage during critical operations","Faster delivery","Reduced workload"],
+correct:1
+},
+
+{
+q:"A logistics AI system identifies a mismatch between planned and actual supply usage rates. What should the operator do next?",
+a:["Ignore mismatch","Investigate discrepancy and adjust planning if necessary","Cancel supply orders","Approve system without review"],
+correct:1
+}
+]
+  },    
+{
+name:"Module 4: AI in Logistics, Supply Chain & Operational Readiness",
+lessons:[
+"AI systems in military and naval operations are heavily used in logistics to track supplies, predict shortages, and optimize delivery routes across complex environments.",
+"Operational readiness depends on having the right equipment, fuel, personnel, and supplies available at the right time. AI helps forecast needs, but decisions must still be verified.",
+"AI logistics systems analyze movement patterns, environmental conditions, and mission timelines to recommend adjustments to supply routes and distribution plans.",
+"Supply chain disruptions can occur due to weather, equipment failure, or unexpected operational changes. AI can detect these risks early but does not automatically resolve them.",
+"Effective use of AI in logistics requires understanding both the system’s recommendations and the real-world impact of decisions across multiple operations."
+],
+quiz:[
+
+{
+q:"An AI logistics system predicts a delay in critical supply delivery due to changing environmental conditions and route congestion. The system recommends rerouting supplies through an alternate path that may affect another scheduled operation. What is the most appropriate next step for the operator?",
+a:["Reroute supplies immediately without review","Ignore the AI system and continue with the original plan","Evaluate the impact of the reroute on all operations before making a decision","Cancel all supply movement"],
+correct:2
+},
+
+{
+q:"A naval logistics AI system flags that fuel consumption rates are higher than expected based on current mission activity. The system suggests adjusting supply distribution to compensate. What should the logistics officer do next?",
+a:["Ignore the alert since operations are ongoing","Immediately redistribute fuel without verification","Review consumption data and confirm the accuracy before making adjustments","Shut down operations"],
+correct:2
+},
+
+{
+q:"An AI supply chain system identifies a potential shortage of critical equipment based on projected mission timelines. The current inventory appears sufficient for now. What is the most responsible action?",
+a:["Ignore the projection because current inventory is stable","Order excessive supplies immediately","Review projections and verify demand before adjusting inventory","Cancel missions"],
+correct:2
+},
+
+{
+q:"A logistics AI platform recommends consolidating supply shipments to improve efficiency. However, doing so could delay delivery to certain units. What should be considered before following the recommendation?",
+a:["Only efficiency","The impact of delays on operational readiness","Ignoring the recommendation","Reducing all shipments"],
+correct:1
+},
+
+{
+q:"An AI system flags irregular supply movement patterns that could indicate a disruption or misallocation of resources. The data is incomplete but suggests potential inefficiencies. What should the operator do?",
+a:["Ignore incomplete data","Investigate the pattern further before taking action","Shut down supply movement","Approve all shipments"],
+correct:1
+},
+
+{
+q:"A military logistics AI system suggests reallocating resources from one operation to support another higher-priority mission. What is the correct approach?",
+a:["Reallocate immediately","Ignore priority changes","Evaluate the impact on both operations before making a decision","Cancel both missions"],
+correct:2
+},
+
+{
+q:"An AI-driven logistics system recommends a faster delivery route, but the route passes through an area with uncertain environmental conditions. What should the decision-maker do?",
+a:["Approve route immediately","Ignore route suggestion","Assess risks and verify route safety before proceeding","Delay all deliveries"],
+correct:2
+},
+
+{
+q:"A supply chain AI system predicts delays due to weather disruptions. The system suggests preemptive redistribution of supplies. What is the most appropriate response?",
+a:["Ignore prediction","Redistribute supplies immediately","Verify forecast and impact before making changes","Cancel shipments"],
+correct:2
+},
+
+{
+q:"An AI system monitors inventory levels and suggests reducing stock to optimize storage efficiency. What is the potential risk?",
+a:["Improved efficiency","Possible shortage during critical operations","Faster delivery","Reduced workload"],
+correct:1
+},
+
+{
+q:"A logistics AI system identifies a mismatch between planned and actual supply usage rates. What should the operator do next?",
+a:["Ignore mismatch","Investigate discrepancy and adjust planning if necessary","Cancel supply orders","Approve system without review"],
+correct:1
+}
+
+]
+},
+{
+name:"Module 5: Real Operational AI Decision Scenarios",
+lessons:[
+"In real marine and naval environments, AI systems support decisions but do not replace command responsibility. Every alert, recommendation, and prediction must be verified within operational context.",
+"AI decision-support tools combine data from radar, navigation, logistics, and surveillance systems to provide recommendations. These recommendations must be evaluated carefully before action is taken.",
+"Operational environments are dynamic, meaning AI outputs may not always reflect real-time conditions perfectly. Human oversight ensures that decisions align with actual mission requirements.",
+"Effective decision-making requires balancing AI input, real-world conditions, mission objectives, and risk factors before acting.",
+"The strongest operators understand that AI is a support system, not an authority, and that final decisions must be based on verified information and professional judgment."
+],
+quiz:[
+
+{
+q:"An AI command-support system recommends adjusting vessel positioning based on combined data from navigation, radar, and environmental inputs. The recommendation conflicts with real-time observations from the crew. What is the most appropriate next step?",
+a:["Follow AI recommendation immediately","Ignore both sources","Verify both AI data and real-time observations before making a decision","Shut down systems"],
+correct:2
+},
+
+{
+q:"A naval AI system flags a potential operational risk based on predictive modeling, but current conditions appear stable. What should the operator do next?",
+a:["Ignore prediction","Take immediate action without verification","Review prediction data and verify conditions before deciding","Cancel operations"],
+correct:2
+},
+
+{
+q:"An AI system suggests rerouting a vessel to avoid a potential hazard detected through data analysis. The alternative route increases travel time and resource use. What should the decision-maker consider?",
+a:["Only speed","Only resource usage","Both safety and operational impact before making a decision","Ignore system"],
+correct:2
+},
+
+{
+q:"A marine AI system detects unusual coordination between multiple vessels in a monitored area. The behavior is not immediately classified as hostile. What is the correct action?",
+a:["Ignore activity","Assume threat","Investigate and verify before escalating","Shut down monitoring"],
+correct:2
+},
+
+{
+q:"An AI system provides conflicting recommendations from two different data models regarding a potential operational risk. What is the best response?",
+a:["Choose one randomly","Ignore both","Analyze both outputs and verify before deciding","Delay indefinitely"],
+correct:2
+},
+
+{
+q:"A decision-support AI flags an anomaly in system performance during a mission. The anomaly is minor but could indicate a developing issue. What should the operator do?",
+a:["Ignore minor issue","Investigate and verify before continuing","Shut down mission","Delete alert"],
+correct:1
+},
+
+{
+q:"An AI system suggests immediate action based on predictive threat modeling, but there is limited supporting data available. What is the most responsible approach?",
+a:["Act immediately","Ignore system","Verify available data before taking action","Cancel operations"],
+correct:2
+},
+
+{
+q:"A naval operator relies on AI recommendations during high-pressure operations. What is the most important principle to follow?",
+a:["Trust AI completely","Ignore AI","Use AI as support while verifying all decisions","Avoid decisions"],
+correct:2
+},
+
+{
+q:"An AI system identifies a pattern that could indicate a future operational disruption. The disruption has not yet occurred. What should the operator do?",
+a:["Ignore prediction","Prepare and verify before disruption occurs","Cancel operations","Delete data"],
+correct:1
+},
+
+{
+q:"A marine AI system integrates multiple data sources to recommend a course of action. What is the operator’s responsibility?",
+a:["Follow automatically","Ignore system","Evaluate and verify before executing","Delay indefinitely"],
+correct:2
+}
+
+]
+}
+];
+
+
+// ===== SYSTEM FUNCTIONS =====
+
+function getTotalSteps() {
+  let total = 0;
+  modules.forEach(module => {
+    total += module.lessons.length + module.quiz.length;
+  });
+  return total;
+}
+
+function getCurrentStep() {
+  let step = 0;
+
+  for (let i = 0; i < moduleIndex; i++) {
+    step += modules[i].lessons.length + modules[i].quiz.length;
+  }
+
+  if (mode === "lesson") {
+    step += lessonIndex;
+  } else {
+    step += modules[moduleIndex].lessons.length + quizIndex;
+  }
+
+  return step;
+}
+
+function renderQuestion(q) {
+  let html = `<p><strong>${q.q}</strong></p>`;
+  q.a.forEach((opt, i) => {
+    html += `<button class="answer-btn" onclick="checkAnswer(${i})">${opt}</button>`;
+  });
+  return html;
+}
+
+function load() {
+  const module = modules[moduleIndex];
+
+  document.getElementById("module").innerText = module.name;
+
+  if (mode === "lesson") {
+    document.getElementById("title").innerText = "Lesson " + (lessonIndex + 1);
+    document.getElementById("content").innerHTML = `<p>${module.lessons[lessonIndex]}</p>`;
+    document.getElementById("nextBtn").style.display = "block";
+  }
+
+  if (mode === "quiz") {
+    document.getElementById("title").innerText = "Question " + (quizIndex + 1);
+    document.getElementById("content").innerHTML = renderQuestion(module.quiz[quizIndex]);
+    document.getElementById("nextBtn").style.display = "none";
+  }
+}
+
+function checkAnswer(i) {
+  const module = modules[moduleIndex];
+  const correct = module.quiz[quizIndex].correct;
+
+  if (i === correct) {
+    alert("Correct");
+  } else {
+    alert("Try again");
+    return;
+  }
+
+  quizIndex++;
+
+  if (quizIndex >= module.quiz.length) {
+    moduleIndex++;
+    quizIndex = 0;
+    lessonIndex = 0;
+    mode = "lesson";
+
+    if (moduleIndex >= modules.length) {
+      window.location.href = "certificate-choice.html";
+      return;
+    }
+  }
+
+  load();
+}
+
+function next() {
+  lessonIndex++;
+
+  if (lessonIndex >= modules[moduleIndex].lessons.length) {
+    mode = "quiz";
+    lessonIndex = 0;
+  }
+
+  load();
+}
+
+load();
+
+</script>
+</body>
+</html>          
+          
+            
