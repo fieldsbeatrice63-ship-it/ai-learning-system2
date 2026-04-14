@@ -1,612 +1,289 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lumi AI Nexus™ | AI Everyday Applications™</title>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lumi AI Nexus™ | AI Everyday Applications™</title>
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(180deg, #eaf6ff 0%, #d8efff 100%);
-      color: #173b79;
-    }
-
-    .top-bar {
-      width: 100%;
-      height: 8px;
-      background: #cce6ff;
-    }
-
-    .progress {
-      height: 8px;
-      width: 0%;
-      background: linear-gradient(90deg, #4aa9ff, #215fe5);
-      transition: width 0.35s ease;
-    }
-
-    .wrap {
-      max-width: 920px;
-      margin: 40px auto;
-      padding: 20px;
-    }
-
-    .card {
-      background: #ffffff;
-      border-radius: 24px;
-      padding: 30px 28px;
-      box-shadow: 0 18px 40px rgba(20, 59, 121, 0.12);
-    }
-
-    .module-title {
-      font-size: 14px;
-      font-weight: 700;
-      color: #4a78c2;
-      margin-bottom: 8px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .lesson-title {
-      font-size: 30px;
-      font-weight: 800;
-      margin-bottom: 18px;
-      color: #173b79;
-      line-height: 1.2;
-    }
-
-    .content {
-      font-size: 18px;
-      line-height: 1.75;
-      color: #355171;
-    }
-
-    .content p {
-      margin: 0 0 14px;
-    }
-
-    .question-text {
-      font-size: 22px;
-      font-weight: 700;
-      color: #173b79;
-      margin-bottom: 18px;
-      line-height: 1.45;
-    }
-
-    button {
-      margin-top: 20px;
-      padding: 15px 18px;
-      border: none;
-      border-radius: 12px;
-      background: linear-gradient(180deg, #4aa9ff, #215fe5);
-      color: white;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      width: 100%;
-      box-shadow:
-        0 10px 20px rgba(33, 95, 229, 0.25),
-        inset 0 2px 0 rgba(255,255,255,0.3);
-      transition: transform 0.15s ease, filter 0.15s ease;
-    }
-
-    button:hover {
-      transform: translateY(-1px);
-      filter: brightness(1.02);
-    }
-
-    .answer-btn {
-      margin: 12px 0;
-      background: #f3f8ff;
-      color: #173b79;
-      box-shadow: none;
-      border: 1px solid #d6e6ff;
-    }
-
-    .answer-btn:hover {
-      background: #e4f1ff;
-      filter: none;
-    }
-
-    .footer-note {
-      margin-top: 22px;
-      text-align: center;
-      font-size: 14px;
-      color: #58739b;
-      line-height: 1.6;
-    }
-
-    @media (max-width: 768px) {
-      .wrap {
-        margin: 24px auto;
-        padding: 14px;
-      }
-
-      .card {
-        padding: 22px 18px;
-      }
-
-      .lesson-title {
-        font-size: 24px;
-      }
-
-      .content,
-      .question-text {
-        font-size: 17px;
-      }
-    }
-  </style>
+<style>
+body { font-family: Arial; background:#eaf6ff; margin:0; padding:20px;}
+.container { max-width:900px; margin:auto; background:white; padding:25px; border-radius:16px;}
+h4 { color:#355171;}
+h2 { color:#1e4db7;}
+button { margin-top:20px; padding:12px 20px; border:none; background:#2c7dff; color:white; border-radius:10px; cursor:pointer;}
+</style>
 </head>
+
 <body>
-  <div class="top-bar">
-    <div class="progress" id="progressBar"></div>
-  </div>
+<div class="container">
+<h4 id="module"></h4>
+<h2 id="title"></h2>
+<p id="content"></p>
+<button onclick="next()">Next</button>
+</div>
 
-  <div class="wrap">
-    <div class="card">
+<script>
 
-      <div style="display:flex; justify-content:flex-end; margin-bottom:14px;">
-        <a href="course-selection.html" style="text-decoration:none; background:#eef6ff; color:#173b79; padding:10px 14px; border-radius:10px; font-weight:700; border:1px solid #dbeafe;">
-          ← Back to Courses
-        </a>
-      </div>
+const modules = [
 
-      <div class="module-title" id="moduleLabel"></div>
-      <div class="lesson-title" id="title"></div>
-      <div class="content" id="content"></div>
+/* ================= MODULE 1 ================= */
+{
+name:"Module 1: AI in Everyday Communication",
+lessons:[
+"AI tools are commonly used in texting, email drafting, and rewriting messages. These systems help improve clarity and speed but do not fully understand personal relationships or emotional context.",
+"Many messaging apps now include AI suggestions for replies. While these are helpful, they are generated from patterns and not from true understanding of the situation.",
+"AI can help reword messages to sound more professional, casual, or persuasive. However, tone must always be reviewed before sending to ensure it matches the situation.",
+"In everyday communication, AI reduces effort but does not replace human awareness. The user must still ensure accuracy, tone, and intent.",
+"Strong communication using AI comes from combining system assistance with human judgment."
+],
+quiz:[
 
-      <button id="nextBtn" onclick="next()">Next</button>
+{q:"A user asks an AI tool to rewrite a text message to sound more professional before sending it to a colleague. The AI produces a well-structured message, but it removes a key detail from the original message. If the user sends it without reviewing, what is the most likely issue that could occur in this situation?",
+a:["The message will automatically correct itself after sending","The AI system will resend the original version","Important context may be lost, causing confusion","The system will notify the recipient of the change"],correct:2},
 
-      <div class="footer-note">
-        Lumi AI Nexus™<br>
-        Where AI, People, and Knowledge Meet.<br>
-        AI Governance Powered by HALO™
-      </div>
-    </div>
-  </div>
+{q:"A person uses AI-generated replies in a messaging app during a personal conversation. The suggested replies sound neutral and do not reflect the emotional tone of the discussion. What does this scenario demonstrate about using AI in everyday communication?",
+a:["AI fully understands emotional context","AI requires human adjustment to match tone and intent","AI should always be used in conversations","AI replaces human communication"],correct:1},
 
-  <script>
-    let moduleIndex = 0;
-    let lessonIndex = 0;
-    let quizIndex = 0;
-    let mode = "lesson";
+{q:"A user copies an AI-generated email response and sends it without reviewing it. Later, they realize the tone sounded too formal and created distance in the conversation. What is the main lesson from this scenario?",
+a:["AI systems should never be used","AI-generated content must be reviewed for tone and context","Emails should always be short","Formal tone is always incorrect"],correct:1},
 
-    const modules = [
-      {
-        name: "Module 1: Everyday AI Basics",
-        lessons: [
-          "AI can be part of everyday life, not just work or technology. People use AI for planning, writing, searching, organizing, and simplifying daily tasks.",
-          "Everyday AI means using tools that help save time, reduce stress, and improve decision-making in normal routines like scheduling, shopping, messaging, and note-taking.",
-          "You do not have to be an expert to use AI well. The most important skill is learning what kind of help you need and choosing the right tool for the task.",
-          "AI works best when it supports your thinking instead of replacing your judgment. It should help you move faster and more clearly, not make every decision for you.",
-          "The goal of everyday AI use is practical improvement. If a tool helps you communicate better, organize better, or finish tasks more efficiently, it is serving its purpose."
-        ],
-        quiz: [
-          {
-            q: "What is one of the main benefits of everyday AI?",
-            a: ["Making life more confusing", "Saving time and supporting daily tasks", "Replacing all human decisions", "Only helping programmers"],
-            correct: 1
-          },
-          {
-            q: "Everyday AI is best described as:",
-            a: ["AI used only in laboratories", "AI used only in large companies", "AI tools that support normal daily tasks and routines", "AI that replaces human life"],
-            correct: 2
-          },
-          {
-            q: "A person uses AI to organize their week and draft messages. This is an example of:",
-            a: ["Industrial AI", "Everyday AI use", "Medical-only AI", "Military-only AI"],
-            correct: 1
-          },
-          {
-            q: "What mindset is most helpful when using AI in daily life?",
-            a: ["Let AI make every decision", "Use AI to support your own thinking and judgment", "Avoid checking anything", "Only use AI for work"],
-            correct: 1
-          },
-          {
-            q: "Who can benefit from everyday AI?",
-            a: ["Only experts", "Only office workers", "Only students", "Anyone with daily tasks and responsibilities"],
-            correct: 3
-          },
-          {
-            q: "What should AI improve in daily use?",
-            a: ["Confusion", "Stress and wasted effort", "Human independence", "Nothing practical"],
-            correct: 1
-          },
-          {
-            q: "A good everyday AI tool should:",
-            a: ["Make tasks harder", "Be practical and useful", "Only work in coding", "Replace all planning"],
-            correct: 1
-          },
-          {
-            q: "What is a smart way to begin using AI daily?",
-            a: ["Use every tool at once", "Start with a real task you already do", "Let it run without input", "Skip learning how it works"],
-            correct: 1
-          },
-          {
-            q: "AI in daily life is most valuable when it:",
-            a: ["Creates unnecessary work", "Supports communication, planning, and organization", "Replaces family and friends", "Avoids all review"],
-            correct: 1
-          },
-          {
-            q: "What is the purpose of this course?",
-            a: ["Teach advanced programming only", "Teach practical AI use for real life", "Teach robotics manufacturing", "Teach only corporate systems"],
-            correct: 1
-          }
-        ]
-      },
+{q:"A team uses AI to draft internal communication messages but requires each employee to personalize the message before sending. Why is this considered a strong practice when using AI tools?",
+a:["It removes AI from the process","It ensures communication stays accurate and human-centered","It slows down productivity","It limits system use"],correct:1},
 
-      {
-        name: "Module 2: AI for Daily Tasks",
-        lessons: [
-          "AI can help with daily tasks such as writing messages, planning schedules, organizing ideas, summarizing long information, and generating first drafts for documents or responses.",
-          "When you use AI for everyday tasks, start by being clear about what you need. The better you define the task, the more useful the result usually becomes.",
-          "AI is especially useful for repetitive or mentally draining tasks. It can help sort information, suggest wording, structure ideas, and speed up simple decisions.",
-          "Not every daily task needs AI. Some tasks are already simple. The best use of AI is where it saves effort, reduces friction, or helps you think more clearly.",
-          "A strong everyday AI user knows when to use the tool and when not to use it. That judgment is part of real AI skill."
-        ],
-        quiz: [
-          {
-            q: "Which of the following is a strong everyday use for AI?",
-            a: ["Replacing all personal judgment", "Drafting messages and organizing information", "Ignoring tasks completely", "Only advanced coding"],
-            correct: 1
-          },
-          {
-            q: "Why is AI useful for daily tasks?",
-            a: ["It makes simple tasks longer", "It can reduce effort and save time", "It removes the need to think", "It only helps corporations"],
-            correct: 1
-          },
-          {
-            q: "What should you do first before asking AI for help?",
-            a: ["Guess randomly", "Be clear about what task you need help with", "Avoid details", "Use multiple tools at once"],
-            correct: 1
-          },
-          {
-            q: "What kind of tasks does AI often help with best?",
-            a: ["Tasks that need structure, summaries, or drafting", "Only physical labor", "Only driving", "Only legal judgments"],
-            correct: 0
-          },
-          {
-            q: "What is one sign of good AI judgment?",
-            a: ["Using AI for everything", "Knowing when AI is useful and when it is unnecessary", "Never checking results", "Ignoring your own thinking"],
-            correct: 1
-          },
-          {
-            q: "AI can help summarize long information by:",
-            a: ["Making it harder to understand", "Condensing key points into simpler form", "Deleting useful meaning entirely", "Refusing to respond"],
-            correct: 1
-          },
-          {
-            q: "If a task is already simple and quick, the best choice may be to:",
-            a: ["Still force AI into it", "Use the simplest method available", "Always add more tools", "Avoid finishing it"],
-            correct: 1
-          },
-          {
-            q: "A useful daily AI task might be:",
-            a: ["Planning a weekly schedule", "Flying an aircraft without training", "Replacing licensed decisions", "Ignoring responsibilities"],
-            correct: 0
-          },
-          {
-            q: "Why should daily AI use stay practical?",
-            a: ["Because practical use creates real value", "Because AI is only entertainment", "Because structure is unimportant", "Because users should depend fully on it"],
-            correct: 0
-          },
-          {
-            q: "A strong AI user in daily life focuses on:",
-            a: ["Tool overload", "Task clarity and usefulness", "Replacing all work", "Avoiding review"],
-            correct: 1
-          }
-        ]
-      },
+{q:"A user relies heavily on AI suggestions for communication and stops thinking about how their message sounds. Over time, their communication becomes inconsistent. What is the underlying problem in this situation?",
+a:["AI systems are malfunctioning","Overdependence on AI without human review","AI cannot generate messages","Messaging apps are unreliable"],correct:1},
 
-      {
-        name: "Module 3: Prompting for Daily Use",
-        lessons: [
-          "Prompting means telling AI what you want in a clear way. In everyday life, good prompting helps you get better emails, better schedules, better plans, and better answers.",
-          "Weak prompts are vague, such as 'help me' or 'do this.' Strong prompts explain the task, the format, and the type of answer needed.",
-          "A useful daily prompt often includes the purpose, the audience, and the format. For example: 'Write a polite text asking to reschedule an appointment for tomorrow afternoon.'",
-          "Good prompting is not about using big technical words. It is about being clear, specific, and intentional with what you ask the AI to do.",
-          "Prompting improves with practice. The more you refine your requests, the better your daily AI results become."
-        ],
-        quiz: [
-          {
-            q: "What is prompting in everyday AI use?",
-            a: ["Ignoring the AI", "Giving AI a clear instruction", "Only writing technical code", "Letting AI choose the task"],
-            correct: 1
-          },
-          {
-            q: "Which prompt is better for daily use?",
-            a: ["Help me", "Write a polite email asking for an appointment change", "Do something", "Fix it"],
-            correct: 1
-          },
-          {
-            q: "What makes a prompt stronger?",
-            a: ["Less clarity", "More guessing", "Clear purpose and format", "No context"],
-            correct: 2
-          },
-          {
-            q: "A good daily prompt often includes:",
-            a: ["Purpose, audience, and format", "Only one random word", "No details at all", "Only emotion"],
-            correct: 0
-          },
-          {
-            q: "Why do vague prompts often fail?",
-            a: ["Because AI dislikes users", "Because they do not provide enough direction", "Because AI only works at night", "Because prompts should always be one word"],
-            correct: 1
-          },
-          {
-            q: "Prompting skill improves when you:",
-            a: ["Stop practicing", "Use the same vague request every time", "Refine and clarify your requests", "Avoid details"],
-            correct: 2
-          },
-          {
-            q: "A beginner-friendly prompt should be:",
-            a: ["Clear and specific", "Confusing and broad", "Empty", "Only technical"],
-            correct: 0
-          },
-          {
-            q: "Prompting in daily life can help with:",
-            a: ["Messages, plans, and organization", "Only military operations", "Only advanced engineering", "Nothing practical"],
-            correct: 0
-          },
-          {
-            q: "A strong prompt helps AI:",
-            a: ["Make random guesses", "Respond more usefully", "Stop working", "Ignore the task"],
-            correct: 1
-          },
-          {
-            q: "The main goal of daily prompting is:",
-            a: ["To impress the AI", "To get clearer, more useful output", "To avoid real tasks", "To make prompts longer without meaning"],
-            correct: 1
-          }
-        ]
-      },
+{q:"A person uses AI to rewrite a message and then adjusts it before sending. Why does this approach lead to better outcomes in everyday communication?",
+a:["It removes all errors automatically","It balances AI efficiency with human judgment","It avoids using AI completely","It increases message length"],correct:1},
 
-      {
-        name: "Module 4: Choosing the Right Everyday AI Tools",
-        lessons: [
-          "Different AI tools are designed for different purposes. Some are better for writing, some for images, some for scheduling, some for organizing, and some for searching or summarizing.",
-          "Choosing the right AI tool starts with understanding the task. If you need writing help, use a writing-focused AI. If you need images, use an image tool. If you need organization, choose a planning tool.",
-          "Using the wrong tool can create frustration. A strong AI user does not pick tools randomly. They match the tool to the task.",
-          "You do not need dozens of AI tools. You need a few tools that you understand well and can use consistently for your real needs.",
-          "Good tool selection makes daily AI simpler, faster, and more effective."
-        ],
-        quiz: [
-          {
-            q: "Why is choosing the right AI tool important?",
-            a: ["Because all tools do the same thing", "Because different tools fit different tasks", "Because tools do not matter", "Because one tool should do everything"],
-            correct: 1
-          },
-          {
-            q: "If you need help drafting a message, the best kind of tool is:",
-            a: ["A writing-focused AI tool", "A spreadsheet only", "A calculator", "A weather tool"],
-            correct: 0
-          },
-          {
-            q: "What happens when people use the wrong AI tool for a task?",
-            a: ["They usually get better results", "They may get frustration or poor output", "It never matters", "The task becomes fully automated"],
-            correct: 1
-          },
-          {
-            q: "What is a strong AI habit?",
-            a: ["Using every tool available", "Matching the tool to the task", "Ignoring the task type", "Choosing tools by color"],
-            correct: 1
-          },
-          {
-            q: "How many tools do you need to use AI well?",
-            a: ["Dozens", "As many as possible", "A few that fit your real needs", "Only one for every situation"],
-            correct: 2
-          },
-          {
-            q: "A good everyday AI system should feel:",
-            a: ["Overcomplicated", "Simple and effective", "Random", "Uncontrolled"],
-            correct: 1
-          },
-          {
-            q: "What should come first when choosing a tool?",
-            a: ["The brand name", "The task you are trying to complete", "The trend", "The loudest ad"],
-            correct: 1
-          },
-          {
-            q: "Good tool selection improves:",
-            a: ["Confusion", "Speed and usefulness", "Task delay", "Dependence without thinking"],
-            correct: 1
-          },
-          {
-            q: "A person who picks tools with purpose is showing:",
-            a: ["Weak judgment", "Strong AI literacy", "No understanding", "Random behavior"],
-            correct: 1
-          },
-          {
-            q: "The goal of everyday tool selection is:",
-            a: ["More complexity", "Better task results with less friction", "Using tools for everything", "Replacing your judgment"],
-            correct: 1
-          }
-        ]
-      },
+{q:"A user selects a quick AI reply in a messaging app without reading it fully. The reply does not match the conversation. What does this highlight about AI-assisted communication?",
+a:["AI always improves conversations","Users must review suggestions before sending","AI cannot generate replies","Messaging apps are inaccurate"],correct:1},
 
-      {
-        name: "Module 5: Smart & Responsible AI Use",
-        lessons: [
-          "Everyday AI use should still be responsible. Just because a result looks helpful does not mean it should be trusted without review.",
-          "Smart AI use means verifying important details, checking tone and accuracy, and making sure the output fits your real situation.",
-          "Responsible use also means protecting privacy. You should be careful with sensitive information and avoid sharing personal data carelessly into systems.",
-          "AI should support your daily decisions, not replace your judgment. You are still responsible for what you send, say, or rely on.",
-          "The most valuable daily AI user is not the one who uses AI the most. It is the one who uses AI wisely, carefully, and effectively."
-        ],
-        quiz: [
-          {
-            q: "What is a smart rule for everyday AI use?",
-            a: ["Trust all results immediately", "Verify important details before using them", "Never review anything", "Let AI decide everything"],
-            correct: 1
-          },
-          {
-            q: "Why is privacy important in everyday AI use?",
-            a: ["Because sensitive information should be handled carefully", "Because AI automatically protects everything", "Because privacy does not matter", "Because all data is public"],
-            correct: 0
-          },
-          {
-            q: "Who is responsible for how AI output is used?",
-            a: ["Only the AI", "Only the device", "The user", "No one"],
-            correct: 2
-          },
-          {
-            q: "A wise AI user should:",
-            a: ["Use AI carelessly", "Use AI with judgment and review", "Avoid all thinking", "Never check anything"],
-            correct: 1
-          },
-          {
-            q: "Why should important AI output be reviewed?",
-            a: ["Because AI can still make mistakes", "Because review is pointless", "Because AI is always emotional", "Because only experts can read it"],
-            correct: 0
-          },
-          {
-            q: "What does responsible AI use include?",
-            a: ["Verification, privacy awareness, and judgment", "Blind dependence", "Random copying", "Ignoring context"],
-            correct: 0
-          },
-          {
-            q: "What should AI do in daily life?",
-            a: ["Replace all personal choices", "Support decision-making", "Control your schedule without review", "Remove responsibility"],
-            correct: 1
-          },
-          {
-            q: "Smart AI use is best described as:",
-            a: ["Frequent and careless", "Wise, careful, and practical", "Automatic and unreviewed", "Only technical"],
-            correct: 1
-          },
-          {
-            q: "What is one danger of careless AI use?",
-            a: ["Better results", "Spreading inaccurate or poorly checked information", "Guaranteed speed", "No effect at all"],
-            correct: 1
-          },
-          {
-            q: "The strongest everyday AI user is the one who:",
-            a: ["Uses AI the most", "Uses AI the loudest", "Uses AI wisely and effectively", "Avoids all review"],
-            correct: 2
-          }
-        ]
-      }
-    ];
+{q:"An employee uses AI to draft a message but reviews it carefully before sending to ensure clarity and tone. What skill is being demonstrated here?",
+a:["Automation","Responsible AI use","System avoidance","Speed processing"],correct:1},
 
-    function getTotalSteps() {
-      let total = 0;
-      modules.forEach(module => {
-        total += module.lessons.length + module.quiz.length;
-      });
-      return total;
-    }
+{q:"A user believes AI-generated communication is always appropriate for any situation. Why is this belief incorrect?",
+a:["AI lacks full understanding of context and relationships","AI cannot write messages","AI systems are too slow","AI cannot process text"],correct:0},
 
-    function getCurrentStep() {
-      let step = 0;
+{q:"A professional uses AI to improve message clarity but keeps the final decision on wording. Why is this the most effective approach?",
+a:["It avoids using AI","It ensures accuracy and maintains human intent","It speeds up AI performance","It reduces message quality"],correct:1}
 
-      for (let i = 0; i < moduleIndex; i++) {
-        step += modules[i].lessons.length + modules[i].quiz.length;
-      }
+]
+},
 
-      if (mode === "lesson") {
-        step += lessonIndex;
-      } else {
-        step += modules[moduleIndex].lessons.length + quizIndex;
-      }
+/* ================= MODULE 2 ================= */
+{
+name:"Module 2: AI in Daily Planning & Scheduling",
+lessons:[
+"AI is used in calendars, reminders, and scheduling tools to help users organize their daily lives.",
+"These systems can suggest meeting times, task priorities, and reminders based on patterns and availability.",
+"AI improves efficiency in planning but does not fully understand personal responsibilities or real-life constraints.",
+"Users should always review AI-generated schedules to ensure they match actual needs.",
+"Effective planning with AI combines automation with personal decision-making."
+],
+quiz:[
 
-      return step;
-    }
+{q:"A user allows an AI assistant to automatically schedule their day based on availability. The assistant fills the schedule with tasks but does not include breaks or personal time. What is the main issue with relying solely on AI in this scenario?",
+a:["AI cannot schedule tasks","AI does not fully understand personal needs and balance","AI systems are too fast","AI removes tasks automatically"],correct:1},
 
-    function updateProgress() {
-      const progressBar = document.getElementById("progressBar");
-      const totalSteps = getTotalSteps();
-      const currentStep = getCurrentStep();
-      const progressPercent = (currentStep / totalSteps) * 100;
-      progressBar.style.width = progressPercent + "%";
-    }
+{q:"A professional uses AI to generate a daily to-do list but notices that urgent tasks are missing. Why is it important to review AI-generated plans before following them?",
+a:["AI systems cannot create lists","AI may not recognize priorities without guidance","AI deletes tasks automatically","AI cannot process time"],correct:1},
 
-    function renderQuestion(q) {
-      let html = `<div class="question-text">${q.q}</div>`;
-      q.a.forEach((opt, i) => {
-        html += `<button class="answer-btn" onclick="checkAnswer(${i})">${opt}</button>`;
-      });
-      return html;
-    }
+{q:"A user depends completely on AI reminders and stops tracking responsibilities manually. What risk does this create over time?",
+a:["Improved memory","Overdependence and reduced awareness","Better organization","Faster planning"],correct:1},
 
-    function load() {
-      const title = document.getElementById("title");
-      const content = document.getElementById("content");
-      const nextBtn = document.getElementById("nextBtn");
-      const moduleLabel = document.getElementById("moduleLabel");
+{q:"An AI assistant suggests moving a meeting based on schedule conflicts, but the user knows the meeting cannot be changed. What should the user do in this situation?",
+a:["Accept AI suggestion","Adjust based on real-world requirements","Cancel meeting","Ignore system"],correct:1},
 
-      const module = modules[moduleIndex];
+{q:"A user reviews and adjusts AI-generated schedules daily. Why does this lead to better results?",
+a:["It avoids AI use","It ensures schedules match real-life conditions","It slows productivity","It removes automation"],correct:1},
 
-      updateProgress();
-      moduleLabel.innerText = module.name;
+{q:"AI creates a schedule that looks efficient but overlooks travel time between appointments. What does this demonstrate about AI planning?",
+a:["AI is always accurate","AI may miss real-world factors","AI cannot create schedules","AI removes travel"],correct:1},
 
-      if (mode === "lesson") {
-        title.innerText = "Lesson " + (lessonIndex + 1);
-        content.innerHTML = `<p>${module.lessons[lessonIndex]}</p>`;
-        nextBtn.style.display = "block";
-      }
+{q:"A user follows AI-generated plans without reviewing them and experiences conflicts throughout the day. What caused this issue?",
+a:["AI system failure","Lack of human oversight","Too many tasks","Slow processing"],correct:1},
 
-      if (mode === "quiz") {
-        title.innerText = "Question " + (quizIndex + 1);
-        content.innerHTML = renderQuestion(module.quiz[quizIndex]);
-        nextBtn.style.display = "none";
-      }
-    }
+{q:"A person uses AI to organize tasks but rearranges them based on urgency. What does this demonstrate?",
+a:["Avoiding AI","Using AI with human judgment","System failure","Data overload"],correct:1},
 
-    function checkAnswer(i) {
-      const module = modules[moduleIndex];
-      const correct = module.quiz[quizIndex].correct;
+{q:"AI suggests a sequence of tasks that does not match real priorities. What is the correct approach?",
+a:["Follow AI blindly","Adjust based on importance","Delete tasks","Restart system"],correct:1},
 
-      if (i === correct) {
-        alert("Correct!");
-      } else {
-        alert("Incorrect. Try again.");
-        return;
-      }
+{q:"A user combines AI scheduling with personal planning decisions. What benefit does this provide?",
+a:["Reduced efficiency","Balanced and realistic planning","Slower workflow","System dependence"],correct:1}
 
-      quizIndex++;
+]
+},
 
-      if (quizIndex < module.quiz.length) {
-        load();
-      } else {
-        alert(module.name + " Complete!");
-        moduleIndex++;
-        lessonIndex = 0;
-        quizIndex = 0;
-        mode = "lesson";
+/* ================= MODULE 3 ================= */
+{
+name:"Module 3: AI in Everyday Decision-Making",
+lessons:[
+"AI supports daily decisions through recommendations, navigation apps, and suggestions.",
+"These systems provide guidance but do not understand personal preferences fully.",
+"Users should evaluate AI suggestions rather than follow them blindly.",
+"Decision quality improves when AI insights are combined with personal judgment.",
+"AI simplifies choices but does not replace thinking."
+],
+quiz:[
 
-        if (moduleIndex >= modules.length) {
-          localStorage.setItem("courseName", "AI Everyday Applications™");
-          localStorage.setItem("courseSubtitle", "Completed all modules and assessments");
-          localStorage.setItem("issueDate", new Date().toLocaleDateString());
-          localStorage.setItem("certificateId", "LUMI-" + Math.floor(10000 + Math.random() * 90000));
+{q:"A navigation app suggests a faster route that avoids traffic but leads through an unfamiliar area. The user is unsure if the route is safe or practical. What is the best approach in this situation when using AI for decision-making?",
+a:["Follow AI blindly","Evaluate the suggestion based on personal knowledge and conditions","Ignore AI completely","Restart the app"],correct:1},
 
-          window.location.href = "certificate-choice.html";
-        } else {
-          load();
-        }
-      }
-    }
+{q:"A user follows AI recommendations for shopping based on previous behavior but realizes the suggestions no longer match current needs. What does this reveal about AI recommendation systems?",
+a:["They always update instantly","They rely on patterns and may not reflect current preferences","They are always accurate","They cannot suggest products"],correct:1},
 
-    function next() {
-      const module = modules[moduleIndex];
+{q:"A person compares multiple AI suggestions before making a decision. Why is this considered an effective strategy when using AI tools?",
+a:["It slows decision-making","It improves decision quality by evaluating options","It avoids AI use","It limits choices"],correct:1},
 
-      if (mode === "lesson") {
-        lessonIndex++;
+{q:"A user assumes that AI suggestions are always the best option available. Why is this assumption risky?",
+a:["AI is too fast","AI does not account for all real-world variables","AI cannot make suggestions","AI systems are slow"],correct:1},
 
-        if (lessonIndex >= module.lessons.length) {
-          mode = "quiz";
-          lessonIndex = 0;
-        }
+{q:"A user reviews AI recommendations but makes the final decision based on personal judgment. What does this demonstrate?",
+a:["Avoidance of AI","Balanced use of AI and human thinking","System failure","Data overload"],correct:1},
 
-        load();
-      }
-    }
+{q:"AI suggests a product based on past purchases, but the user’s current needs have changed. What should the user do?",
+a:["Follow suggestion","Evaluate current needs before deciding","Ignore system","Restart AI"],correct:1},
 
-    load();
-  </script>
+{q:"A user receives multiple AI-generated options for a decision. What is the best next step?",
+a:["Pick first option","Compare and evaluate each option carefully","Ignore all options","Delete suggestions"],correct:1},
+
+{q:"AI helps simplify decision-making. What must remain in control?",
+a:["System","Human judgment","Automation","Speed"],correct:1},
+
+{q:"A user relies entirely on AI for decisions. What risk does this create?",
+a:["Better outcomes","Poor decision-making due to lack of evaluation","Faster results","Improved efficiency"],correct:1},
+
+{q:"AI assists with decisions but does not take responsibility. Why is this important?",
+a:["Accuracy","Responsibility remains with the user","Speed","Automation"],correct:1}
+
+]
+},
+
+/* ================= MODULE 4 ================= */
+{
+name:"Module 4: AI in Daily Productivity",
+lessons:[
+"AI tools help with writing, summarizing, and organizing information in everyday tasks.",
+"These tools increase productivity but require review and adjustment.",
+"Users must verify outputs before using them in real situations.",
+"AI enhances efficiency when combined with human oversight.",
+"Balanced use improves both speed and quality."
+],
+quiz:[
+
+{q:"A user relies on AI to summarize a document but does not check the summary before using it in a report. What is the most likely risk in this situation?",
+a:["Faster output","Missing or inaccurate information","Better clarity","Reduced effort"],correct:1},
+
+{q:"A person uses AI to draft a task list but reviews and adjusts it before acting. Why is this approach effective in everyday productivity?",
+a:["It avoids AI use","It ensures accuracy and relevance","It slows workflow","It reduces output"],correct:1},
+
+{q:"A user notices that AI-generated content is incomplete and adds missing details manually. What does this demonstrate?",
+a:["AI failure","Effective human oversight","System malfunction","Data loss"],correct:1},
+
+{q:"AI speeds up daily tasks, but users skip review processes. What risk increases as a result?",
+a:["Efficiency","Errors and inaccuracies","Speed","Automation"],correct:1},
+
+{q:"A user balances AI assistance with manual review. What outcome does this create?",
+a:["Slower work","Higher-quality results","More errors","Reduced productivity"],correct:1},
+
+{q:"AI generates a draft that requires editing. Why is editing necessary?",
+a:["AI is slow","AI output may lack context or detail","AI cannot write","AI removes content"],correct:1},
+
+{q:"A user trusts AI output without checking it. What is the likely consequence?",
+a:["Improved accuracy","Potential mistakes","Faster work","Better automation"],correct:1},
+
+{q:"AI tools assist productivity but require what to be effective?",
+a:["Deletion","Oversight","Restart","Avoidance"],correct:1},
+
+{q:"A user improves AI-generated content before final use. What skill is applied?",
+a:["Automation","Critical thinking","Data deletion","System reset"],correct:1},
+
+{q:"AI improves speed in tasks. What must remain to ensure quality?",
+a:["Automation","Human review","Speed","Data"],correct:1}
+
+]
+},
+
+/* ================= MODULE 5 ================= */
+{
+name:"Module 5: Awareness & Control in Everyday AI Use",
+lessons:[
+"Understanding how AI works in daily life improves decision-making and reduces errors.",
+"Users must stay aware of limitations and maintain control over outputs.",
+"AI should be used as a tool, not authority.",
+"Awareness leads to better outcomes and smarter use.",
+"Control ensures that AI enhances rather than replaces human thinking."
+],
+quiz:[
+
+{q:"A user understands the limitations of AI and reviews outputs before acting. How does this impact their everyday use of AI tools?",
+a:["Reduces speed","Improves decision quality","Eliminates AI use","Slows productivity"],correct:1},
+
+{q:"A person uses AI without understanding how it works and makes decisions based solely on outputs. What is the primary risk in this situation?",
+a:["Faster results","Incorrect decisions","Better efficiency","Automation"],correct:1},
+
+{q:"A user combines AI suggestions with personal judgment when making daily decisions. What benefit does this provide?",
+a:["Reduced workload","Balanced and accurate outcomes","Slower decisions","Less automation"],correct:1},
+
+{q:"AI is used as a tool rather than an authority. Why is this approach important?",
+a:["Speed","Maintains human responsibility","Automation","Cost"],correct:1},
+
+{q:"A user is aware of AI limitations and adjusts outputs accordingly. What does this demonstrate?",
+a:["Avoidance","Smart usage","System failure","Overuse"],correct:1},
+
+{q:"A person blindly trusts AI outputs in daily life. What is the biggest risk?",
+a:["Efficiency","Errors","Speed","Automation"],correct:1},
+
+{q:"AI helps simplify tasks. What must users maintain to ensure success?",
+a:["Automation","Control","Speed","Deletion"],correct:1},
+
+{q:"A user actively reviews AI suggestions before using them. What does this demonstrate?",
+a:["Inefficiency","Responsible AI usage","System failure","Avoidance"],correct:1},
+
+{q:"Understanding AI improves what aspect of everyday use?",
+a:["Speed","Decision-making","Cost","Automation"],correct:1},
+
+{q:"A user applies awareness when using AI daily. What is the result?",
+a:["Better outcomes","Slower performance","More errors","System dependence"],correct:0}
+
+]
+}
+
+];
+
+let moduleIndex=0,lessonIndex=0,quizIndex=0,mode="lesson";
+
+function load(){
+let m=modules[moduleIndex];
+document.getElementById("module").innerText=m.name;
+if(mode==="lesson"){
+document.getElementById("title").innerText="Lesson "+(lessonIndex+1);
+document.getElementById("content").innerText=m.lessons[lessonIndex];
+}else{
+let q=m.quiz[quizIndex];
+document.getElementById("title").innerText="Question "+(quizIndex+1);
+document.getElementById("content").innerText=q.q;
+}
+}
+
+function next(){
+let m=modules[moduleIndex];
+if(mode==="lesson"){
+lessonIndex++;
+if(lessonIndex>=m.lessons.length){lessonIndex=0;mode="quiz";}
+}else{
+quizIndex++;
+if(quizIndex>=m.quiz.length){
+quizIndex=0;moduleIndex++;mode="lesson";
+if(moduleIndex>=modules.length){alert("Course Complete!");return;}
+}}
+load();
+}
+
+load();
+
+</script>
 </body>
 </html>
