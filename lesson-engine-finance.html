@@ -1,529 +1,262 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lumi AI Nexus™ | AI in Finance & Banking™</title>
-
-<style>
-body { margin:0; font-family:Arial; background:#eaf6ff; }
-.container { max-width:900px; margin:auto; padding:20px; }
-.card { background:#fff; padding:25px; border-radius:20px; box-shadow:0 10px 25px rgba(0,0,0,0.1); }
-button { margin-top:20px; padding:12px; border:none; background:#2c7dff; color:white; border-radius:10px; cursor:pointer; width:100%; }
-.answer-btn { background:#f1f5ff; color:#000; margin:10px 0; }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lumi AI Nexus™ | AI in Finance and Banking™</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Arial, sans-serif; background: linear-gradient(180deg, #eaf6ff 0%, #d8efff 100%); color: #173b79; }
+    .top-bar { width: 100%; height: 8px; background: #cce6ff; }
+    .progress { height: 8px; width: 0%; background: linear-gradient(90deg, #4aa9ff, #215fe5); transition: width 0.35s ease; }
+    .wrap { max-width: 920px; margin: 40px auto; padding: 20px; }
+    .card { background: #ffffff; border-radius: 24px; padding: 30px 28px; box-shadow: 0 18px 40px rgba(20, 59, 121, 0.12); }
+    .module-title { font-size: 14px; font-weight: 700; color: #4a78c2; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.08em; }
+    .lesson-title { font-size: 30px; font-weight: 800; margin-bottom: 18px; color: #173b79; line-height: 1.2; }
+    .content { font-size: 18px; line-height: 1.75; color: #355171; }
+    .content p { margin: 0 0 14px; }
+    .scenario-box { background: #eef5ff; border-left: 5px solid #2c7dff; border-radius: 10px; padding: 16px 18px; margin-bottom: 18px; font-size: 17px; color: #173b79; line-height: 1.7; }
+    .question-text { font-size: 22px; font-weight: 700; color: #173b79; margin-bottom: 18px; line-height: 1.45; }
+    .answer-btn { display: block; width: 100%; margin: 10px 0; padding: 15px 18px; border: 2px solid #d6e6ff; border-radius: 12px; background: #f3f8ff; color: #173b79; font-size: 16px; font-weight: 600; text-align: left; cursor: pointer; transition: background 0.15s ease, border-color 0.15s ease; }
+    .answer-btn:hover:not(:disabled) { background: #e4f1ff; border-color: #a8ccff; }
+    .answer-btn.correct { background: #d4f7e0; border-color: #27ae60; color: #145a32; }
+    .answer-btn.incorrect { background: #fde8e8; border-color: #e74c3c; color: #7b241c; }
+    .answer-btn:disabled { cursor: default; }
+    .feedback-box { display: none; margin-top: 18px; padding: 16px 18px; border-radius: 14px; font-size: 18px; font-weight: 700; line-height: 1.5; text-align: center; }
+    .feedback-box.correct { display: block; background: #d4f7e0; border: 2px solid #27ae60; color: #145a32; }
+    .feedback-box.incorrect { display: block; background: #fde8e8; border: 2px solid #e74c3c; color: #7b241c; }
+    .continue-btn { display: none; margin-top: 20px; padding: 15px 18px; border: none; border-radius: 12px; background: linear-gradient(180deg, #4aa9ff, #215fe5); color: white; font-size: 16px; font-weight: 700; cursor: pointer; width: 100%; box-shadow: 0 10px 20px rgba(33,95,229,0.25), inset 0 2px 0 rgba(255,255,255,0.3); transition: transform 0.15s ease, filter 0.15s ease; }
+    .continue-btn:hover { transform: translateY(-1px); filter: brightness(1.02); }
+    .footer-note { margin-top: 22px; text-align: center; font-size: 14px; color: #58739b; line-height: 1.6; }
+    @media (max-width: 768px) { .wrap { margin: 24px auto; padding: 14px; } .card { padding: 22px 18px; } .lesson-title { font-size: 24px; } .content, .question-text { font-size: 17px; } .answer-btn { font-size: 15px; padding: 13px 14px; } .feedback-box { font-size: 16px; } }
+  </style>
 </head>
-
 <body>
-
-<div class="container">
-<div class="card">
-
-<div style="text-align:right;">
-<a href="course-selection.html">← Back</a>
-</div>
-
-<h4 id="module"></h4>
-<h2 id="title"></h2>
-<div id="content"></div>
-
-<button id="nextBtn" onclick="next()">Next</button>
-
-</div>
-</div>
-
+<div class="top-bar"><div class="progress" id="progressBar"></div></div>
+<div class="wrap"><div class="card">
+  <div style="display:flex; justify-content:flex-end; margin-bottom:14px;">
+    <a href="course-selection.html" style="text-decoration:none; background:#eef6ff; color:#173b79; padding:10px 14px; border-radius:10px; font-weight:700; border:1px solid #dbeafe;">← Back to Courses</a>
+  </div>
+  <div class="module-title" id="moduleLabel"></div>
+  <div class="lesson-title" id="screenTitle"></div>
+  <div class="content" id="content"></div>
+  <div class="feedback-box" id="feedbackBox"></div>
+  <button class="continue-btn" id="continueBtn" onclick="advance()">Continue</button>
+  <div class="footer-note">Lumi AI Nexus™<br>Where AI, People, and Knowledge Meet.<br>AI Governance Powered by HALO™</div>
+</div></div>
 <script>
-
-let moduleIndex=0, lessonIndex=0, quizIndex=0, mode="lesson";
-
 const modules = [
-
- {
-name:"Module 1: AI in Financial Systems",
-lessons:[
-"AI systems assist financial decision-making by identifying patterns, flagging unusual behavior, and supporting analysts in reviewing transactions and account activity. These systems improve speed, but they do not replace verification or professional judgment.",
-"Fraud detection tools in banking monitor customer behavior, transaction patterns, device usage, geography, and timing. AI can identify activity that looks unusual, but a person still has to determine what action is appropriate.",
-"AI in financial systems is designed to support risk review, transaction monitoring, customer protection, and workflow efficiency. It is not designed to approve, deny, or clear every issue without human involvement.",
-"Financial systems rely on verification because flagged activity may be legitimate, and normal-looking activity may still carry risk. That is why employees must understand what AI is doing and how to respond to it correctly.",
-"AI identifies patterns, scores behavior, and surfaces anomalies, but it does not understand human intent the way a trained employee must. Strong financial professionals use AI as a support layer inside a controlled review process."
-],
-quiz:[
-
 {
-q:"A bank’s AI fraud detection system flags a transaction because it does not match the customer’s normal spending behavior or location history. The customer calls and insists the transaction is legitimate and urgent, and the AI system suggests allowing the transaction based only on customer confirmation. What is the most appropriate next step?",
-a:["Verify the transaction through additional review and authentication before approving it","Approve the transaction immediately because the customer confirmed it","Ignore the alert because the system already made a suggestion","Block the account permanently without further review"],
-correct:0
+  name: "Module 1: AI in Financial Systems — Foundations, Functions, and Professional Standards",
+  lessons: [
+    { title: "Lesson 1: Understanding AI's Role in Modern Finance and Banking",
+      content: "Artificial intelligence has become deeply integrated into the operations of banks, credit unions, investment firms, insurance companies, and financial service providers of every size. In financial environments, AI is applied to credit decisioning, fraud detection, customer service automation, investment analysis, regulatory compliance monitoring, risk assessment, and operational efficiency. These applications share a common foundation: they use patterns in financial data to support faster, more consistent, and more informed decisions. For financial professionals, understanding AI's role begins with recognizing that it is a decision-support system — not a decision-maker. In finance, where decisions affect people's financial security, creditworthiness, and access to services, the accountability for every AI-assisted decision rests with the institution and the professional, not the tool that generated the recommendation.",
+      questions: [
+        { q: "What is AI's foundational role in financial institutions?", a: ["To make all lending, investment, and account decisions autonomously without human review", "To use patterns in financial data to support faster and more informed decisions — while accountability for those decisions remains with the institution and the professional", "To replace compliance officers and regulatory reporting functions entirely", "To manage customer relationships without any human banker involvement"], correct: 1 },
+        { q: "Why is it particularly important that AI in finance be understood as a decision-support system rather than a decision-maker?", a: ["Because AI tools in finance are not yet technically capable of making decisions", "Because financial decisions affect people's financial security, creditworthiness, and access to services — making human accountability for those decisions a legal and ethical requirement", "Because financial regulators have prohibited AI from making any decisions in banking", "Because AI decision-making in finance always produces worse outcomes than human judgment"], correct: 1 }
+      ]
+    },
+    { title: "Lesson 2: How AI Processes Financial Data to Generate Insights",
+      content: "AI systems in finance work by analyzing large volumes of structured and unstructured financial data — transaction records, account histories, credit bureau data, market data, news feeds, regulatory filings, and customer interaction records — to identify patterns that inform risk assessments, predictions, and recommendations. The models behind these systems are trained on historical financial data, which means they learn to recognize patterns that have been associated with outcomes in the past: which transaction profiles preceded fraud, which borrower characteristics correlated with default, which market signals preceded volatility. This historical training gives AI systems predictive capability — but it also means they inherit the limitations of historical data, including biases that may have affected how certain customer groups were treated in the past. Financial professionals who use AI tools must understand that the insights they receive are pattern-based, not universal truths.",
+      questions: [
+        { q: "What types of data do AI systems in finance typically analyze to generate insights?", a: ["Only real-time market data from stock exchanges", "Transaction records, account histories, credit data, market data, regulatory filings, and customer interaction records — structured and unstructured data across the financial environment", "Exclusively data provided directly by the customer at the time of application", "Only data generated within the institution's own systems"], correct: 1 },
+        { q: "Why must financial professionals understand that AI insights are pattern-based rather than universal truths?", a: ["Because pattern-based insights are less accurate than rule-based calculations", "Because AI models trained on historical data inherit historical limitations and biases — meaning their recommendations reflect patterns from the past that may not apply fairly or accurately to every current situation", "Because pattern-based insights are not admissible in regulatory audits", "Because universal truths in finance are only accessible through licensed actuarial analysis"], correct: 1 }
+      ]
+    },
+    { title: "Lesson 3: Professional Standards for Finance Professionals Using AI",
+      content: "Financial professionals who use AI tools in their work are subject to the same fiduciary, ethical, and regulatory standards that govern all financial practice — regardless of whether AI was involved in producing an output. A loan officer who approves a credit application based on an AI recommendation without reviewing the applicant's actual circumstances is still accountable for that approval decision. A compliance analyst who submits a regulatory report generated by an AI tool without verifying its accuracy is still accountable for that filing. A wealth manager who follows an AI-generated investment recommendation without assessing its suitability for the specific client is still accountable for the investment outcome. These accountability structures are not changed by AI involvement — they are the professional and regulatory standards that define what it means to practice responsibly in the financial industry.",
+      questions: [
+        { q: "A loan officer approves a credit application based solely on an AI recommendation without reviewing the applicant's file. Who bears accountability for this decision?", a: ["The AI system developer, who is responsible for the accuracy of the credit recommendation", "The loan officer, whose professional and regulatory accountability applies regardless of whether AI generated the recommendation", "The institution's technology department, which deployed the AI lending tool", "Accountability is shared equally between the loan officer and the AI vendor"], correct: 1 },
+        { q: "What professional standard most directly governs how financial professionals should treat AI-generated recommendations?", a: ["Accept AI recommendations to demonstrate institutional trust in the technology investment", "Treat AI recommendations as inputs to professional judgment rather than substitutes for it — maintaining accountability for every decision regardless of AI involvement", "Escalate all AI recommendations to senior management before any action is taken", "Document AI recommendations separately from professional judgment in all client records"], correct: 1 }
+      ]
+    },
+    { title: "Lesson 4: Bias, Fairness, and Explainability in Financial AI",
+      content: "Three of the most significant governance challenges in financial AI are bias, fairness, and explainability. Bias occurs when AI models produce systematically different outcomes for different demographic groups — denying credit, flagging fraud, or pricing risk differently based on factors that correlate with race, gender, age, or geography in ways that are not justified by legitimate financial risk factors. Fairness requires that AI systems produce equitable outcomes across the populations they serve, and that their decisions can be audited against fair lending and anti-discrimination laws. Explainability requires that when an AI system produces an adverse decision — declining a loan, flagging a transaction, restricting an account — the institution can explain to the affected person why the decision was made in terms they can understand and challenge. These are not just ethical concerns — they are regulatory requirements in most financial jurisdictions, and financial professionals are expected to understand and uphold them.",
+      questions: [
+        { q: "What is AI bias in a financial services context?", a: ["When AI systems favor certain financial products over others in their recommendations", "When AI models produce systematically different outcomes for different demographic groups based on factors not justified by legitimate financial risk", "When AI systems are programmed to prioritize institutional profitability over customer outcomes", "When AI models disagree with human analysts on credit or risk assessments"], correct: 1 },
+        { q: "Why is explainability a regulatory requirement rather than just a best practice in financial AI?", a: ["Because explainability reduces the cost of AI model development and maintenance", "Because when AI produces an adverse decision affecting a customer's financial access, the institution must be able to explain and justify that decision in terms the customer can understand and challenge", "Because explainable AI models are more accurate than non-explainable ones", "Because explainability is required by AI vendors as a condition of their licensing agreements"], correct: 1 }
+      ]
+    },
+    { title: "Lesson 5: Building AI Literacy as a Financial Professional Competency",
+      content: "AI literacy in financial services means understanding enough about how AI tools work to use them responsibly, question their outputs critically, and maintain the professional judgment that the financial industry's regulatory environment demands. This is not about becoming a data scientist — it is about understanding the foundations: that AI recommendations are pattern-based and not infallible, that historical training data carries limitations, that AI systems require governance and oversight to remain fair and accurate, and that professional accountability is not diminished by AI involvement. Financial institutions that build genuine AI literacy across their workforce — from tellers and loan officers to compliance analysts and risk managers — are better positioned to use AI effectively, catch its errors before they affect customers, and demonstrate to regulators that their AI use is responsible and governed.",
+      questions: [
+        { q: "What does AI literacy mean for a financial professional who is not a data scientist?", a: ["The ability to build and train custom AI models for financial applications", "Understanding that AI recommendations are pattern-based and not infallible, that training data has limitations, and that professional accountability is not diminished by AI involvement", "Completing vendor certification programs for every AI tool used in financial operations", "Managing the procurement and regulatory approval of all AI tools used by the institution"], correct: 1 },
+        { q: "Why do financial institutions that build AI literacy across their workforce catch AI errors more reliably?", a: ["Because literate users generate fewer AI queries, reducing the probability of errors", "Because professionals who understand AI limitations know what to look for and can recognize when an AI output does not match the customer's actual situation", "Because AI literacy training improves the performance of the AI models themselves", "Because regulators provide preferential treatment to institutions with certified AI literacy programs"], correct: 1 }
+      ]
+    }
+  ]
 },
-
 {
-q:"An AI system analyzes spending behavior and flags unusual activity on a business account. The account owner states the transactions are part of a new expansion effort and should not be delayed. What should the financial analyst do next before clearing the activity?",
-a:["Clear the alert immediately because the explanation sounds reasonable","Investigate the pattern further and verify that the activity is consistent with legitimate business changes","Close the account to eliminate all possible risk","Ignore the system because the customer responded"],
-correct:1
+  name: "Module 2: Fraud Detection and Risk Monitoring — AI in Financial Security Operations",
+  lessons: [
+    { title: "Lesson 1: How AI Detects Fraud in Financial Transactions",
+      content: "Fraud detection is one of the most mature and high-value applications of AI in financial services. AI fraud detection systems analyze transactions in real time — comparing each transaction against a customer's historical behavior, known fraud patterns, network relationships between accounts, geographic anomalies, device and channel characteristics, and velocity indicators — to assess the probability that a transaction is fraudulent. When a transaction's profile deviates significantly from what the model expects, the system flags it for review, declines it, or triggers additional authentication. The speed of this analysis — occurring in milliseconds across millions of transactions simultaneously — is what gives AI fraud detection its fundamental advantage over rule-based systems. Traditional fraud rules can catch known patterns, but AI can identify novel fraud techniques by detecting that something is anomalous even when the specific anomaly has not been seen before.",
+      questions: [
+        { q: "What gives AI fraud detection a fundamental advantage over traditional rule-based fraud systems?", a: ["AI fraud systems are less expensive to operate than rule-based systems", "AI can detect novel fraud techniques by identifying anomalies in real time across millions of transactions — even when the specific fraud pattern has not been seen before", "AI fraud systems never produce false positives that inconvenience legitimate customers", "AI fraud detection does not require any historical transaction data to function"], correct: 1 },
+        { q: "What factors does an AI fraud detection system typically analyze when assessing a transaction?", a: ["Only the transaction amount and the account balance at the time of the transaction", "The customer's historical behavior, known fraud patterns, geographic anomalies, device characteristics, and velocity indicators compared against the current transaction profile", "Exclusively the geographic location from which the transaction was initiated", "Only the time of day and the merchant category of the transaction"], correct: 1 }
+      ]
+    },
+    { title: "Lesson 2: Managing False Positives in Fraud Detection",
+      content: "Every AI fraud detection system operates with a balance between catching fraud and not disrupting legitimate customer activity. False positives — legitimate transactions flagged as fraudulent — are one of the most significant operational challenges in financial fraud management. A false positive that blocks a customer's transaction at a critical moment — while traveling, during a major purchase, or in an emergency — damages trust, creates customer service burdens, and can drive customers to competitors. False negatives — fraudulent transactions that pass through undetected — result in financial losses and potential regulatory scrutiny. The sensitivity calibration of a fraud detection model is therefore a business decision as much as a technical one: setting sensitivity too high catches more fraud but generates more false positives; setting it too low reduces customer friction but allows more fraud through. Financial professionals who understand this balance are better positioned to interpret fraud alerts, manage customer impacts, and contribute meaningfully to fraud system governance discussions.",
+      questions: [
+        { q: "What is the operational impact of excessive false positives in an AI fraud detection system?", a: ["False positives improve fraud detection accuracy by casting a wider net", "Excessive false positives block legitimate customer transactions, damage trust, create customer service burdens, and can drive customers to competitors", "False positives have no customer impact since they are resolved automatically within seconds", "Excessive false positives only affect high-value transactions and not routine purchases"], correct: 1 },
+        { q: "Why is fraud detection sensitivity calibration described as a business decision as much as a technical one?", a: ["Because technical teams are not authorized to make fraud detection decisions in regulated institutions", "Because the right sensitivity balance depends on the institution's risk tolerance, customer experience priorities, and regulatory environment — requiring business judgment beyond technical model tuning", "Because business teams generate more accurate fraud models than technical teams", "Because sensitivity calibration must be approved by the institution's board of directors"], correct: 1 }
+      ]
+    },
+    { title: "Lesson 3: AI in Credit Risk Assessment",
+      content: "Credit risk assessment — evaluating the probability that a borrower will repay a loan — has been transformed by AI. Traditional credit scoring used a limited set of variables derived from credit bureau data. AI credit risk models can incorporate a much broader range of data points — payment behavior patterns, cash flow analysis, spending category trends, employment stability indicators, and in some cases alternative data sources — to produce more nuanced risk assessments. These richer assessments can identify creditworthy borrowers who would be declined by traditional models, and can identify higher-risk profiles that traditional scores might miss. However, AI credit risk models must be governed carefully: they must be tested for discriminatory impact, documented thoroughly for regulatory examination, and applied with human review for cases where the model's output does not align with the underwriter's knowledge of the applicant's specific circumstances.",
+      questions: [
+        { q: "What advantage does AI credit risk assessment offer over traditional credit scoring models?", a: ["AI credit models eliminate the need for any human underwriter involvement in lending decisions", "AI can incorporate a broader range of data points to produce more nuanced risk assessments than traditional bureau-based scoring — identifying creditworthy borrowers traditional models would miss", "AI credit models are guaranteed to produce decisions that comply with all fair lending regulations", "AI credit assessment is faster because it does not require any applicant documentation"], correct: 1 },
+        { q: "What governance requirement applies to AI credit risk models used in lending decisions?", a: ["AI credit models must be replaced every two years to remain current", "AI credit models must be tested for discriminatory impact, documented for regulatory examination, and applied with human review where model output does not align with underwriter knowledge of the applicant", "AI credit models must be approved by the applicant before their score is used in a lending decision", "AI credit models can only be used for applications below a specified dollar threshold"], correct: 1 }
+      ]
+    },
+    { title: "Lesson 4: Anti-Money Laundering and AI Transaction Monitoring",
+      content: "Anti-money laundering — AML — compliance is one of the most resource-intensive regulatory obligations in banking, requiring financial institutions to monitor transactions for patterns that may indicate money laundering, terrorist financing, or other financial crimes. AI has significantly enhanced AML monitoring by enabling pattern detection across complex transaction networks — identifying structuring patterns, unusual cash flows, suspicious beneficial ownership relationships, and cross-border transaction sequences that manual review would take days or weeks to piece together. AI AML systems generate alerts when transaction patterns cross defined risk thresholds. These alerts must be reviewed by human AML analysts who investigate whether the pattern represents genuine suspicious activity, assess the customer's relationship and history, and determine whether a Suspicious Activity Report must be filed with regulators. AI generates the alert — the human analyst makes the determination and bears the regulatory responsibility for the filing decision.",
+      questions: [
+        { q: "What capability does AI bring to AML transaction monitoring that manual review cannot match?", a: ["AI can automatically file Suspicious Activity Reports without human review", "AI can detect complex patterns across transaction networks at a speed and scale that manual review cannot achieve", "AI eliminates the need for AML compliance programs by preventing all suspicious transactions", "AI AML systems are exempt from regulatory examination requirements"], correct: 1 },
+        { q: "When an AI AML system generates a suspicious activity alert, what is the human analyst's responsibility?", a: ["To immediately file a SAR based on the AI alert without further investigation", "To investigate the alert, assess the customer's history, determine whether genuine suspicious activity exists, and make the filing decision — bearing full regulatory responsibility", "To dismiss the alert if the customer is a long-standing account holder in good standing", "To forward the alert to the AI vendor for secondary review before taking any action"], correct: 1 }
+      ]
+    },
+    { title: "Lesson 5: Human Oversight in Financial Risk and Fraud Operations",
+      content: "The common thread across all AI financial risk and fraud applications is this: AI identifies, flags, and scores — humans investigate, decide, and bear accountability. This division of labor is not a limitation of AI capability — it is a deliberate and necessary governance structure in an industry where decisions affect people's financial lives, where regulatory accountability is specific and demanding, and where the consequences of systematic error can be severe and widespread. Financial risk and fraud professionals who understand this structure — who know when to trust an AI alert, when to question it, when to escalate it, and how to document their decision-making — are the professionals who most effectively protect their institutions, their customers, and their own professional standing. The AI is the instrument of detection. The professional is the instrument of judgment.",
+      questions: [
+        { q: "What is the appropriate division of responsibility between AI and human professionals in financial fraud and risk operations?", a: ["AI handles both detection and final decision-making while humans focus on customer communication", "AI identifies, flags, and scores anomalies while humans investigate, decide, and bear full accountability for the determination and any regulatory action", "Humans identify fraud patterns and AI handles all documentation and reporting", "AI and humans share equal responsibility for all fraud detection and risk decisions"], correct: 1 },
+        { q: "Why is the human accountability structure in financial AI fraud operations described as deliberate rather than a limitation?", a: ["Because AI tools are not yet sophisticated enough to make final fraud determinations", "Because in an industry where decisions affect people's financial lives and regulatory accountability is specific, human judgment and accountability are governance requirements — not workarounds", "Because human accountability reduces the cost of AI fraud detection system licensing", "Because financial regulators prohibit AI from making any final determinations in fraud cases"], correct: 1 }
+      ]
+    }
+  ]
 },
-
 {
-q:"A financial AI tool recommends approving a transaction due to prior customer behavior patterns. However, the transaction amount is significantly higher than normal and involves a new destination that has not appeared before. What should be done next?",
-a:["Approve the transaction because the system recognized part of the pattern","Ignore the alert since the customer has history on the account","Review the transaction more closely and verify it before granting approval","Delete the alert because the account is still active"],
-correct:2
+  name: "Module 3: Customer Accounts and Identity Verification — AI in Financial Client Services",
+  lessons: [
+    { title: "Lesson 1: AI in Customer Account Management",
+      content: "Customer account management — maintaining accurate account records, responding to customer inquiries, processing account changes, and delivering personalized service — is an area where AI has introduced significant capability improvements in financial services. AI-powered customer service systems can handle routine account inquiries, guide customers through standard transactions, surface personalized product recommendations based on account behavior, and flag accounts that show patterns associated with financial distress or life events that may require proactive outreach. These capabilities allow financial institutions to serve more customers more responsively without proportionally increasing staff. However, AI account management systems are only as accurate as the data they operate on, and they lack the contextual judgment to handle situations that fall outside their trained parameters. When a customer's situation is complex, emotionally charged, or involves circumstances the AI was not designed to address, human engagement is not just preferable — it is essential.",
+      questions: [
+        { q: "What is the primary operational benefit of AI-powered customer account management for financial institutions?", a: ["It eliminates the need for any human customer service staff", "It allows institutions to serve more customers more responsively by handling routine inquiries without proportionally increasing staff", "It automatically closes inactive accounts to reduce operational overhead", "It replaces all human judgment in account decisions with consistent algorithmic outcomes"], correct: 1 },
+        { q: "When is human engagement essential rather than optional in AI-assisted customer account management?", a: ["When a customer's account balance exceeds a specified threshold", "When a customer's situation is complex, emotionally charged, or involves circumstances outside the AI system's trained parameters", "When a customer has been with the institution for more than ten years", "Human engagement is never essential since AI can handle all customer situations"], correct: 1 }
+      ]
+    },
+    { title: "Lesson 2: AI in Identity Verification and Know Your Customer Processes",
+      content: "Know Your Customer — KYC — is the regulatory requirement that financial institutions verify the identity of their customers and assess the risk they represent before establishing a financial relationship and on an ongoing basis thereafter. AI has transformed KYC processes by enabling automated document verification, biometric identity matching, sanctions list screening, adverse media scanning, and beneficial ownership analysis at a scale and speed that manual KYC teams cannot match. AI KYC systems can compare submitted identity documents against biometric data, screen names against global watchlists and sanctions databases, analyze news sources for adverse mentions, and assess the overall risk profile of the relationship — all within minutes of account application. These capabilities have dramatically reduced onboarding time while maintaining compliance standards. However, AI KYC results must be reviewed by trained compliance professionals for cases that trigger elevated risk scores, and the final determination of customer risk classification remains a human responsibility.",
+      questions: [
+        { q: "What regulatory obligation does AI KYC technology help financial institutions fulfill?", a: ["The obligation to report all new account openings to tax authorities within 24 hours", "The Know Your Customer requirement to verify customer identity and assess relationship risk before and during a financial relationship", "The obligation to offer all customers the same financial products regardless of risk profile", "The requirement to maintain paper copies of all customer identification documents"], correct: 1 },
+        { q: "What responsibility remains with human compliance professionals even when AI KYC systems are in use?", a: ["Manually re-entering all data that AI KYC systems have already processed", "Reviewing cases that trigger elevated risk scores and making the final determination of customer risk classification", "Operating the AI KYC system and maintaining its software updates", "Contacting every customer to confirm that their AI-verified identity is accurate"], correct: 1 }
+      ]
+    },
+    { title: "Lesson 3: AI and Personalized Financial Services",
+      content: "AI enables financial institutions to deliver personalized service at a scale that was previously only available to high-net-worth clients with dedicated advisors. By analyzing a customer's transaction history, account behavior, life stage indicators, and financial goal patterns, AI systems can surface relevant product recommendations, flag potential savings opportunities, identify when a customer might benefit from a refinancing option, or detect early signs of financial stress that warrant a proactive conversation. These personalization capabilities can genuinely improve customer financial outcomes — but they also introduce ethical considerations. AI-driven personalization that is designed to maximize product sales rather than customer financial wellbeing can constitute a form of targeted exploitation. Financial professionals involved in AI personalization programs must ensure that the systems they work with are designed around customer benefit, not just conversion optimization.",
+      questions: [
+        { q: "What makes AI-driven financial personalization valuable for customers when implemented responsibly?", a: ["It allows financial institutions to sell more products to each customer", "It surfaces relevant recommendations and proactive support based on individual financial behavior — improving outcomes previously only available through dedicated advisors", "It reduces the cost of customer service by eliminating the need for human advisors", "It standardizes financial advice so all customers receive identical recommendations"], correct: 1 },
+        { q: "What ethical concern must financial professionals address when working with AI personalization systems?", a: ["Whether AI personalization complies with social media advertising regulations", "Whether the personalization system is designed around genuine customer financial benefit or optimized primarily for product sales — which can constitute targeted financial exploitation", "Whether customers prefer AI recommendations to those from human advisors", "Whether AI personalization systems share customer data with competitor institutions"], correct: 1 }
+      ]
+    },
+    { title: "Lesson 4: Handling AI Errors in Customer Account Situations",
+      content: "AI errors in customer account contexts — incorrect balance information, wrong transaction categorization, erroneous fraud flags on legitimate activity, or inaccurate credit limit communications — can have immediate and significant impacts on customers' financial lives. A customer whose legitimate transaction is blocked at a point of need, who receives an incorrect account notification, or who is denied a service based on a data error has a real problem that requires a real solution — not an explanation of how AI systems work. Financial professionals who handle customer account issues involving AI errors must be prepared to acknowledge the error, take ownership of resolving it, escalate to the appropriate technical team, and ensure the customer is made whole. The customer's experience of the institution's response to an AI error is often more formative for their trust and loyalty than the error itself.",
+      questions: [
+        { q: "What is the most important quality of a financial professional's response when an AI error has negatively affected a customer's account?", a: ["Explaining the technical limitations of AI systems to help the customer understand why errors occur", "Taking immediate ownership of resolving the issue — acknowledging the error, escalating to the appropriate team, and ensuring the customer is made whole", "Documenting the error in the customer's account file before taking any corrective action", "Referring the customer to the AI vendor's customer support line"], correct: 1 },
+        { q: "Why is a financial institution's response to an AI error often more important than the error itself for customer trust?", a: ["Because customers do not notice AI errors unless the institution draws attention to them", "Because customers evaluate institutions based on how problems are resolved — a prompt, accountable response can preserve trust while a dismissive response permanently damages it", "Because AI errors are always the customer's fault for providing incorrect information", "Because regulatory agencies evaluate institutions based on their error response speed"], correct: 1 }
+      ]
+    },
+    { title: "Lesson 5: Privacy and Consent in AI-Driven Financial Customer Relationships",
+      content: "AI-driven financial services generate and consume enormous volumes of customer data — transaction records, behavioral patterns, communication history, life event indicators, and in some cases alternative data from external sources. Customers have both legal rights and reasonable expectations regarding how their data is used, and financial institutions using AI have obligations to honor those rights. This includes being transparent about what data is used in AI-driven decisions, providing customers with the ability to understand and challenge AI-based decisions that affect them, honoring data usage limitations where customers have opted out of certain uses, and ensuring that the data used in AI models is handled in compliance with applicable privacy regulations. Financial professionals who interact with customers have a role in this privacy framework — their conduct either reinforces or undermines the institution's commitment to using customer data responsibly.",
+      questions: [
+        { q: "What privacy obligation do financial institutions have regarding AI-driven decisions that affect customers?", a: ["To keep all AI decision-making processes confidential to protect proprietary technology", "To be transparent about what data is used, provide customers the ability to understand and challenge AI decisions, and handle data in compliance with applicable privacy regulations", "To obtain customer consent only for AI decisions that result in adverse outcomes", "To share all AI decision data with regulatory agencies before it is applied to any customer"], correct: 1 },
+        { q: "How do financial professionals reinforce a customer's trust in the institution's data practices?", a: ["By explaining the technical architecture of AI systems during customer interactions", "By conducting themselves in ways that demonstrate the institution uses customer data responsibly — being transparent, honoring consent choices, and addressing data concerns accountably", "By avoiding any discussion of AI or data practices during customer interactions", "By directing all customer data questions to the institution's legal department"], correct: 1 }
+      ]
+    }
+  ]
 },
-
 {
-q:"An AI system identifies a transaction as low risk based on historical behavior, but new account data shows several recent changes in device usage and login geography. A team member says the AI score should still be trusted because it was generated by the system. What is the strongest response?",
-a:["Trust the original score because AI already completed the analysis","Approve the transaction and update the record later","Ignore the new data because it may only confuse the review","Reevaluate the transaction using the updated information before deciding how to proceed"],
-correct:3
+  name: "Module 4: Compliance and Data Handling — Governance and Privacy in AI-Assisted Finance",
+  lessons: [
+    { title: "Lesson 1: Regulatory Frameworks Governing AI in Financial Services",
+      content: "Financial services is one of the most heavily regulated industries in the world, and the use of AI does not create an exemption from the regulatory obligations that govern financial practice. In the United States, AI in lending must comply with the Equal Credit Opportunity Act, the Fair Housing Act, and the Fair Credit Reporting Act — which prohibit discriminatory lending and require specific adverse action notices when credit is denied. AI in banking operations is subject to examination by federal and state regulators who evaluate model risk management practices. AML and fraud programs using AI must meet Bank Secrecy Act and FinCEN requirements. In Europe, the General Data Protection Regulation imposes significant constraints on how personal data is used in automated decision-making. Financial professionals need to understand that the regulatory framework governing their work applies fully to AI-assisted work, and that compliance is their professional responsibility regardless of the tool used.",
+      questions: [
+        { q: "What regulatory requirement applies when an AI credit decisioning system produces an adverse outcome for a loan applicant?", a: ["The institution must replace the AI model with a human underwriter for the applicant's next application", "The institution must provide a specific adverse action notice explaining the reasons for the denial as required by the Equal Credit Opportunity Act and Fair Credit Reporting Act", "The institution must share the AI model's training data with the applicant upon request", "No regulatory requirement applies since the decision was made by an automated system"], correct: 1 },
+        { q: "What does it mean for a financial professional that regulatory compliance obligations apply fully to AI-assisted work?", a: ["That financial professionals are not responsible for compliance failures caused by AI system errors", "That the same legal and regulatory standards governing manual financial work apply to AI-assisted work — and professionals bear accountability for compliance regardless of AI involvement", "That all AI-assisted work must be submitted to regulators for pre-approval", "That financial institutions using AI are subject to stricter regulations than those that do not"], correct: 1 }
+      ]
+    },
+    { title: "Lesson 2: Model Risk Management in Financial AI",
+      content: "Model risk management — the discipline of identifying, measuring, and mitigating the risks that arise from using quantitative models in financial decision-making — is a formal regulatory expectation for financial institutions that use AI. Regulators expect institutions to document how their AI models work, validate them against independent data to confirm they perform as intended, monitor them on an ongoing basis to detect degradation or drift, and have processes for identifying and addressing model failures before they cause regulatory or customer harm. This framework applies to AI credit models, fraud detection systems, AML monitoring tools, and any other AI application used in material financial decisions. Financial professionals involved in operating, using, or overseeing AI tools contribute to model risk management every time they report an anomaly, question a counterintuitive output, or escalate a concern about model performance.",
+      questions: [
+        { q: "What does model risk management require of financial institutions that use AI in material decisions?", a: ["Replacing all AI models every two years regardless of their performance", "Documenting how models work, validating them against independent data, monitoring for degradation, and having processes to address model failures before they cause harm", "Obtaining customer consent before any AI model is used in a decision affecting their account", "Reporting all AI model outputs to regulators before they are applied to customers"], correct: 1 },
+        { q: "How do frontline financial professionals contribute to model risk management?", a: ["By programming and retraining AI models when their performance degrades", "By reporting anomalies, questioning counterintuitive outputs, and escalating concerns about model performance — providing essential front-line observations to the governance process", "By approving all AI model changes before they are deployed to production", "By conducting independent validation of AI models on a quarterly basis"], correct: 1 }
+      ]
+    },
+    { title: "Lesson 3: Data Governance and Data Quality in Financial AI",
+      content: "Data governance — the policies, processes, and standards that ensure financial data is accurate, complete, consistent, and used appropriately — is the foundation on which all financial AI systems depend. AI models in finance are only as reliable as the data they are trained on and operate with. Poor data quality — duplicate records, inconsistent formatting, outdated information, missing fields, or data that reflects historical errors — produces AI outputs that inherit those flaws. In financial services, data quality issues can result in incorrect credit assessments, missed fraud alerts, inaccurate regulatory reports, and erroneous customer communications. Financial institutions must establish clear data governance frameworks that define data ownership, quality standards, validation processes, and the responsibilities of the professionals who create, modify, and use financial data. Every professional who enters, modifies, or reviews financial data is a participant in the institution's data governance framework.",
+      questions: [
+        { q: "Why is data quality described as the foundation of reliable financial AI?", a: ["Because regulators evaluate institutions primarily on the quality of their data management practices", "Because AI models are only as reliable as the data they are trained on — poor quality data produces flawed outputs regardless of model sophistication", "Because high-quality data reduces the computational cost of running AI models", "Because data quality only affects AI training and not ongoing model performance"], correct: 1 },
+        { q: "In what way is every financial professional a participant in the institution's data governance framework?", a: ["Every professional is required to complete data governance certification annually", "Every professional who creates, modifies, or reviews financial data contributes to or detracts from the data quality that AI systems depend on — making data accuracy a shared professional responsibility", "Only data management and IT professionals participate in data governance", "Professional participation in data governance is limited to management and compliance roles"], correct: 1 }
+      ]
+    },
+    { title: "Lesson 4: Customer Data Privacy in AI-Assisted Financial Operations",
+      content: "Financial institutions hold some of the most sensitive personal information that exists — account numbers, Social Security numbers, income data, spending patterns, debt levels, and financial behavior history. AI systems that process this data must do so within a framework of legal protections and professional obligations. The Gramm-Leach-Bliley Act requires financial institutions to protect customer financial information and explain their data sharing practices. The Fair Credit Reporting Act governs how consumer credit information can be used in decisions. State privacy laws in many jurisdictions impose additional requirements. Using customer financial data in AI systems without appropriate controls, sharing it beyond its authorized purpose, or failing to protect it from unauthorized access can result in regulatory penalties, civil liability, and irreversible damage to customer trust.",
+      questions: [
+        { q: "What does the Gramm-Leach-Bliley Act require of financial institutions regarding customer data?", a: ["That all customer data be stored in government-approved data centers", "That financial institutions protect customer financial information and explain their data sharing practices to customers", "That customers consent to every individual use of their data before it is processed", "That AI systems processing customer data be reviewed by a federal agency annually"], correct: 1 },
+        { q: "What is the consequence of using customer financial data in AI systems beyond its authorized purpose?", a: ["The AI model will automatically flag the unauthorized use and alert compliance", "The institution may face regulatory penalties, civil liability, and damage to customer trust that cannot be easily restored", "The customer's account will be automatically closed as a protective measure", "The AI system will produce less accurate outputs when unauthorized data is included"], correct: 1 }
+      ]
+    },
+    { title: "Lesson 5: Ethical AI Use as a Financial Professional Obligation",
+      content: "Ethical AI use in financial services is not a philosophical abstraction — it is a professional obligation with concrete behavioral requirements. It means ensuring that AI tools used in customer-facing decisions are fair and do not discriminate. It means being transparent with customers about when and how AI is involved in decisions that affect them. It means raising concerns when AI systems produce outcomes that seem unfair, unexplainable, or inconsistent with the institution's stated values. It means refusing to use AI in ways that prioritize short-term revenue over customer financial wellbeing. And it means maintaining personal professional judgment rather than hiding behind AI outputs when a decision is questioned. Financial professionals who treat ethical AI use as a genuine professional commitment build lasting customer relationships, contribute to institutional integrity, and represent the best of what financial services can be.",
+      questions: [
+        { q: "What concrete behavior does ethical AI use require of financial professionals in customer-facing roles?", a: ["Completing an annual ethics training module and signing a compliance attestation", "Ensuring AI tools are fair, being transparent about AI involvement, raising concerns about unfair outcomes, and maintaining personal professional judgment rather than hiding behind AI outputs", "Avoiding all AI tools that have not been approved by an independent ethics board", "Disclosing to every customer that AI was used in every step of their service interaction"], correct: 1 },
+        { q: "What distinguishes a financial professional who treats ethical AI use as a genuine commitment from one who treats it as a compliance checkbox?", a: ["A genuinely committed professional uses AI less frequently to reduce ethical risk", "A genuinely committed professional actively upholds fair, transparent, and customer-centered AI use as part of their professional identity — not just when being evaluated for compliance purposes", "A compliance-focused professional produces better outcomes because they follow all documented procedures", "There is no meaningful difference in outcomes between the two approaches"], correct: 1 }
+      ]
+    }
+  ]
 },
-
 {
-q:"A banking AI system flags a pattern of late-night transactions that differ from the customer’s normal account activity. The amounts are not large, but the timing and sequence appear unusual compared with the historical profile. What is the best action for the employee reviewing the case?",
-a:["Investigate the activity pattern before deciding whether it is legitimate or suspicious","Approve the transactions because none of them are individually high value","Turn off alerts for the account to reduce unnecessary reviews","Close the case immediately because the system did not block the activity"],
-correct:0
-},
-
-{
-q:"AI flags multiple transactions as suspicious, but each one falls within normal dollar limits when viewed separately. The analyst notices, however, that the timing and repetition may suggest a structured pattern. What should the analyst consider before making a decision?",
-a:["Only the dollar amount of each transaction","Whether the activity forms a broader pattern when reviewed collectively","Whether the customer sounds calm when contacted","Whether the alert can be closed quickly"],
-correct:1
-},
-
-{
-q:"A financial monitoring system uses AI to detect anomalies and flags activity on an account, but the system does not provide a full explanation of why the pattern was scored as high risk. The employee reviewing the case needs to decide what to do next. What is the strongest response?",
-a:["Ignore the alert because the system gave no explanation","Approve the activity because the customer has no prior fraud history","Investigate the flagged activity further instead of treating the alert as final by itself","Delete the alert because the AI output is incomplete"],
-correct:2
-},
-
-{
-q:"A bank relies on AI to monitor account behavior, identify risk patterns, and support transaction review. A new employee believes the system should make the final decision because it processes more data than a human can read quickly. What is the correct understanding of the employee’s role?",
-a:["The employee should let AI decide all flagged cases automatically","The employee should only review cases when customers complain","The employee should ignore AI whenever it creates extra work","The employee is responsible for reviewing and verifying AI output before final action is taken"],
-correct:3
-},
-
-{
-q:"AI suggests that a transaction is likely safe because the account has a long history and few prior issues. However, the current activity still shows several unusual elements compared with recent behavior. What must the employee remember before acting on the suggestion?",
-a:["Verification is still required even when AI suggests low risk","AI suggestions should replace account review when the customer is established","The alert should be ignored if prior history looks strong","Low-risk scores mean no further thought is needed"],
-correct:0
-},
-
-{
-q:"An AI system identifies abnormal activity on an account, but when the customer is contacted, they deny that anything is wrong and ask the bank to clear the alert immediately. The employee knows the activity still looks inconsistent with normal patterns. What should happen next?",
-a:["Approve the activity because the customer denied a problem","Verify the activity independently before clearing the alert","Block all future account activity permanently","Ignore the system warning because the customer responded"],
-correct:1
-}
-
-]
-},
-  
-{
-name:"Module 2: AI Fraud Detection & Risk Monitoring",
-lessons:[
-"AI fraud detection systems analyze transaction behavior, location data, device usage, and spending patterns to identify potential risks. These systems assign risk scores but do not make final decisions on their own.",
-"Fraud monitoring AI looks at patterns over time, not just individual transactions. A single normal transaction can still be part of a suspicious pattern when viewed in context.",
-"AI risk scoring helps prioritize which transactions or accounts require review, but employees must still investigate and confirm whether the activity is legitimate.",
-"Financial institutions rely on layered monitoring systems where AI provides alerts, and human analysts validate, escalate, or clear those alerts based on evidence.",
-"Strong fraud detection requires understanding both what AI flags and what it may miss, ensuring that decisions are based on both data and professional judgment."
-],
-quiz:[
-
-{
-q:"A fraud detection AI system flags a transaction because it appears inconsistent with the customer’s historical spending behavior and device usage. The customer states that they recently traveled and made the purchase intentionally. What should the analyst do before clearing the transaction?",
-a:["Approve the transaction immediately based on customer explanation","Investigate additional transaction details and confirm legitimacy before approving","Ignore the alert since the system may be overly sensitive","Block the account permanently to eliminate all risk"],
-correct:1
-},
-
-{
-q:"An AI monitoring system assigns a low-risk score to a transaction because it matches previous spending amounts. However, the transaction occurs from a new location and device never used before. What is the most appropriate response?",
-a:["Trust the low-risk score and approve the transaction","Ignore the transaction because the amount is normal","Review the full context including location and device before making a decision","Delete the alert since the system did not flag it as high risk"],
-correct:2
-},
-
-{
-q:"A series of transactions individually fall within normal limits, but the AI system flags them due to their timing and frequency. The pattern suggests possible structuring behavior. What should the analyst focus on next?",
-a:["Only the value of each transaction","The overall pattern formed by the transactions","Customer satisfaction with the account","Closing the alerts quickly"],
-correct:1
-},
-
-{
-q:"An AI system flags multiple small transactions across different locations within a short timeframe. The customer claims they authorized all transactions. What is the best next step?",
-a:["Approve all transactions based on customer confirmation","Investigate whether the pattern matches legitimate behavior or indicates risk","Ignore the system warning","Disable alerts for the account"],
-correct:1
-},
-
-{
-q:"A fraud detection AI system fails to flag a transaction that later turns out to be fraudulent. The analyst reviewing the case wants to rely less on the system moving forward. What is the correct understanding?",
-a:["AI systems are unreliable and should not be used","AI systems are supportive tools and require human oversight to catch what they may miss","All fraud can be detected automatically without human input","Fraud detection should only happen after complaints"],
-correct:1
-},
-
-{
-q:"An AI system flags a transaction as high risk, but the transaction matches the customer’s typical behavior except for a slight increase in amount. What should the analyst do?",
-a:["Deny the transaction immediately","Ignore the alert completely","Review both the amount change and behavior pattern before deciding","Approve it without review"],
-correct:2
-},
-
-{
-q:"A financial institution uses AI to monitor account activity in real time. An alert is triggered during a high-volume transaction period, and the analyst is under pressure to clear alerts quickly. What is the most responsible action?",
-a:["Clear alerts quickly to reduce backlog","Investigate alerts properly even under time pressure","Ignore lower-value alerts","Approve all transactions"],
-correct:1
-},
-
-{
-q:"AI flags a transaction because it differs from historical behavior, but the account has recently undergone changes such as a new job and location. What should the analyst consider?",
-a:["Only past behavior","Recent changes to the account and whether they explain the activity","Ignoring the alert","Automatically approving"],
-correct:1
-},
-
-{
-q:"A fraud detection system uses AI scoring to prioritize alerts. A low-priority alert still shows some unusual characteristics. What is the correct approach?",
-a:["Ignore low-priority alerts completely","Review alerts based on both score and context","Delete the alert","Escalate all alerts regardless of priority"],
-correct:1
-},
-
-{
-q:"An AI system identifies a potential fraud pattern across multiple accounts linked by similar behavior. What should be the next step?",
-a:["Ignore because accounts are separate","Investigate the connection between accounts and escalate if needed","Approve all activity","Close the alerts"],
-correct:1
-}
-
-]
-},  
-{
-name:"Module 3: AI in Customer Accounts & Identity Verification",
-lessons:[
-"AI identity verification systems are used in banking to confirm customer identity through documents, facial recognition, behavioral patterns, and device analysis. These systems assist with onboarding and account access but do not replace full verification procedures.",
-"AI tools can detect inconsistencies in identity data, such as mismatched facial scans, document irregularities, or unusual login behavior. These alerts must be reviewed carefully before granting access.",
-"Account access is one of the most sensitive actions in banking. Even when AI suggests a match or low risk, employees must follow strict verification protocols to prevent unauthorized access.",
-"AI behavioral systems analyze typing speed, login timing, device history, and navigation patterns to help detect suspicious activity. These signals are supportive, not final.",
-"Strong financial security depends on combining AI verification tools with human judgment, ensuring that access is granted only when identity is fully confirmed."
-],
-quiz:[
-
-{
-q:"A customer attempts to access their account using a new device, and the AI identity verification system flags the login as unusual due to differences in device history and behavior patterns. The customer claims they recently purchased a new phone and need immediate access. What should the employee do next?",
-a:["Grant access immediately based on customer explanation","Ignore the alert because device changes are common","Verify the customer’s identity through additional approved methods before granting access","Block the account permanently"],
-correct:2
-},
-
-{
-q:"An AI identity system performs facial recognition during account verification and returns a partial match with minor inconsistencies. The customer insists the system is incorrect and requests access to proceed. What is the most appropriate action?",
-a:["Approve access based on partial match","Require full verification before granting access","Ignore the system and reset credentials","Allow temporary access without documentation"],
-correct:1
-},
-
-{
-q:"A customer submits identification documents through an AI verification system, and the system flags potential irregularities in the document structure. The customer claims the document is valid. What should the employee do?",
-a:["Approve the document immediately","Ignore the AI system","Review the document further and verify authenticity before proceeding","Delete the submission"],
-correct:2
-},
-
-{
-q:"An AI system identifies a login attempt as low risk based on behavioral patterns, but the login location differs significantly from the customer's normal activity. What should the employee consider?",
-a:["Approve because risk is low","Ignore the location change","Verify whether the location change is legitimate before granting access","Block access permanently"],
-correct:2
-},
-
-{
-q:"A banking AI system uses behavioral biometrics to evaluate typing patterns and navigation habits. A login attempt shows a mismatch in behavior, but the correct password is entered. What is the best next step?",
-a:["Grant access because the password is correct","Ignore behavioral data","Investigate the mismatch before granting access","Reset the account immediately"],
-correct:2
-},
-
-{
-q:"A customer requests account access but cannot complete standard identity verification due to lost credentials. The AI system suggests a possible match based on historical data. What should the employee do?",
-a:["Grant access based on AI suggestion","Follow strict identity verification procedures before granting access","Ignore the request","Allow partial access"],
-correct:1
-},
-
-{
-q:"An AI identity verification system approves a document submission, but the employee notices inconsistencies in customer-provided information. What should be done?",
-a:["Trust AI completely","Ignore inconsistencies","Verify the information before final approval","Approve quickly"],
-correct:2
-},
-
-{
-q:"A customer attempts to reset their account using AI-assisted verification. The system flags unusual behavior but still provides a reset option. What should the employee do?",
-a:["Allow reset immediately","Ignore flags","Verify identity before allowing reset","Block account"],
-correct:2
-},
-
-{
-q:"An AI system monitors login behavior and flags multiple failed attempts followed by a successful login. The customer claims it was them. What is the best response?",
-a:["Ignore the alert","Approve immediately","Investigate the login activity before confirming access","Disable account permanently"],
-correct:2
-},
-
-{
-q:"AI suggests that a customer’s identity is verified based on multiple data points, but one verification factor is missing. What should the employee do?",
-a:["Approve verification","Ignore missing data","Require complete verification before granting access","Allow temporary access"],
-correct:2
-}
-
-]
-},
-  
-{
-name:"Module 4: AI Compliance & Data Handling",
-lessons:[
-"AI systems in finance must operate within strict regulatory and compliance frameworks. These include rules around data privacy, transaction monitoring, reporting requirements, and customer protection.",
-"Financial institutions use AI to assist with compliance by flagging unusual activity, identifying potential reporting obligations, and helping monitor regulatory thresholds. However, AI outputs must always be verified.",
-"Data handling in banking is highly sensitive. Customer information, account details, transaction data, and identification records must never be exposed or misused, even when using AI tools for assistance.",
-"AI tools can process large volumes of financial data quickly, but improper use—such as sharing sensitive data externally—can create major compliance risks.",
-"Employees must understand how to use AI responsibly, ensuring that all actions follow internal policy, regulatory requirements, and data protection standards."
-],
-quiz:[
-
-{
-q:"A financial employee uses an AI tool to analyze transaction data and considers copying customer account details into an external AI system to get faster insights. What is the primary compliance concern with this action?",
-a:["The AI may respond too slowly","Sensitive customer data may be exposed outside secure systems","The analysis may become too detailed","The system may generate too many alerts"],
-correct:1
-},
-
-{
-q:"An AI system flags a transaction pattern that may require regulatory reporting, but the employee is unsure whether it meets the reporting threshold. What is the most appropriate next step?",
-a:["Ignore the alert","Submit a report immediately without review","Review the flagged activity against compliance requirements before deciding","Delete the alert"],
-correct:2
-},
-
-{
-q:"A banking AI system identifies potential suspicious activity that could fall under anti-money laundering (AML) regulations. The customer claims all activity is legitimate. What should the employee do next?",
-a:["Clear the alert immediately","Investigate and follow compliance procedures before clearing the activity","Ignore the system","Close the account without review"],
-correct:1
-},
-
-{
-q:"An employee relies on AI to determine whether a transaction meets regulatory reporting requirements. The AI suggests no reporting is needed, but the employee notices unusual structuring behavior. What should be done?",
-a:["Follow AI recommendation","Ignore the structuring pattern","Review the behavior carefully and verify compliance requirements before deciding","Delete the alert"],
-correct:2
-},
-
-{
-q:"A financial AI system suggests combining multiple small alerts into a single review to improve efficiency. What is the compliance risk in doing this without proper evaluation?",
-a:["Improved efficiency","Missing important details that may require individual review or reporting","Faster resolution","Reduced workload"],
-correct:1
-},
-
-{
-q:"An employee uses AI to summarize customer transaction activity for reporting purposes. The summary omits several key transactions flagged earlier. What should the employee do?",
-a:["Submit the summary","Verify the full transaction history before reporting","Ignore missing data","Delete the report"],
-correct:1
-},
-
-{
-q:"A compliance AI system flags an account for potential reporting due to repeated unusual transactions. The employee feels the pattern is not serious. What is the correct action?",
-a:["Ignore the system","Follow proper compliance review before making a decision","Close the account","Approve activity"],
-correct:1
-},
-
-{
-q:"A financial institution uses AI to monitor regulatory thresholds. A transaction is just below the reporting limit, but part of a larger pattern. What should be considered?",
-a:["Only the single transaction","The overall pattern and potential structuring behavior","Ignoring the alert","Immediate approval"],
-correct:1
-},
-
-{
-q:"An employee considers using AI to speed up compliance reporting by skipping manual verification. What is the main risk?",
-a:["Faster reporting","Potential regulatory violations due to lack of verification","Improved efficiency","Reduced workload"],
-correct:1
-},
-
-{
-q:"A financial AI system processes customer data for compliance checks. What is the employee’s responsibility when using this system?",
-a:["Trust AI completely","Ensure data is handled securely and compliance requirements are met","Ignore system","Share data freely"],
-correct:1
-}
-
-]
-},  
-{
-name:"Module 5: Real Financial AI Scenarios & Decision Making",
-lessons:[
-"Real-world financial environments require employees to make decisions based on AI insights while balancing risk, compliance, and customer needs. AI can guide decisions, but it cannot replace accountability.",
-"Financial AI systems generate alerts, recommendations, and risk scores, but employees must interpret these outputs within the full context of each situation.",
-"AI may provide fast answers, but incorrect or unchecked decisions can lead to financial loss, fraud exposure, or regulatory violations.",
-"Decision-making in finance involves reviewing AI output, verifying information, and understanding the consequences of each action before proceeding.",
-"The strongest financial professionals use AI as a support tool while maintaining control over final decisions, ensuring accuracy, security, and compliance."
-],
-quiz:[
-
-{
-q:"A financial AI system flags a transaction as potentially fraudulent based on unusual behavior and assigns it a high-risk score. The customer contacts support and insists the transaction is legitimate due to a recent change in spending habits. The AI system suggests declining the transaction. What is the most appropriate next step?",
-a:["Decline the transaction immediately","Verify the transaction through additional checks before making a final decision","Ignore the AI system","Approve the transaction without review"],
-correct:1
-},
-
-{
-q:"An AI system recommends approving a financial request based on strong customer history and low-risk scoring. However, the request includes incomplete documentation that is required by policy. What should the employee do?",
-a:["Approve based on AI recommendation","Request complete documentation before making a final decision","Ignore the request","Deny immediately"],
-correct:1
-},
-
-{
-q:"A banking AI tool suggests that a pattern of transactions across multiple accounts may be linked, indicating potential coordinated activity. The accounts individually show low risk. What should the analyst do next?",
-a:["Ignore because each account is low risk","Investigate the potential connection across accounts before making a decision","Approve all transactions","Close alerts"],
-correct:1
-},
-
-{
-q:"A customer disputes a flagged transaction and demands immediate resolution. The AI system suggests approving the transaction due to customer pressure patterns identified in similar cases. What is the best response?",
-a:["Approve to satisfy the customer","Follow verification procedures before making a decision","Ignore the request","Block the account"],
-correct:1
-},
-
-{
-q:"An AI system recommends denying a transaction due to risk indicators, but the employee notices recent changes in the customer’s behavior that may explain the activity. What should the employee do?",
-a:["Deny immediately","Ignore the system","Review the context and verify before making a decision","Approve automatically"],
-correct:2
-},
-
-{
-q:"A financial AI system suggests that a transaction is safe because it matches historical patterns. However, the employee notices that the timing and frequency of the transactions are unusual. What should be considered?",
-a:["Only the pattern match","The full context including timing and frequency before deciding","Ignore the observation","Approve automatically"],
-correct:1
-},
-
-{
-q:"An AI system flags multiple alerts during a high-volume period. The employee feels pressure to resolve alerts quickly. What is the most responsible approach?",
-a:["Clear alerts quickly","Investigate each alert appropriately despite time pressure","Ignore alerts","Approve all transactions"],
-correct:1
-},
-
-{
-q:"A banking AI system provides a recommendation that conflicts with internal policy. What should the employee do?",
-a:["Follow AI recommendation","Ignore policy","Follow internal policy and verify before acting","Delete the alert"],
-correct:2
-},
-
-{
-q:"An AI system suggests combining several flagged transactions into one decision to improve efficiency. What is the risk of doing this?",
-a:["Improved efficiency","Missing important details that require separate review","Faster processing","Reduced workload"],
-correct:1
-},
-
-{
-q:"A financial employee uses AI to assist in decision-making but notices that the system occasionally produces conflicting recommendations. What is the correct approach?",
-a:["Trust the first recommendation","Ignore AI completely","Review and verify all outputs before making decisions","Approve randomly"],
-correct:2
-]  
+  name: "Module 5: Real Financial AI Scenarios — Applying Judgment in Banking and Finance Practice",
+  lessons: [
+    { title: "Lesson 1: Fraud Alert and Customer Impact Scenario",
+      content: `<div class="scenario-box">📋 <strong>Scenario:</strong> A bank's AI fraud detection system flags and blocks a debit card transaction of $847 at a home improvement store. The customer calls the fraud line immediately, frustrated and distressed. They explain that they are in the middle of a home repair emergency — a pipe burst — and need the supplies right now. The representative checks and sees the AI flagged the transaction because it was made 200 miles from the customer's home address and is significantly larger than the customer's typical purchases at this merchant category. The customer confirms they are traveling for work and stopped to buy supplies for their rental property in that city.</div>This scenario illustrates the tension between fraud protection and customer experience — and the critical importance of human judgment in fraud alert resolution. The AI flagged correctly based on available signals: geographic anomaly and purchase size deviation. But the AI has no way of knowing this customer travels for work, owns a rental property, and is dealing with an emergency. The representative's responsibility is to verify the customer's identity through authentication procedures, confirm the explanation is consistent with account history, unblock the transaction, and ensure the customer can complete their purchase.`,
+      questions: [
+        { q: "An AI fraud system blocks a legitimate customer transaction based on geographic anomaly. What is the representative's responsibility after verifying identity?", a: ["Keep the transaction blocked for 24 hours as a precautionary measure", "Verify the explanation against account history, unblock the transaction, and ensure the customer can complete their purchase", "Require the customer to visit a branch in person before the block can be removed", "File a fraud report based on the AI alert regardless of the customer's explanation"], correct: 1 },
+        { q: "What does this scenario demonstrate about the relationship between AI fraud detection and human judgment?", a: ["AI fraud detection is unreliable and produces too many false positives to be useful", "AI correctly identified anomaly signals but lacked contextual knowledge to distinguish fraud from a legitimate unusual transaction — human judgment with the customer's context completed the picture", "Representatives should override AI fraud alerts whenever a customer provides any explanation", "AI fraud systems should never block transactions while a customer is traveling"] , correct: 1 }
+      ]
+    },
+    { title: "Lesson 2: Credit Decision and Adverse Action Scenario",
+      content: `<div class="scenario-box">📋 <strong>Scenario:</strong> A loan officer is reviewing a small business loan application. The AI credit decisioning system scored it high-risk and recommended denial. The loan officer reviews the file and notices the AI's risk score was heavily influenced by a 90-day delinquency from three years ago. The loan officer knows this delinquency occurred during a documented period of severe flooding that affected the entire region — a well-known local event — and the business has maintained a perfect payment record for 30 months since. The AI model did not have context for the regional disaster and scored the delinquency as a standard credit risk factor.</div>This scenario demonstrates the critical importance of human underwriter review in AI-assisted lending. The AI scored based on available data — and the delinquency is a legitimate risk signal in isolation. But the loan officer has contextual knowledge the model cannot access: the delinquency occurred during a documented disaster, the business recovered, and the 30-month clean history demonstrates resilience. The loan officer's responsibility is to document this context, apply underwriting judgment, and make a lending decision that reflects the full picture.`,
+      questions: [
+        { q: "An AI credit model recommends denial based on a delinquency the loan officer knows occurred during a documented regional disaster. What is the most appropriate professional response?", a: ["Approve the loan without documentation since the loan officer knows the local context", "Deny the loan as recommended since the AI model has processed all available credit data", "Document the disaster context and 30-month clean history in the credit file, apply professional underwriting judgment, and make a defensible lending decision", "Refer the application to a different loan officer without local knowledge"], correct: 2 },
+        { q: "What does this scenario illustrate about AI credit scoring and human underwriting judgment?", a: ["AI credit scores are always more accurate than human underwriter assessments", "AI scores the available data accurately but human underwriters bring contextual knowledge — including documented external events — that AI models cannot incorporate, making human review essential for fair lending", "Loan officers should always override AI recommendations when they have local knowledge", "AI credit models should be retrained after every regional disaster to incorporate local context"], correct: 1 }
+      ]
+    },
+    { title: "Lesson 3: AML Alert and Investigation Scenario",
+      content: `<div class="scenario-box">📋 <strong>Scenario:</strong> An AML analyst receives an AI-generated alert on a business checking account. The alert flags a pattern of cash deposits over 45 days: 18 deposits ranging from $8,000 to $9,500 — all below the $10,000 Currency Transaction Report threshold — totaling $156,000. The AI flagged this as a potential structuring pattern. The analyst reviews the account history and sees the business is a landscaping company with a six-year account history. For five years the account showed seasonal cash deposit patterns consistent with a cash-based landscaping business, with occasional deposits above $10,000. The analyst also notes the business recently hired new crews and took on a large commercial contract three months ago.</div>This scenario illustrates the complexity of AML investigation — an AI alert identifying a real statistical pattern that could indicate structuring, but with a plausible legitimate explanation based on account history and recent business growth. The analyst must not dismiss the alert because the customer is long-standing, nor file a SAR based solely on the AI pattern. The correct approach is thorough investigation: review business documentation for the new contract, assess whether the deposit pattern is consistent with stated growth, consider contacting the business for clarification, and make a documented, defensible determination.`,
+      questions: [
+        { q: "An AI AML alert flags a potential structuring pattern on a long-standing business account that recently expanded. What is the analyst's correct investigative approach?", a: ["Dismiss the alert since the customer has a six-year relationship and no prior issues", "Immediately file a SAR based on the AI structuring pattern identification", "Conduct a thorough investigation — reviewing business documentation, assessing whether the pattern is consistent with stated growth, and making a documented, defensible determination", "Transfer the account to a high-risk category without further investigation"], correct: 2 },
+        { q: "What does this scenario demonstrate about professional judgment in AI-assisted AML operations?", a: ["AI AML alerts should always result in SAR filings since the AI has identified a statistical anomaly", "Long-standing customer relationships exempt accounts from AML monitoring requirements", "AI identifies statistical patterns but cannot assess business context — the analyst must investigate thoroughly and make an accountable determination rather than either blindly acting on or dismissing the alert", "AML analysts should contact customers directly before reviewing any documentation"], correct: 2 }
+      ]
+    },
+    { title: "Lesson 4: KYC and Identity Verification Scenario",
+      content: `<div class="scenario-box">📋 <strong>Scenario:</strong> A compliance associate is reviewing a new account application. The AI KYC system scored it elevated risk based on three factors: the applicant's name produces a partial match against a sanctions watchlist, the address provided does not appear in standard address verification databases, and the applicant is a foreign national with a recently issued passport. The associate reviews the file and identifies: the sanctions watchlist match is for a person with a different date of birth and different country of origin; the address is in a recently constructed residential development not yet in all address databases; and the applicant's passport was recently renewed — not issued for the first time.</div>This scenario demonstrates how AI KYC risk flags require human review to distinguish genuine risk from false positive indicators. Each flag the AI generated was technically accurate — there is a partial name match, the address is non-standard, the passport is recent. But each flag has a plausible non-risk explanation that the AI cannot independently assess. The compliance associate's responsibility is to document the resolution of each flag: confirm the sanctions match is a different person, verify the address through alternative sources, confirm the passport renewal history, and make a documented risk determination that reflects the full picture rather than the AI's initial flag count.`,
+      questions: [
+        { q: "An AI KYC system flags an application with three elevated risk indicators that each have plausible non-risk explanations. What is the compliance associate's responsibility?", a: ["Decline the application since the AI has identified three separate risk flags", "Approve the application immediately since the associate has identified explanations for all flags", "Document the resolution of each flag with evidence, verify through alternative sources where needed, and make a documented risk determination reflecting the full picture", "Escalate to senior compliance without conducting any independent review"], correct: 2 },
+        { q: "What does this scenario demonstrate about AI KYC risk scoring and human compliance review?", a: ["AI KYC systems are unreliable and should not be used in account opening decisions", "AI correctly identifies technical risk indicators but cannot independently assess whether each indicator has a legitimate explanation — human compliance review resolves the full picture and makes the accountable determination", "Compliance associates should accept AI risk scores as final determinations to ensure consistency", "Three AI risk flags always indicate genuine suspicious activity requiring SAR filing"], correct: 1 }
+      ]
+    },
+    { title: "Lesson 5: Investment Suitability and AI Recommendation Scenario",
+      content: `<div class="scenario-box">📋 <strong>Scenario:</strong> A wealth management associate is reviewing an AI-generated investment recommendation for a client's portfolio rebalancing. The AI has recommended increasing the client's allocation to a high-growth technology sector fund based on the client's stated goal of long-term growth and their current portfolio's underweight position in that sector. The associate reviews the client's full profile and notices information that does not appear to have been weighted in the AI's recommendation: the client is 61 years old, has noted plans to retire in three years, and in a recent service call flagged anxiety about market volatility. The AI recommendation was technically consistent with the client's stated growth goal — but the associate recognizes it may not be suitable given the client's actual timeline and risk tolerance as expressed in recent interactions.</div>This scenario illustrates the suitability obligation that governs investment recommendations — and why AI-generated investment guidance must always be evaluated against the client's complete circumstances, not just the data points the model was optimized for. The associate's responsibility is to assess the recommendation against the client's full profile including age, retirement timeline, and expressed risk tolerance, determine whether the recommendation is suitable, and if not, identify an alternative that better serves the client's actual situation. Implementing an unsuitable recommendation because AI generated it is not a defense — it is a suitability violation.`,
+      questions: [
+        { q: "An AI investment recommendation is technically consistent with a client's stated growth goal but the associate recognizes it may not suit the client's retirement timeline and expressed risk anxiety. What is the correct response?", a: ["Implement the AI recommendation since it aligns with the client's stated goal", "Assess the recommendation against the client's complete profile including age, timeline, and expressed risk tolerance, and identify an alternative if it is not suitable", "Ask the client to update their stated goal to match the AI recommendation", "Escalate to a senior advisor without conducting any independent suitability review"], correct: 1 },
+        { q: "Why is implementing an unsuitable AI-generated investment recommendation not defensible on the grounds that AI generated it?", a: ["Because AI investment tools are not approved for use in wealth management", "Because the suitability obligation rests with the financial professional — an unsuitable recommendation implemented without judgment is a suitability violation regardless of whether AI or a human generated it", "Because AI investment recommendations are always unsuitable for clients over 60", "Because AI-generated recommendations require client consent before they can be implemented"], correct: 1 }
+      ]
+    }
+  ]
 }
 ];
 
-
-  function getTotalSteps() {
-  let total = 0;
-  modules.forEach(module => {
-    total += module.lessons.length + module.quiz.length;
-  });
-  return total;
-}
-
-function getCurrentStep() {
-  let step = 0;
-
-  for (let i = 0; i < moduleIndex; i++) {
-    step += modules[i].lessons.length + modules[i].quiz.length;
-  }
-
-  if (mode === "lesson") {
-    step += lessonIndex;
-  } else {
-    step += modules[moduleIndex].lessons.length + quizIndex;
-  }
-
-  return step;
-}
-
-function updateProgress() {
-  const progressBar = document.getElementById("progressBar");
-  if (!progressBar) return;
-
-  const totalSteps = getTotalSteps();
-  const currentStep = getCurrentStep();
-  const progressPercent = (currentStep / totalSteps) * 100;
-  progressBar.style.width = progressPercent + "%";
-}
-
-function renderQuestion(q) {
-  let html = `<div class="question-text">${q.q}</div>`;
-  q.a.forEach((opt, i) => {
-    html += `<button class="answer-btn" onclick="checkAnswer(${i})">${opt}</button>`;
-  });
-  return html;
-}
-
-function load() {
-  const title = document.getElementById("title");
-  const content = document.getElementById("content");
-  const nextBtn = document.getElementById("nextBtn");
-  const moduleLabel = document.getElementById("moduleLabel");
-
-  const module = modules[moduleIndex];
-
-  updateProgress();
-  moduleLabel.innerText = module.name;
-
-  if (mode === "lesson") {
-    title.innerText = "Lesson " + (lessonIndex + 1);
-    content.innerHTML = `<p>${module.lessons[lessonIndex]}</p>`;
-    nextBtn.style.display = "block";
-  }
-
-  if (mode === "quiz") {
-    title.innerText = "Question " + (quizIndex + 1);
-    content.innerHTML = renderQuestion(module.quiz[quizIndex]);
-    nextBtn.style.display = "none";
-  }
-}
-
-function checkAnswer(i) {
-  const module = modules[moduleIndex];
-  const correct = module.quiz[quizIndex].correct;
-
-  if (i === correct) {
-    alert("Correct!");
-  } else {
-    alert("Incorrect. Try again.");
-    return;
-  }
-
-  quizIndex++;
-
-  if (quizIndex < module.quiz.length) {
-    load();
-  } else {
-    alert(module.name + " Complete!");
-    moduleIndex++;
-    lessonIndex = 0;
-    quizIndex = 0;
-    mode = "lesson";
-
-    if (moduleIndex >= modules.length) {
-      localStorage.setItem("courseName", "AI in Finance & Banking™");
-      localStorage.setItem("courseSubtitle", "Completed all modules and assessments");
-      localStorage.setItem("issueDate", new Date().toLocaleDateString());
-      localStorage.setItem("certificateId", "LUMI-" + Math.floor(10000 + Math.random() * 90000));
-
-      window.location.href = "certificate-choice.html";
-    } else {
-      load();
-    }
-  }
-}
-
-function next() {
-  const module = modules[moduleIndex];
-
-  if (mode === "lesson") {
-    lessonIndex++;
-
-    if (lessonIndex >= module.lessons.length) {
-      mode = "quiz";
-      lessonIndex = 0;
-    }
-
-    load();
-  }
-}
-
-load();
-
+let moduleIndex = 0, lessonIndex = 0, questionIndex = -1, questionAnswered = false;
+function totalSteps(){let t=0;modules.forEach(m=>{t+=m.lessons.length*3;});return t;}
+function currentStep(){let s=0;for(let i=0;i<moduleIndex;i++)s+=modules[i].lessons.length*3;s+=lessonIndex*3;if(questionIndex>=0)s+=1+questionIndex;return s;}
+function updateProgress(){document.getElementById("progressBar").style.width=(currentStep()/totalSteps()*100)+"%";}
+function showLesson(){const mod=modules[moduleIndex];const lesson=mod.lessons[lessonIndex];document.getElementById("moduleLabel").innerText=mod.name;document.getElementById("screenTitle").innerText=lesson.title;const raw=lesson.content;document.getElementById("content").innerHTML=raw.includes("<div")?raw:`<p>${raw}</p>`;document.getElementById("feedbackBox").className="feedback-box";document.getElementById("feedbackBox").innerText="";const btn=document.getElementById("continueBtn");btn.style.display="block";btn.innerText="Continue to Knowledge Check";updateProgress();}
+function showQuestion(){const lesson=modules[moduleIndex].lessons[lessonIndex];const q=lesson.questions[questionIndex];document.getElementById("moduleLabel").innerText=modules[moduleIndex].name;document.getElementById("screenTitle").innerText="Knowledge Check — "+lesson.title;document.getElementById("feedbackBox").className="feedback-box";document.getElementById("feedbackBox").innerText="";document.getElementById("continueBtn").style.display="none";questionAnswered=false;let html=`<div class="question-text">${q.q}</div>`;q.a.forEach((opt,i)=>{html+=`<button class="answer-btn" id="btn-${i}" onclick="checkAnswer(${i})">${opt}</button>`;});document.getElementById("content").innerHTML=html;updateProgress();}
+function checkAnswer(selected){if(questionAnswered)return;questionAnswered=true;const lesson=modules[moduleIndex].lessons[lessonIndex];const q=lesson.questions[questionIndex];const isCorrect=selected===q.correct;q.a.forEach((_,i)=>{document.getElementById("btn-"+i).disabled=true;});document.getElementById("btn-"+selected).classList.add(isCorrect?"correct":"incorrect");if(!isCorrect){document.getElementById("btn-"+q.correct).classList.add("correct");}const fb=document.getElementById("feedbackBox");if(isCorrect){fb.className="feedback-box correct";fb.innerHTML="✅ Correct! Well done.";}else{fb.className="feedback-box incorrect";fb.innerHTML="❌ Not quite. The correct answer is highlighted above.";}const btn=document.getElementById("continueBtn");btn.style.display="block";btn.innerText="Continue";}
+function advance(){if(questionIndex===-1){questionIndex=0;showQuestion();return;}questionIndex++;if(questionIndex<modules[moduleIndex].lessons[lessonIndex].questions.length){showQuestion();return;}questionIndex=-1;lessonIndex++;if(lessonIndex<modules[moduleIndex].lessons.length){showLesson();return;}lessonIndex=0;moduleIndex++;if(moduleIndex<modules.length){showLesson();return;}localStorage.setItem("courseName","AI in Finance and Banking™");localStorage.setItem("courseSubtitle","Completed all modules and assessments");localStorage.setItem("issueDate",new Date().toLocaleDateString());localStorage.setItem("certificateId","LUMI-"+Math.floor(10000+Math.random()*90000));window.location.href="certificate-choice.html";}
+showLesson();
 </script>
 </body>
 </html>
