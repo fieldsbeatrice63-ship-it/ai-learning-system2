@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Access Granted</title>
+</head>
+
+<body style="font-family: Arial; text-align:center; padding-top:100px;">
+
+<h2>Payment Successful</h2>
+<p>Unlocking your course now...</p>
+
+<script>
+localStorage.setItem("toolsPaid", "true");
+
+setTimeout(() => {
+  window.location.href = "lesson-engine-tools.html";
+}, 1500);
+</script>
+
+</body>
+</html>
