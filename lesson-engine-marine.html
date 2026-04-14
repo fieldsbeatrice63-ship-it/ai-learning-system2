@@ -155,7 +155,7 @@
         </a>
       </div>
 
-      <div class="module-title" id="moduleLabel"></div>
+      <div class="module-title" id="module"></div>
       <div class="lesson-title" id="title"></div>
       <div class="content" id="content"></div>
 
@@ -168,12 +168,7 @@
       </div>
     </div>
   </div>
-<div class="container">
-  <h4 id="module"></h4>
-  <h2 id="title"></h2>
-  <div id="content"></div>
-  <button id="nextBtn" onclick="next()">Next</button>
-</div>
+
   <script>
     let moduleIndex = 0;
     let lessonIndex = 0;
@@ -370,77 +365,6 @@ correct:1
 {
 q:"A maritime security analyst notices that an AI threat model has increased the risk score of a vessel after combining radar behavior, route deviation, and proximity to restricted waters. However, recent weather conditions may also explain some movement irregularities. What is the most appropriate next step?",
 a:["Escalate immediately without review because the score increased","Review environmental conditions alongside the AI findings before deciding whether the activity is truly suspicious","Ignore the risk score because weather always causes false alerts","Reduce the score manually and clear the case without documentation"],
-correct:1
-},
-
-{
-name:"Module 4: AI in Logistics, Supply Chain & Operational Readiness",
-lessons:[
-"AI systems in military and naval operations are heavily used in logistics to track supplies, predict shortages, and optimize delivery routes across complex environments.",
-"Operational readiness depends on having the right equipment, fuel, personnel, and supplies available at the right time. AI helps forecast needs, but decisions must still be verified.",
-"AI logistics systems analyze movement patterns, environmental conditions, and mission timelines to recommend adjustments to supply routes and distribution plans.",
-"Supply chain disruptions can occur due to weather, equipment failure, or unexpected operational changes. AI can detect these risks early but does not automatically resolve them.",
-"Effective use of AI in logistics requires understanding both the system’s recommendations and the real-world impact of decisions across multiple operations."
-],
-quiz:[
-
-{
-q:"An AI logistics system predicts a delay in critical supply delivery due to changing environmental conditions and route congestion. The system recommends rerouting supplies through an alternate path that may affect another scheduled operation. What is the most appropriate next step for the operator?",
-a:["Reroute supplies immediately without review","Ignore the AI system and continue with the original plan","Evaluate the impact of the reroute on all operations before making a decision","Cancel all supply movement"],
-correct:2
-},
-
-{
-q:"A naval logistics AI system flags that fuel consumption rates are higher than expected based on current mission activity. The system suggests adjusting supply distribution to compensate. What should the logistics officer do next?",
-a:["Ignore the alert since operations are ongoing","Immediately redistribute fuel without verification","Review consumption data and confirm the accuracy before making adjustments","Shut down operations"],
-correct:2
-},
-
-{
-q:"An AI supply chain system identifies a potential shortage of critical equipment based on projected mission timelines. The current inventory appears sufficient for now. What is the most responsible action?",
-a:["Ignore the projection because current inventory is stable","Order excessive supplies immediately","Review projections and verify demand before adjusting inventory","Cancel missions"],
-correct:2
-},
-
-{
-q:"A logistics AI platform recommends consolidating supply shipments to improve efficiency. However, doing so could delay delivery to certain units. What should be considered before following the recommendation?",
-a:["Only efficiency","The impact of delays on operational readiness","Ignoring the recommendation","Reducing all shipments"],
-correct:1
-},
-
-{
-q:"An AI system flags irregular supply movement patterns that could indicate a disruption or misallocation of resources. The data is incomplete but suggests potential inefficiencies. What should the operator do?",
-a:["Ignore incomplete data","Investigate the pattern further before taking action","Shut down supply movement","Approve all shipments"],
-correct:1
-},
-
-{
-q:"A military logistics AI system suggests reallocating resources from one operation to support another higher-priority mission. What is the correct approach?",
-a:["Reallocate immediately","Ignore priority changes","Evaluate the impact on both operations before making a decision","Cancel both missions"],
-correct:2
-},
-
-{
-q:"An AI-driven logistics system recommends a faster delivery route, but the route passes through an area with uncertain environmental conditions. What should the decision-maker do?",
-a:["Approve route immediately","Ignore route suggestion","Assess risks and verify route safety before proceeding","Delay all deliveries"],
-correct:2
-},
-
-{
-q:"A supply chain AI system predicts delays due to weather disruptions. The system suggests preemptive redistribution of supplies. What is the most appropriate response?",
-a:["Ignore prediction","Redistribute supplies immediately","Verify forecast and impact before making changes","Cancel shipments"],
-correct:2
-},
-
-{
-q:"An AI system monitors inventory levels and suggests reducing stock to optimize storage efficiency. What is the potential risk?",
-a:["Improved efficiency","Possible shortage during critical operations","Faster delivery","Reduced workload"],
-correct:1
-},
-
-{
-q:"A logistics AI system identifies a mismatch between planned and actual supply usage rates. What should the operator do next?",
-a:["Ignore mismatch","Investigate discrepancy and adjust planning if necessary","Cancel supply orders","Approve system without review"],
 correct:1
 }
 ]
