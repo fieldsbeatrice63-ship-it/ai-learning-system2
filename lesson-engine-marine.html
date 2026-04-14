@@ -170,6 +170,13 @@
   </div>
 
   <script>
+
+    const paid = localStorage.getItem("marinePaid");
+
+if (!paid) {
+  alert("Please purchase access first.");
+  window.location.href = "course-selection.html";
+}
     let moduleIndex = 0;
     let lessonIndex = 0;
     let quizIndex = 0;
