@@ -758,18 +758,25 @@
 
       primaryBtn.innerText = course.actionLabel;
 
-      if (course.locked) {
-        primaryBtn.className = "modal-btn locked";
-        primaryBtn.onclick = function() {};
-        primaryBtn.disabled = true;
-      } else {
-        primaryBtn.className = "modal-btn primary";
-        primaryBtn.disabled = false;
-        primaryBtn.onclick = function() {
-          window.location.href = course.redirect;
-        };
-      }
-
+      if (courseLocked) {
+  primaryBTN.className = "modal-btn primary";
+  primaryBTN.disabled = false;
+  primaryBTN.innerText = courseActionLabel || "Unlock Course";
+  primaryBTN.onclick = function () {
+    if (courseStripeLink) {
+      window.open(courseStripeLink, "_blank");
+    } else {
+      alert("Payment link not connected yet.");
+    }
+  };
+} else {
+  primaryBTN.className = "modal-btn primary";
+  primaryBTN.disabled = false;
+  primaryBTN.innerText = courseActionLabel || "Open Course";
+  primaryBTN.onclick = function () {
+    window.location.href = courseRedirect;
+  };
+}
       overlay.classList.add("show");
     }
 
