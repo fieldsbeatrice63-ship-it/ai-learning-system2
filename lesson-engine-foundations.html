@@ -1,1 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lumi AI Nexus™ | AI Foundations™</title>
 
+<style>
+body {
+  font-family: Arial;
+  background: #eaf6ff;
+  margin: 0;
+  padding: 20px;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  background: white;
+  padding: 25px;
+  border-radius: 16px;
+}
+
+h4 { color:#355171; }
+h2 { color:#1e4db7; }
+
+button {
+  margin-top: 20px;
+  padding: 12px 20px;
+  border: none;
+  background: #2c7dff;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h4 id="module"></h4>
+  <h2 id="title"></h2>
+  <p id="content"></p>
+  <button onclick="next()">Next</button>
+</div>
+
+<script>
+
+const modules = [
+
+/* ================= MODULE 1 ================= */
+
+{
+name:"Module 1: Understanding AI Behavior in Real Use",
+lessons:[
+"AI systems do not think or understand information the way humans do. Instead, they identify patterns in data and generate responses based on probability. This distinction is critical when using AI in real-world situations.",
+"In many environments, AI is used to assist with writing, summarizing, and organizing information. However, the responsibility of verifying accuracy always remains with the human user.",
+"People often mistake AI confidence for correctness. AI systems can generate highly structured and confident responses, even when the information is incomplete or slightly inaccurate.",
+"Understanding AI requires recognizing its strengths and limitations. It excels at speed and pattern recognition, but lacks independent reasoning and real-world awareness.",
+"The most effective users of AI treat it as a support system rather than a replacement for decision-making. They actively review, question, and refine outputs."
+],
+quiz:[
+
+{q:"A professional uses an AI system to draft a report summary. The output is well-written and confident, but the user does not verify the information before submitting it. Later, errors are discovered in the report. What is the most accurate explanation of this situation?",
+a:["The AI intentionally provided incorrect data","The AI generated a probable response without verifying factual accuracy","The system malfunctioned during processing","The user input was deleted during generation"],
+correct:1},
+
+{q:"An employee begins relying on AI-generated responses without reviewing them, assuming the system fully understands the context of their work. Over time, small mistakes begin to accumulate in their tasks. What is the underlying issue in this scenario?",
+a:["The AI system stopped functioning correctly","The employee misunderstood how AI generates responses","The data source was corrupted","The AI system lacks internet access"],
+correct:1},
+
+{q:"A team member uses AI to assist in creating internal documentation. They notice that while the structure is strong, some details are missing or vague. What does this indicate about how AI systems operate?",
+a:["AI systems avoid providing complete answers","AI systems generate responses based on patterns rather than full understanding","AI systems are restricted from giving details","AI systems only work with incomplete data"],
+correct:1},
+
+{q:"During a meeting, an AI-generated summary is presented as a final conclusion without review. The summary overlooks key discussion points. What mistake was made in this process?",
+a:["The AI system failed to capture audio","The summary was accepted without human verification","The meeting lacked structure","The AI system processed too much data"],
+correct:1},
+
+{q:"A user believes that AI systems always provide accurate answers because they respond quickly and confidently. In a professional environment, why is this belief problematic?",
+a:["AI systems are too fast to be trusted","Confidence in output does not guarantee accuracy","AI systems require constant updates","AI systems cannot process language correctly"],
+correct:1},
+
+{q:"A manager integrates AI into daily workflows but requires all outputs to be reviewed before use. What does this demonstrate about proper AI usage?",
+a:["Lack of trust in technology","Balanced use of AI with human oversight","Avoidance of automation","Inefficient workflow design"],
+correct:1},
+
+{q:"An AI system provides a structured response that appears correct but lacks supporting detail. What should the user do next?",
+a:["Accept the response immediately","Verify and expand the information before use","Ignore the response completely","Request the same response again without changes"],
+correct:1},
+
+{q:"A user expects AI to interpret emotional tone and intent the same way humans do. What is the flaw in this expectation?",
+a:["AI systems lack emotional awareness and true understanding","AI systems cannot process language","AI systems are limited to numbers only","AI systems only understand commands"],
+correct:0},
+
+{q:"An organization implements AI to assist with documentation. Employees begin skipping review steps because the outputs appear complete. What risk does this create?",
+a:["Improved efficiency","Increased likelihood of unnoticed errors","Reduced workload","Enhanced automation"],
+correct:1},
+
+{q:"A professional treats AI output as a starting point rather than a final answer. Why is this considered best practice?",
+a:["It slows down workflow","It ensures human judgment refines AI output","It avoids using AI completely","It limits AI capabilities"],
+correct:1}
+
+]
+},
+
+/* ================= MODULE 2 ================= */
+
+{
+name:"Module 2: How AI Generates Information",
+lessons:[
+"AI systems generate responses based on probability and pattern recognition. They do not verify facts in real time unless specifically connected to verified data systems.",
+"The output of AI is influenced by the input it receives. Clear, detailed instructions typically lead to more useful and relevant responses.",
+"AI can produce responses that appear highly accurate because of structure and language, but accuracy still depends on context and validation.",
+"Understanding how AI generates responses helps users avoid over-reliance and improves their ability to guide outputs effectively.",
+"In professional use, refining input and reviewing output are equally important when working with AI systems."
+],
+quiz:[
+
+{q:"A user provides vague instructions to an AI system and receives a general, incomplete response. What is the most likely reason for this outcome?",
+a:["The AI system malfunctioned","The input lacked clarity and detail","The AI system ignored the request","The system cannot process vague language"],
+correct:1},
+
+{q:"An AI-generated response appears detailed but includes outdated information. Why might this occur?",
+a:["AI systems intentionally use old data","AI relies on training data and may not reflect real-time updates","The system failed to process input","The user entered incorrect data"],
+correct:1},
+
+{q:"A professional improves the quality of AI responses by refining their instructions. What principle does this demonstrate?",
+a:["AI independence","Input quality directly affects output quality","AI systems self-correct automatically","AI ignores user input"],
+correct:1},
+
+{q:"A team uses AI to generate multiple drafts of a document before selecting the best version. What does this approach demonstrate?",
+a:["Overuse of AI","Effective use of AI as a support tool","Avoidance of manual work","System inefficiency"],
+correct:1},
+
+{q:"An AI system produces a response that sounds accurate but contains subtle errors. What is the best explanation?",
+a:["AI systems guess randomly","AI generates probable responses without guaranteed accuracy","AI systems cannot process information","AI systems avoid detailed answers"],
+correct:1},
+
+{q:"A user expects AI to always provide complete answers without guidance. Why is this expectation unrealistic?",
+a:["AI systems require precise input to perform effectively","AI systems are too slow","AI systems only answer simple questions","AI systems ignore complex requests"],
+correct:0},
+
+{q:"An employee uses AI to summarize a long document but misses key points in the summary. What should they do next?",
+a:["Accept the summary as final","Review and adjust the summary manually","Delete the document","Avoid using AI"],
+correct:1},
+
+{q:"A user compares multiple AI-generated responses before choosing one. Why is this effective?",
+a:["It reduces system errors","It allows better evaluation of output quality","It speeds up AI performance","It limits data processing"],
+correct:1},
+
+{q:"A manager notices that clearer prompts produce more accurate AI results. What does this highlight?",
+a:["AI requires structured guidance","AI operates independently","AI ignores user input","AI cannot adapt"],
+correct:0},
+
+{q:"A user relies solely on AI output without reviewing it. What is the primary risk?",
+a:["Reduced system performance","Unchecked inaccuracies in final results","Data overload","Slower workflows"],
+correct:1}
+
+]
+},
+
+/* ================= MODULE 3 ================= */
+
+{
+name:"Module 3: AI Misinterpretation & Human Responsibility",
+lessons:[
+"Misinterpreting AI outputs is one of the most common issues in AI usage. Users must understand that outputs require evaluation.",
+"AI systems do not assume responsibility for decisions. The responsibility always remains with the user.",
+"Errors often occur not because AI fails, but because users misunderstand its role.",
+"Human oversight ensures that AI is used correctly and responsibly in decision-making processes.",
+"Recognizing AI limitations is essential for preventing errors and improving outcomes."
+],
+quiz:[
+
+{q:"A user accepts an AI recommendation without considering context, leading to a poor decision. What is the root issue?",
+a:["AI system error","Lack of human oversight","Data limitation","System delay"],
+correct:1},
+
+{q:"An organization implements AI but fails to train employees on its limitations. What is the likely outcome?",
+a:["Improved efficiency","Increased misuse and misunderstanding","Reduced automation","System failure"],
+correct:1},
+
+{q:"A team treats AI output as authoritative without review. Why is this problematic?",
+a:["AI lacks accountability for final decisions","AI cannot generate responses","AI requires internet access","AI systems are too fast"],
+correct:0},
+
+{q:"A user questions AI output before acting on it. What does this demonstrate?",
+a:["Lack of trust","Responsible AI usage","System inefficiency","Over-analysis"],
+correct:1},
+
+{q:"An employee notices discrepancies in AI-generated data and investigates further. What skill is being applied?",
+a:["Automation","Critical thinking","Data deletion","System reset"],
+correct:1},
+
+{q:"A manager requires verification of AI outputs before implementation. What does this reinforce?",
+a:["Speed","Accuracy and responsibility","Automation","System independence"],
+correct:1},
+
+{q:"A user assumes AI outputs are always correct. What misunderstanding does this reflect?",
+a:["AI independence","Overestimation of AI accuracy","System efficiency","Data overload"],
+correct:1},
+
+{q:"An AI recommendation conflicts with known policies. What should the user do?",
+a:["Follow AI","Verify against policy","Ignore policy","Regenerate response"],
+correct:1},
+
+{q:"A professional adjusts AI-generated content before final use. Why is this important?",
+a:["To reduce AI usage","To ensure accuracy and relevance","To slow workflow","To avoid automation"],
+correct:1},
+
+{q:"A user blindly trusts AI outputs. What is the biggest risk?",
+a:["Efficiency loss","Incorrect decision-making","System crash","Data corruption"],
+correct:1}
+
+]
+},
+
+/* ================= MODULE 4 ================= */
+
+{
+name:"Module 4: Responsible & Ethical AI Use",
+lessons:[
+"Responsible AI use includes verifying outputs, understanding limitations, and maintaining accountability.",
+"Ethical considerations include fairness, bias, and transparency in AI-generated results.",
+"AI should enhance decision-making, not replace it.",
+"Users must remain aware of how AI impacts outcomes and decisions.",
+"Proper AI use requires balance between efficiency and responsibility."
+],
+quiz:[
+
+{q:"An AI system produces biased output due to training data. What should the user do?",
+a:["Ignore bias","Recognize and adjust output","Delete system","Restart AI"],
+correct:1},
+
+{q:"A company uses AI for decision support but maintains human oversight. What does this demonstrate?",
+a:["Inefficiency","Responsible AI use","System failure","Automation dependency"],
+correct:1},
+
+{q:"A user identifies potential bias in AI results. What is the correct response?",
+a:["Accept results","Review and adjust findings","Ignore issue","Stop using AI"],
+correct:1},
+
+{q:"A manager ensures AI outputs are reviewed before implementation. What is being practiced?",
+a:["Speed","Accountability","Automation","Independence"],
+correct:1},
+
+{q:"AI generates a response that conflicts with ethical standards. What should happen?",
+a:["Use response","Reject or modify it","Ignore standards","Regenerate blindly"],
+correct:1},
+
+{q:"A user understands AI limitations. What benefit does this provide?",
+a:["Faster AI","Better decision-making","Reduced cost","More automation"],
+correct:1},
+
+{q:"AI is used without oversight. What risk increases?",
+a:["Accuracy","Error rate","Efficiency","Speed"],
+correct:1},
+
+{q:"A company trains employees on AI limitations. What does this improve?",
+a:["Automation","Responsible use","System complexity","Cost"],
+correct:1},
+
+{q:"AI outputs are reviewed before action. What does this ensure?",
+a:["Speed","Accuracy","Automation","Efficiency"],
+correct:1},
+
+{q:"A user understands ethical implications of AI. What is strengthened?",
+a:["Efficiency","Trust and responsibility","Speed","Cost reduction"],
+correct:1}
+
+]
+},
+
+/* ================= MODULE 5 ================= */
+
+{
+name:"Module 5: Applying AI Foundations in Real Work",
+lessons:[
+"Applying AI effectively means combining system output with human judgment.",
+"AI supports productivity when used correctly within workflows.",
+"Understanding AI helps users make better decisions and avoid mistakes.",
+"Professional use requires continuous learning and adaptation.",
+"The strongest users of AI integrate it thoughtfully into their processes."
+],
+quiz:[
+
+{q:"A professional uses AI to generate ideas but refines them manually. What does this show?",
+a:["Dependence","Balanced AI use","Avoidance","System limitation"],
+correct:1},
+
+{q:"AI suggests a solution that conflicts with known data. What should be done?",
+a:["Follow AI","Verify and adjust","Ignore data","Restart AI"],
+correct:1},
+
+{q:"A team uses AI to speed up work while maintaining review processes. What is achieved?",
+a:["Efficiency with accuracy","System overload","Reduced output","Automation dependency"],
+correct:0},
+
+{q:"A user integrates AI into workflow carefully. What benefit results?",
+a:["Better outcomes","More errors","Slower work","Less automation"],
+correct:0},
+
+{q:"AI provides multiple options for a task. What is the best approach?",
+a:["Pick first","Evaluate and select best","Ignore options","Regenerate endlessly"],
+correct:1},
+
+{q:"AI is used without understanding. What risk exists?",
+a:["Efficiency","Misuse","Speed","Automation"],
+correct:1},
+
+{q:"A user understands AI strengths. What improves?",
+a:["Decisions","System speed","Data volume","Automation"],
+correct:0},
+
+{q:"AI assists but does not replace human judgment. Why is this important?",
+a:["Accuracy","Speed","Automation","Cost"],
+correct:0},
+
+{q:"A professional uses AI for support, not authority. What does this demonstrate?",
+a:["Dependence","Control","Avoidance","Inefficiency"],
+correct:1},
+
+{q:"Understanding AI fundamentals leads to what outcome?",
+a:["Better usage","System failure","Reduced speed","Automation loss"],
+correct:0}
+
+]
+}
+
+];
+
+let moduleIndex = 0;
+let lessonIndex = 0;
+let quizIndex = 0;
+let mode = "lesson";
+
+function load(){
+  let currentModule = modules[moduleIndex];
+  document.getElementById("module").innerText = currentModule.name;
+
+  if(mode==="lesson"){
+    document.getElementById("title").innerText = "Lesson " + (lessonIndex+1);
+    document.getElementById("content").innerText = currentModule.lessons[lessonIndex];
+  } else {
+    let q = currentModule.quiz[quizIndex];
+    document.getElementById("title").innerText = "Question " + (quizIndex+1);
+    document.getElementById("content").innerText = q.q;
+  }
+}
+
+function next(){
+  let currentModule = modules[moduleIndex];
+
+  if(mode==="lesson"){
+    lessonIndex++;
+    if(lessonIndex >= currentModule.lessons.length){
+      lessonIndex = 0;
+      mode = "quiz";
+    }
+  } else {
+    quizIndex++;
+    if(quizIndex >= currentModule.quiz.length){
+      quizIndex = 0;
+      moduleIndex++;
+      mode = "lesson";
+      if(moduleIndex >= modules.length){
+        alert("Course Complete!");
+        return;
+      }
+    }
+  }
+
+  load();
+}
+
+load();
+
+</script>
+
+</body>
+</html>
