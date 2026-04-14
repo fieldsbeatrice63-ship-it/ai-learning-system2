@@ -6,284 +6,1158 @@
 <title>Lumi AI Nexus™ | AI Everyday Applications™</title>
 
 <style>
-body { font-family: Arial; background:#eaf6ff; margin:0; padding:20px;}
-.container { max-width:900px; margin:auto; background:white; padding:25px; border-radius:16px;}
-h4 { color:#355171;}
-h2 { color:#1e4db7;}
-button { margin-top:20px; padding:12px 20px; border:none; background:#2c7dff; color:white; border-radius:10px; cursor:pointer;}
+body {
+  font-family: Arial, sans-serif;
+  background: #eaf6ff;
+  margin: 0;
+  padding: 20px;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  background: white;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+}
+
+h4 {
+  color: #355171;
+  margin-bottom: 8px;
+}
+
+h2 {
+  color: #1e4db7;
+  margin-top: 0;
+}
+
+#content {
+  color: #243b55;
+  line-height: 1.7;
+  font-size: 16px;
+}
+
+.lesson-block {
+  background: #f7faff;
+  border: 1px solid #d9e7ff;
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 14px;
+}
+
+.lesson-label {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #355171;
+  margin-bottom: 6px;
+}
+
+.lesson-text {
+  color: #243b55;
+  line-height: 1.7;
+  font-size: 16px;
+}
+
+.transition-note {
+  margin-top: 18px;
+  padding: 14px 16px;
+  background: #eef5ff;
+  border-radius: 10px;
+  color: #173b79;
+  font-size: 15px;
+}
+
+.answer-btn {
+  display: block;
+  width: 100%;
+  text-align: left;
+  margin: 10px 0;
+  padding: 14px 16px;
+  border: none;
+  border-radius: 10px;
+  background: #f1f5ff;
+  color: #173b79;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.answer-btn:hover {
+  background: #e4ecff;
+}
+
+.answer-btn.correct {
+  background: #dff5e8;
+  color: #155b3d;
+}
+
+.answer-btn.incorrect {
+  background: #ffe5e5;
+  color: #8a1f1f;
+}
+
+.feedback-box {
+  margin-top: 14px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.feedback-box.correct {
+  background: #e7f8ee;
+  color: #155b3d;
+}
+
+.feedback-box.incorrect {
+  background: #fff1f1;
+  color: #8a1f1f;
+}
+
+button#nextBtn {
+  margin-top: 20px;
+  padding: 12px 20px;
+  border: none;
+  background: #2c7dff;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+button#nextBtn:hover {
+  background: #1f6ef0;
+}
 </style>
 </head>
 
 <body>
 <div class="container">
-<h4 id="module"></h4>
-<h2 id="title"></h2>
-<p id="content"></p>
-<button onclick="next()">Next</button>
+  <h4 id="module"></h4>
+  <h2 id="title"></h2>
+  <div id="content"></div>
+  <button id="nextBtn" onclick="next()">Start Knowledge Check</button>
 </div>
 
 <script>
-
 const modules = [
 
-/* ================= MODULE 1 ================= */
 {
-name:"Module 1: AI in Everyday Communication",
-lessons:[
-"AI tools are commonly used in texting, email drafting, and rewriting messages. These systems help improve clarity and speed but do not fully understand personal relationships or emotional context.",
-"Many messaging apps now include AI suggestions for replies. While these are helpful, they are generated from patterns and not from true understanding of the situation.",
-"AI can help reword messages to sound more professional, casual, or persuasive. However, tone must always be reviewed before sending to ensure it matches the situation.",
-"In everyday communication, AI reduces effort but does not replace human awareness. The user must still ensure accuracy, tone, and intent.",
-"Strong communication using AI comes from combining system assistance with human judgment."
-],
-quiz:[
-
-{q:"A user asks an AI tool to rewrite a text message to sound more professional before sending it to a colleague. The AI produces a well-structured message, but it removes a key detail from the original message. If the user sends it without reviewing, what is the most likely issue that could occur in this situation?",
-a:["The message will automatically correct itself after sending","The AI system will resend the original version","Important context may be lost, causing confusion","The system will notify the recipient of the change"],correct:2},
-
-{q:"A person uses AI-generated replies in a messaging app during a personal conversation. The suggested replies sound neutral and do not reflect the emotional tone of the discussion. What does this scenario demonstrate about using AI in everyday communication?",
-a:["AI fully understands emotional context","AI requires human adjustment to match tone and intent","AI should always be used in conversations","AI replaces human communication"],correct:1},
-
-{q:"A user copies an AI-generated email response and sends it without reviewing it. Later, they realize the tone sounded too formal and created distance in the conversation. What is the main lesson from this scenario?",
-a:["AI systems should never be used","AI-generated content must be reviewed for tone and context","Emails should always be short","Formal tone is always incorrect"],correct:1},
-
-{q:"A team uses AI to draft internal communication messages but requires each employee to personalize the message before sending. Why is this considered a strong practice when using AI tools?",
-a:["It removes AI from the process","It ensures communication stays accurate and human-centered","It slows down productivity","It limits system use"],correct:1},
-
-{q:"A user relies heavily on AI suggestions for communication and stops thinking about how their message sounds. Over time, their communication becomes inconsistent. What is the underlying problem in this situation?",
-a:["AI systems are malfunctioning","Overdependence on AI without human review","AI cannot generate messages","Messaging apps are unreliable"],correct:1},
-
-{q:"A person uses AI to rewrite a message and then adjusts it before sending. Why does this approach lead to better outcomes in everyday communication?",
-a:["It removes all errors automatically","It balances AI efficiency with human judgment","It avoids using AI completely","It increases message length"],correct:1},
-
-{q:"A user selects a quick AI reply in a messaging app without reading it fully. The reply does not match the conversation. What does this highlight about AI-assisted communication?",
-a:["AI always improves conversations","Users must review suggestions before sending","AI cannot generate replies","Messaging apps are inaccurate"],correct:1},
-
-{q:"An employee uses AI to draft a message but reviews it carefully before sending to ensure clarity and tone. What skill is being demonstrated here?",
-a:["Automation","Responsible AI use","System avoidance","Speed processing"],correct:1},
-
-{q:"A user believes AI-generated communication is always appropriate for any situation. Why is this belief incorrect?",
-a:["AI lacks full understanding of context and relationships","AI cannot write messages","AI systems are too slow","AI cannot process text"],correct:0},
-
-{q:"A professional uses AI to improve message clarity but keeps the final decision on wording. Why is this the most effective approach?",
-a:["It avoids using AI","It ensures accuracy and maintains human intent","It speeds up AI performance","It reduces message quality"],correct:1}
-
-]
+  name: "Module 1: AI in Everyday Communication",
+  lessons: [
+    {
+      title: "Lesson 1",
+      lesson: {
+        coreTruth: "AI can help draft texts, emails, and replies, but it does not truly understand personal relationships, emotional nuance, or unstated meaning the way a human does.",
+        whyItMatters: "A message can be grammatically clean and still be wrong for the moment. If tone or context is off, the message may create confusion, distance, or tension.",
+        realWorldExample: "You ask AI to rewrite a message to a colleague. The result sounds polished, but it removes a detail that explains why the message matters.",
+        decisionSkill: "Strong users do not judge communication only by how smooth it sounds. They check whether the message still carries the right tone, meaning, and intent."
+      },
+      quiz: [
+        {
+          q: "You use AI to rewrite a message before sending it to a coworker. The rewrite sounds professional, but one important detail is now missing. What is the best next step?",
+          a: [
+            "Send it because it sounds better",
+            "Add the missing detail and review the full message before sending",
+            "Delete the message entirely",
+            "Assume the missing detail was unnecessary"
+          ],
+          correct: 1,
+          explanation: "Clear wording is helpful, but communication still has to remain complete and accurate."
+        },
+        {
+          q: "Why is it risky to assume AI fully understands a communication situation?",
+          a: [
+            "Because AI cannot write at all",
+            "Because AI only works in formal business settings",
+            "Because AI can improve wording without fully understanding relationship dynamics or emotional context",
+            "Because AI automatically changes every message after sending"
+          ],
+          correct: 2,
+          explanation: "AI can support wording, but human awareness is still needed to judge context and meaning."
+        }
+      ]
+    },
+    {
+      title: "Lesson 2",
+      lesson: {
+        coreTruth: "Suggested replies in messaging apps are generated from patterns, not emotional understanding.",
+        whyItMatters: "A reply can be technically appropriate but emotionally wrong. In personal communication, that difference matters.",
+        realWorldExample: "You are having a sensitive conversation, and the app suggests a neutral reply that ignores the emotional weight of the moment.",
+        decisionSkill: "When communication involves emotion, users should treat AI suggestions as drafts, not final answers."
+      },
+      quiz: [
+        {
+          q: "A suggested AI reply sounds neutral during an emotional conversation. What does this most strongly show?",
+          a: [
+            "AI understands emotion but prefers short replies",
+            "AI-generated replies may miss emotional tone and need human adjustment",
+            "AI should always be ignored in messaging apps",
+            "Emotional conversations should never happen by text"
+          ],
+          correct: 1,
+          explanation: "Pattern-based suggestions may fit the words but miss the emotional needs of the conversation."
+        },
+        {
+          q: "What is the strongest way to use AI-generated replies in personal conversations?",
+          a: [
+            "Send them instantly to save time",
+            "Use them only when the conversation is already over",
+            "Review and adjust them so the tone fits the situation",
+            "Trust them more than your own instincts"
+          ],
+          correct: 2,
+          explanation: "The goal is not speed alone. The goal is communication that still feels accurate and human."
+        }
+      ]
+    },
+    {
+      title: "Lesson 3",
+      lesson: {
+        coreTruth: "AI can help change tone, but polished language is not automatically the right language.",
+        whyItMatters: "Messages that are too formal, too persuasive, or too distant can shift the meaning of what you intended to say.",
+        realWorldExample: "You use AI to improve an email response. The result sounds refined, but it creates unnecessary distance in a conversation that should have stayed warm and simple.",
+        decisionSkill: "Users should choose wording based on the situation, not just on what sounds impressive."
+      },
+      quiz: [
+        {
+          q: "An AI-generated email sounds polished but too formal for the conversation. What is the main problem?",
+          a: [
+            "The message is too short",
+            "The tone does not match the situation",
+            "AI should never be used in email",
+            "Formal wording is always wrong"
+          ],
+          correct: 1,
+          explanation: "Communication succeeds when wording matches the moment, not just when it sounds professional."
+        },
+        {
+          q: "Before sending an AI-rewritten message, what should matter most?",
+          a: [
+            "How advanced the wording sounds",
+            "Whether the message keeps the right tone and intent",
+            "Whether the AI used longer sentences",
+            "Whether the message looks different from the original"
+          ],
+          correct: 1,
+          explanation: "The right message is the one that communicates clearly and fits the relationship and moment."
+        }
+      ]
+    },
+    {
+      title: "Lesson 4",
+      lesson: {
+        coreTruth: "AI reduces communication effort, but it does not remove the need for human review.",
+        whyItMatters: "When users stop checking messages carefully, communication becomes less intentional and more inconsistent over time.",
+        realWorldExample: "A team uses AI to draft internal messages, but each employee still reviews and personalizes the final version before sending.",
+        decisionSkill: "Responsible communication with AI means using it for support while keeping human control over the final message."
+      },
+      quiz: [
+        {
+          q: "Why is it a strong practice for employees to review AI-generated messages before sending them?",
+          a: [
+            "It removes AI from the workflow",
+            "It keeps communication accurate, appropriate, and human-centered",
+            "It prevents people from writing their own messages",
+            "It guarantees every message will be shorter"
+          ],
+          correct: 1,
+          explanation: "AI support is strongest when paired with human judgment and accountability."
+        },
+        {
+          q: "What usually happens when someone relies on AI suggestions without thinking about how the message will land?",
+          a: [
+            "Their communication becomes more consistent automatically",
+            "Their communication may become less intentional and more mismatched",
+            "The AI system stops working",
+            "Every message becomes formal"
+          ],
+          correct: 1,
+          explanation: "Without review, messages may sound acceptable on the surface while still missing the real need of the situation."
+        }
+      ]
+    },
+    {
+      title: "Lesson 5",
+      lesson: {
+        coreTruth: "Strong communication comes from combining AI efficiency with human judgment.",
+        whyItMatters: "Overdependence weakens awareness. The user may save time but lose consistency, tone control, and message quality.",
+        realWorldExample: "Someone begins using AI suggestions for nearly every message and gradually stops paying close attention to what they are actually sending.",
+        decisionSkill: "The best use of AI in communication is not full dependence. It is thoughtful collaboration."
+      },
+      quiz: [
+        {
+          q: "What is the biggest risk of depending too heavily on AI for everyday communication?",
+          a: [
+            "Messages become too short",
+            "The user stops actively managing tone, meaning, and consistency",
+            "AI sends duplicate messages",
+            "Communication becomes impossible"
+          ],
+          correct: 1,
+          explanation: "The danger is not simply using AI. The danger is becoming passive while using it."
+        },
+        {
+          q: "What creates the strongest AI-assisted communication outcomes?",
+          a: [
+            "Automation without review",
+            "Human judgment without any tools",
+            "AI assistance combined with active review and final human choice",
+            "Using only suggested replies"
+          ],
+          correct: 2,
+          explanation: "Good results come from support plus oversight, not support instead of oversight."
+        }
+      ]
+    }
+  ]
 },
 
-/* ================= MODULE 2 ================= */
 {
-name:"Module 2: AI in Daily Planning & Scheduling",
-lessons:[
-"AI is used in calendars, reminders, and scheduling tools to help users organize their daily lives.",
-"These systems can suggest meeting times, task priorities, and reminders based on patterns and availability.",
-"AI improves efficiency in planning but does not fully understand personal responsibilities or real-life constraints.",
-"Users should always review AI-generated schedules to ensure they match actual needs.",
-"Effective planning with AI combines automation with personal decision-making."
-],
-quiz:[
-
-{q:"A user allows an AI assistant to automatically schedule their day based on availability. The assistant fills the schedule with tasks but does not include breaks or personal time. What is the main issue with relying solely on AI in this scenario?",
-a:["AI cannot schedule tasks","AI does not fully understand personal needs and balance","AI systems are too fast","AI removes tasks automatically"],correct:1},
-
-{q:"A professional uses AI to generate a daily to-do list but notices that urgent tasks are missing. Why is it important to review AI-generated plans before following them?",
-a:["AI systems cannot create lists","AI may not recognize priorities without guidance","AI deletes tasks automatically","AI cannot process time"],correct:1},
-
-{q:"A user depends completely on AI reminders and stops tracking responsibilities manually. What risk does this create over time?",
-a:["Improved memory","Overdependence and reduced awareness","Better organization","Faster planning"],correct:1},
-
-{q:"An AI assistant suggests moving a meeting based on schedule conflicts, but the user knows the meeting cannot be changed. What should the user do in this situation?",
-a:["Accept AI suggestion","Adjust based on real-world requirements","Cancel meeting","Ignore system"],correct:1},
-
-{q:"A user reviews and adjusts AI-generated schedules daily. Why does this lead to better results?",
-a:["It avoids AI use","It ensures schedules match real-life conditions","It slows productivity","It removes automation"],correct:1},
-
-{q:"AI creates a schedule that looks efficient but overlooks travel time between appointments. What does this demonstrate about AI planning?",
-a:["AI is always accurate","AI may miss real-world factors","AI cannot create schedules","AI removes travel"],correct:1},
-
-{q:"A user follows AI-generated plans without reviewing them and experiences conflicts throughout the day. What caused this issue?",
-a:["AI system failure","Lack of human oversight","Too many tasks","Slow processing"],correct:1},
-
-{q:"A person uses AI to organize tasks but rearranges them based on urgency. What does this demonstrate?",
-a:["Avoiding AI","Using AI with human judgment","System failure","Data overload"],correct:1},
-
-{q:"AI suggests a sequence of tasks that does not match real priorities. What is the correct approach?",
-a:["Follow AI blindly","Adjust based on importance","Delete tasks","Restart system"],correct:1},
-
-{q:"A user combines AI scheduling with personal planning decisions. What benefit does this provide?",
-a:["Reduced efficiency","Balanced and realistic planning","Slower workflow","System dependence"],correct:1}
-
-]
+  name: "Module 2: AI in Daily Planning & Scheduling",
+  lessons: [
+    {
+      title: "Lesson 1",
+      lesson: {
+        coreTruth: "AI scheduling tools can organize tasks quickly, but they do not fully understand personal energy, balance, or real-life limits.",
+        whyItMatters: "A schedule can look efficient on screen while still being unrealistic in real life.",
+        realWorldExample: "An AI assistant fills your day with appointments and tasks, but leaves no breaks, buffer time, or personal space.",
+        decisionSkill: "Users should review schedules for realism, not just for efficiency."
+      },
+      quiz: [
+        {
+          q: "An AI assistant creates a full daily schedule with no breaks or personal time. What is the main issue?",
+          a: [
+            "AI cannot create schedules",
+            "The schedule may be efficient on paper but unrealistic for real life",
+            "The system is always wrong when planning",
+            "Breaks should never be included"
+          ],
+          correct: 1,
+          explanation: "Efficiency is not the same as sustainability. Good planning must fit actual human needs."
+        },
+        {
+          q: "What is the strongest reason to review an AI-generated schedule before following it?",
+          a: [
+            "AI makes all tasks optional",
+            "AI may miss personal limits, rest needs, or non-obvious constraints",
+            "AI scheduling is only for work meetings",
+            "The calendar app might delete everything"
+          ],
+          correct: 1,
+          explanation: "The human user still has the fuller view of real obligations and real capacity."
+        }
+      ]
+    },
+    {
+      title: "Lesson 2",
+      lesson: {
+        coreTruth: "AI can suggest priorities, but it does not always know what is truly most urgent or important.",
+        whyItMatters: "If a planning system misses urgency, the day may look organized while important responsibilities still get overlooked.",
+        realWorldExample: "You use AI to generate a to-do list, but an urgent responsibility is ranked too low or missing completely.",
+        decisionSkill: "Users should compare AI suggestions against actual priorities before acting."
+      },
+      quiz: [
+        {
+          q: "Your AI-generated plan looks organized, but one urgent task is missing. What does this show?",
+          a: [
+            "AI cannot make lists",
+            "AI may need human guidance to recognize true priority",
+            "Urgent tasks should be ignored until tomorrow",
+            "Planning tools always fail under pressure"
+          ],
+          correct: 1,
+          explanation: "AI can structure tasks well while still misjudging what matters most."
+        },
+        {
+          q: "What should you do when an AI planning tool ranks tasks in a way that does not match your real responsibilities?",
+          a: [
+            "Follow the order anyway",
+            "Adjust the plan based on actual urgency and importance",
+            "Delete all tasks",
+            "Stop using planning tools completely"
+          ],
+          correct: 1,
+          explanation: "AI planning is support, not final authority."
+        }
+      ]
+    },
+    {
+      title: "Lesson 3",
+      lesson: {
+        coreTruth: "Overdependence on AI reminders can weaken personal awareness and responsibility.",
+        whyItMatters: "If users stop tracking important obligations mentally or practically, they may become too passive in managing their own lives.",
+        realWorldExample: "A person begins relying entirely on digital reminders and pays less attention to what actually needs to happen each day.",
+        decisionSkill: "AI reminders should support memory, not replace personal ownership."
+      },
+      quiz: [
+        {
+          q: "What is the long-term risk of depending completely on AI reminders for responsibilities?",
+          a: [
+            "Perfect memory",
+            "Reduced personal awareness and too much dependence on the system",
+            "Better decision speed",
+            "More free time automatically"
+          ],
+          correct: 1,
+          explanation: "Helpful systems can become unhealthy when the user stops staying mentally engaged."
+        },
+        {
+          q: "What is the healthiest role for AI reminders?",
+          a: [
+            "To replace personal responsibility",
+            "To support organization while the user still stays aware and accountable",
+            "To decide what matters most every day",
+            "To eliminate planning"
+          ],
+          correct: 1,
+          explanation: "Support tools work best when they strengthen action, not when they replace ownership."
+        }
+      ]
+    },
+    {
+      title: "Lesson 4",
+      lesson: {
+        coreTruth: "AI suggestions must still be checked against real-world constraints.",
+        whyItMatters: "A tool may see calendar openings without understanding what cannot actually be moved or changed.",
+        realWorldExample: "An AI assistant recommends moving a meeting, but you already know that key people or external constraints make the change impossible.",
+        decisionSkill: "Users should compare system recommendations to reality before accepting them."
+      },
+      quiz: [
+        {
+          q: "An AI assistant suggests moving a meeting, but you know the meeting cannot actually be changed. What is the best response?",
+          a: [
+            "Accept the suggestion because AI found the conflict",
+            "Adjust the plan based on real-world requirements",
+            "Cancel the meeting entirely",
+            "Ignore the schedule for the rest of the day"
+          ],
+          correct: 1,
+          explanation: "A smart user uses AI suggestions as input, not as unquestioned commands."
+        },
+        {
+          q: "What does this kind of situation reveal about AI scheduling tools?",
+          a: [
+            "They can identify patterns and conflicts without always knowing non-visible constraints",
+            "They fully understand all professional realities",
+            "They are only useful for travel planning",
+            "They should never suggest changes"
+          ],
+          correct: 0,
+          explanation: "AI may detect scheduling opportunities without understanding hidden limitations or commitments."
+        }
+      ]
+    },
+    {
+      title: "Lesson 5",
+      lesson: {
+        coreTruth: "The strongest planning comes from combining AI structure with human decision-making.",
+        whyItMatters: "A schedule that looks optimized is only valuable if it is also realistic, balanced, and aligned with actual goals.",
+        realWorldExample: "You use AI to organize tasks, then rearrange them based on urgency, travel time, energy, and non-negotiable commitments.",
+        decisionSkill: "AI can speed up planning, but people should still make the final call on what the day really requires."
+      },
+      quiz: [
+        {
+          q: "Why does reviewing and adjusting an AI-generated daily plan usually lead to better results?",
+          a: [
+            "Because it slows down productivity",
+            "Because it helps align the plan with real-life conditions and true priorities",
+            "Because AI planning must always be discarded",
+            "Because manual planning is always more accurate"
+          ],
+          correct: 1,
+          explanation: "The best schedule is not just organized. It is usable."
+        },
+        {
+          q: "What is the main benefit of combining AI scheduling with personal judgment?",
+          a: [
+            "Balanced, realistic planning that still benefits from automation",
+            "More dependence on the system",
+            "Fewer decisions by the user",
+            "Longer task lists"
+          ],
+          correct: 0,
+          explanation: "Human judgment gives the schedule realism while AI provides speed and structure."
+        }
+      ]
+    }
+  ]
 },
 
-/* ================= MODULE 3 ================= */
 {
-name:"Module 3: AI in Everyday Decision-Making",
-lessons:[
-"AI supports daily decisions through recommendations, navigation apps, and suggestions.",
-"These systems provide guidance but do not understand personal preferences fully.",
-"Users should evaluate AI suggestions rather than follow them blindly.",
-"Decision quality improves when AI insights are combined with personal judgment.",
-"AI simplifies choices but does not replace thinking."
-],
-quiz:[
-
-{q:"A navigation app suggests a faster route that avoids traffic but leads through an unfamiliar area. The user is unsure if the route is safe or practical. What is the best approach in this situation when using AI for decision-making?",
-a:["Follow AI blindly","Evaluate the suggestion based on personal knowledge and conditions","Ignore AI completely","Restart the app"],correct:1},
-
-{q:"A user follows AI recommendations for shopping based on previous behavior but realizes the suggestions no longer match current needs. What does this reveal about AI recommendation systems?",
-a:["They always update instantly","They rely on patterns and may not reflect current preferences","They are always accurate","They cannot suggest products"],correct:1},
-
-{q:"A person compares multiple AI suggestions before making a decision. Why is this considered an effective strategy when using AI tools?",
-a:["It slows decision-making","It improves decision quality by evaluating options","It avoids AI use","It limits choices"],correct:1},
-
-{q:"A user assumes that AI suggestions are always the best option available. Why is this assumption risky?",
-a:["AI is too fast","AI does not account for all real-world variables","AI cannot make suggestions","AI systems are slow"],correct:1},
-
-{q:"A user reviews AI recommendations but makes the final decision based on personal judgment. What does this demonstrate?",
-a:["Avoidance of AI","Balanced use of AI and human thinking","System failure","Data overload"],correct:1},
-
-{q:"AI suggests a product based on past purchases, but the user’s current needs have changed. What should the user do?",
-a:["Follow suggestion","Evaluate current needs before deciding","Ignore system","Restart AI"],correct:1},
-
-{q:"A user receives multiple AI-generated options for a decision. What is the best next step?",
-a:["Pick first option","Compare and evaluate each option carefully","Ignore all options","Delete suggestions"],correct:1},
-
-{q:"AI helps simplify decision-making. What must remain in control?",
-a:["System","Human judgment","Automation","Speed"],correct:1},
-
-{q:"A user relies entirely on AI for decisions. What risk does this create?",
-a:["Better outcomes","Poor decision-making due to lack of evaluation","Faster results","Improved efficiency"],correct:1},
-
-{q:"AI assists with decisions but does not take responsibility. Why is this important?",
-a:["Accuracy","Responsibility remains with the user","Speed","Automation"],correct:1}
-
-]
+  name: "Module 3: AI in Everyday Decision-Making",
+  lessons: [
+    {
+      title: "Lesson 1",
+      lesson: {
+        coreTruth: "AI recommendations can support decisions, but they do not fully understand personal priorities, comfort, or changing circumstances.",
+        whyItMatters: "A suggestion can be technically logical while still being wrong for the person using it.",
+        realWorldExample: "A navigation app offers a faster route, but the user is unsure whether the route is safe, familiar, or practical.",
+        decisionSkill: "Users should weigh AI suggestions against real-world knowledge before acting."
+      },
+      quiz: [
+        {
+          q: "A navigation app suggests a faster route through an unfamiliar area. What is the strongest next step?",
+          a: [
+            "Follow it immediately because it is faster",
+            "Evaluate the route using personal knowledge, safety, and practicality",
+            "Delete the app",
+            "Ignore all navigation systems permanently"
+          ],
+          correct: 1,
+          explanation: "Good decision-making means comparing AI convenience with human judgment and current conditions."
+        },
+        {
+          q: "Why can an AI recommendation be helpful but still not be the best choice?",
+          a: [
+            "Because AI recommendations are random",
+            "Because AI does not always account for every personal or situational factor",
+            "Because AI only works indoors",
+            "Because all routes are equally risky"
+          ],
+          correct: 1,
+          explanation: "Suggestions can be useful without being complete."
+        }
+      ]
+    },
+    {
+      title: "Lesson 2",
+      lesson: {
+        coreTruth: "Recommendation systems often rely on past behavior, not your current reality.",
+        whyItMatters: "What matched before may no longer match now. If users do not notice that, suggestions can feel relevant while still being outdated.",
+        realWorldExample: "A shopping platform keeps recommending products based on old habits, even though your current needs have changed.",
+        decisionSkill: "Users should check whether recommendations fit the present, not just the pattern."
+      },
+      quiz: [
+        {
+          q: "A recommendation system keeps suggesting products based on your past purchases, but your current needs are different. What does this reveal?",
+          a: [
+            "AI updates instantly in all cases",
+            "Recommendation systems may rely on historical patterns that do not fully reflect the present",
+            "The system is broken",
+            "Shopping suggestions should always be ignored"
+          ],
+          correct: 1,
+          explanation: "AI often predicts based on patterns, not on a full understanding of what changed."
+        },
+        {
+          q: "What is the best response when an AI recommendation no longer fits your actual situation?",
+          a: [
+            "Follow it because it is personalized",
+            "Evaluate current needs before deciding whether the suggestion is useful",
+            "Buy it anyway to retrain the system",
+            "Turn off all recommendations forever"
+          ],
+          correct: 1,
+          explanation: "Good users stay aware of the difference between past patterns and current needs."
+        }
+      ]
+    },
+    {
+      title: "Lesson 3",
+      lesson: {
+        coreTruth: "Comparing and evaluating AI suggestions usually leads to stronger decisions than accepting the first one offered.",
+        whyItMatters: "Decision quality improves when options are weighed thoughtfully instead of taken at face value.",
+        realWorldExample: "A user receives several AI-generated options for a choice and pauses to compare them instead of picking the first one.",
+        decisionSkill: "AI can expand options, but the human should still assess which option actually fits."
+      },
+      quiz: [
+        {
+          q: "Why is comparing multiple AI-generated options often a better strategy than accepting the first one immediately?",
+          a: [
+            "It improves decision quality by encouraging evaluation",
+            "It confuses the system",
+            "It makes AI faster",
+            "It removes personal responsibility"
+          ],
+          correct: 0,
+          explanation: "Thinking through options helps the user choose based on fit, not convenience alone."
+        },
+        {
+          q: "What does a user demonstrate when they review several AI suggestions before choosing?",
+          a: [
+            "Avoidance of technology",
+            "Balanced decision-making with active judgment",
+            "Lack of confidence",
+            "System dependence"
+          ],
+          correct: 1,
+          explanation: "Using AI well includes evaluating what it offers rather than surrendering control."
+        }
+      ]
+    },
+    {
+      title: "Lesson 4",
+      lesson: {
+        coreTruth: "AI can simplify everyday decisions, but it should not replace thinking.",
+        whyItMatters: "When users assume AI suggestions are always best, they may stop noticing risk, mismatch, or poor fit.",
+        realWorldExample: "A person begins treating AI recommendations as automatic answers instead of considering their own experience and needs.",
+        decisionSkill: "The user should remain the decision-maker, even when the system is useful."
+      },
+      quiz: [
+        {
+          q: "Why is it risky to assume AI suggestions are always the best option?",
+          a: [
+            "Because AI is always slow",
+            "Because AI may not account for all real-world variables or personal priorities",
+            "Because AI never gives useful advice",
+            "Because decisions should never involve technology"
+          ],
+          correct: 1,
+          explanation: "Useful systems can still miss important factors that the user knows and feels directly."
+        },
+        {
+          q: "What must remain in control when AI helps with daily choices?",
+          a: [
+            "Automation",
+            "Human judgment",
+            "Suggestion history",
+            "System speed"
+          ],
+          correct: 1,
+          explanation: "AI can support the process, but final responsibility still stays with the person."
+        }
+      ]
+    },
+    {
+      title: "Lesson 5",
+      lesson: {
+        coreTruth: "AI can assist with decisions, but it does not carry responsibility for the outcome.",
+        whyItMatters: "If the suggestion turns out to be weak, the impact still falls on the person who followed it.",
+        realWorldExample: "A user follows AI guidance without evaluating it and later experiences a poor outcome that could have been avoided with review.",
+        decisionSkill: "The strongest users treat AI as support, then make the final decision deliberately."
+      },
+      quiz: [
+        {
+          q: "What is the main danger of relying entirely on AI for decisions?",
+          a: [
+            "Better outcomes",
+            "Poor decisions caused by lack of evaluation and ownership",
+            "Too many options",
+            "Longer recommendations"
+          ],
+          correct: 1,
+          explanation: "The risk is not AI itself. The risk is passive decision-making."
+        },
+        {
+          q: "Why is it important to remember that AI does not take responsibility for decisions?",
+          a: [
+            "Because responsibility remains with the user who chooses to act",
+            "Because AI always denies its outputs",
+            "Because AI cannot make recommendations",
+            "Because decisions are never serious in daily life"
+          ],
+          correct: 0,
+          explanation: "Support can assist the decision, but accountability still remains human."
+        }
+      ]
+    }
+  ]
 },
 
-/* ================= MODULE 4 ================= */
 {
-name:"Module 4: AI in Daily Productivity",
-lessons:[
-"AI tools help with writing, summarizing, and organizing information in everyday tasks.",
-"These tools increase productivity but require review and adjustment.",
-"Users must verify outputs before using them in real situations.",
-"AI enhances efficiency when combined with human oversight.",
-"Balanced use improves both speed and quality."
-],
-quiz:[
-
-{q:"A user relies on AI to summarize a document but does not check the summary before using it in a report. What is the most likely risk in this situation?",
-a:["Faster output","Missing or inaccurate information","Better clarity","Reduced effort"],correct:1},
-
-{q:"A person uses AI to draft a task list but reviews and adjusts it before acting. Why is this approach effective in everyday productivity?",
-a:["It avoids AI use","It ensures accuracy and relevance","It slows workflow","It reduces output"],correct:1},
-
-{q:"A user notices that AI-generated content is incomplete and adds missing details manually. What does this demonstrate?",
-a:["AI failure","Effective human oversight","System malfunction","Data loss"],correct:1},
-
-{q:"AI speeds up daily tasks, but users skip review processes. What risk increases as a result?",
-a:["Efficiency","Errors and inaccuracies","Speed","Automation"],correct:1},
-
-{q:"A user balances AI assistance with manual review. What outcome does this create?",
-a:["Slower work","Higher-quality results","More errors","Reduced productivity"],correct:1},
-
-{q:"AI generates a draft that requires editing. Why is editing necessary?",
-a:["AI is slow","AI output may lack context or detail","AI cannot write","AI removes content"],correct:1},
-
-{q:"A user trusts AI output without checking it. What is the likely consequence?",
-a:["Improved accuracy","Potential mistakes","Faster work","Better automation"],correct:1},
-
-{q:"AI tools assist productivity but require what to be effective?",
-a:["Deletion","Oversight","Restart","Avoidance"],correct:1},
-
-{q:"A user improves AI-generated content before final use. What skill is applied?",
-a:["Automation","Critical thinking","Data deletion","System reset"],correct:1},
-
-{q:"AI improves speed in tasks. What must remain to ensure quality?",
-a:["Automation","Human review","Speed","Data"],correct:1}
-
-]
+  name: "Module 4: AI in Daily Productivity",
+  lessons: [
+    {
+      title: "Lesson 1",
+      lesson: {
+        coreTruth: "AI productivity tools can save time by drafting, summarizing, and organizing, but faster output is not the same as trustworthy output.",
+        whyItMatters: "When users treat AI-generated work like a finished product, missing details and inaccuracies can quietly spread into real tasks.",
+        realWorldExample: "Someone uses an AI summary in a report without checking it and later finds that important information was missing.",
+        decisionSkill: "AI output should be treated as a draft to evaluate, not an automatic final version to trust."
+      },
+      quiz: [
+        {
+          q: "A user places an AI-generated summary into a report without checking it. What is the most likely risk?",
+          a: [
+            "The report becomes shorter",
+            "Important or accurate information may be missing or distorted",
+            "The AI rewrites the report later",
+            "The report automatically fixes itself"
+          ],
+          correct: 1,
+          explanation: "Productivity tools can speed up work while still requiring human verification."
+        },
+        {
+          q: "What is the strongest mindset to have when using AI for summaries or drafts?",
+          a: [
+            "The answer is probably final",
+            "The output is the beginning of review, not the end of thinking",
+            "The shorter the summary, the better",
+            "Speed matters more than completeness"
+          ],
+          correct: 1,
+          explanation: "Mature use means checking whether the output is actually ready for real use."
+        }
+      ]
+    },
+    {
+      title: "Lesson 2",
+      lesson: {
+        coreTruth: "AI becomes more effective in productivity when the user reviews and adjusts the output before acting on it.",
+        whyItMatters: "The strongest results usually come from collaboration between system efficiency and human judgment.",
+        realWorldExample: "A user asks AI to organize a task list, then adjusts the order and details before using it.",
+        decisionSkill: "The user should refine AI output until it fits the actual task, not just accept it because it saved time."
+      },
+      quiz: [
+        {
+          q: "Why is it effective to review and adjust an AI-generated task list before using it?",
+          a: [
+            "Because it ensures the plan is relevant, accurate, and actually usable",
+            "Because AI should only be used for brainstorming",
+            "Because reviewing always makes work slower",
+            "Because lists must always be handwritten"
+          ],
+          correct: 0,
+          explanation: "Productivity improves most when AI structure is matched with human oversight."
+        },
+        {
+          q: "A user notices that AI-generated content is incomplete and adds missing details manually. What skill are they demonstrating?",
+          a: [
+            "System avoidance",
+            "Effective oversight and quality control",
+            "Data deletion",
+            "Automatic correction"
+          ],
+          correct: 1,
+          explanation: "The user is staying active in the process instead of becoming passive."
+        }
+      ]
+    },
+    {
+      title: "Lesson 3",
+      lesson: {
+        coreTruth: "Balanced productivity is not just about speed. It is about producing work that is both efficient and reliable.",
+        whyItMatters: "If users chase speed without review, they may create more rework later.",
+        realWorldExample: "A person uses AI to speed through daily tasks but skips checking the details, leading to preventable mistakes.",
+        decisionSkill: "Users should value quality control as part of productivity, not as an obstacle to it."
+      },
+      quiz: [
+        {
+          q: "What risk increases when AI speeds up a task but the user skips review?",
+          a: [
+            "More creativity",
+            "More errors and weak output entering real work",
+            "More organization",
+            "Fewer decisions"
+          ],
+          correct: 1,
+          explanation: "Fast work is only strong work if it still holds up under real use."
+        },
+        {
+          q: "Why is human review still part of good productivity when using AI?",
+          a: [
+            "Because quality and reliability still need to be protected",
+            "Because AI is incapable of helping",
+            "Because review is only for managers",
+            "Because slower work is always better"
+          ],
+          correct: 0,
+          explanation: "Review is not wasted time when it protects the outcome."
+        }
+      ]
+    },
+    {
+      title: "Lesson 4",
+      lesson: {
+        coreTruth: "AI-generated drafts often need refinement because they may lack context, detail, or precision.",
+        whyItMatters: "A draft that looks complete can still be incomplete in ways that matter when it is actually used.",
+        realWorldExample: "An AI system drafts content quickly, but the user notices that an important detail is too vague and edits it before final use.",
+        decisionSkill: "Strong users improve what AI gives them instead of expecting perfect output every time."
+      },
+      quiz: [
+        {
+          q: "Why is editing often necessary after AI generates a draft?",
+          a: [
+            "Because AI drafts may still miss context, detail, or precision",
+            "Because AI always writes too slowly",
+            "Because editing is required even when the draft is perfect",
+            "Because drafts should never be used"
+          ],
+          correct: 0,
+          explanation: "AI can provide a strong starting point without providing a fully finished result."
+        },
+        {
+          q: "What does a user show when they improve AI-generated content before using it?",
+          a: [
+            "Critical thinking and ownership of quality",
+            "Distrust of all tools",
+            "Avoidance of productivity systems",
+            "A refusal to save time"
+          ],
+          correct: 0,
+          explanation: "The user is treating AI as support while keeping responsibility for the result."
+        }
+      ]
+    },
+    {
+      title: "Lesson 5",
+      lesson: {
+        coreTruth: "AI improves productivity best when it supports the user without replacing judgment.",
+        whyItMatters: "Tools can accelerate work, but only people can decide whether the work is actually ready, accurate, and appropriate.",
+        realWorldExample: "A person uses AI to move faster but still checks the result carefully before sending, submitting, or acting on it.",
+        decisionSkill: "The goal is not only to work faster. The goal is to work faster without becoming careless."
+      },
+      quiz: [
+        {
+          q: "What usually creates higher-quality results when using AI for daily productivity?",
+          a: [
+            "Speed without review",
+            "Balanced use of AI support and human oversight",
+            "Trusting the first output automatically",
+            "Removing all manual decision-making"
+          ],
+          correct: 1,
+          explanation: "The strongest workflow combines efficiency with thoughtful checking."
+        },
+        {
+          q: "AI can improve speed in daily tasks. What must remain in place to protect quality?",
+          a: [
+            "More automation",
+            "Human review",
+            "Longer prompts only",
+            "Fewer decisions"
+          ],
+          correct: 1,
+          explanation: "Quality stays strongest when humans still judge the output before using it."
+        }
+      ]
+    }
+  ]
 },
 
-/* ================= MODULE 5 ================= */
 {
-name:"Module 5: Awareness & Control in Everyday AI Use",
-lessons:[
-"Understanding how AI works in daily life improves decision-making and reduces errors.",
-"Users must stay aware of limitations and maintain control over outputs.",
-"AI should be used as a tool, not authority.",
-"Awareness leads to better outcomes and smarter use.",
-"Control ensures that AI enhances rather than replaces human thinking."
-],
-quiz:[
-
-{q:"A user understands the limitations of AI and reviews outputs before acting. How does this impact their everyday use of AI tools?",
-a:["Reduces speed","Improves decision quality","Eliminates AI use","Slows productivity"],correct:1},
-
-{q:"A person uses AI without understanding how it works and makes decisions based solely on outputs. What is the primary risk in this situation?",
-a:["Faster results","Incorrect decisions","Better efficiency","Automation"],correct:1},
-
-{q:"A user combines AI suggestions with personal judgment when making daily decisions. What benefit does this provide?",
-a:["Reduced workload","Balanced and accurate outcomes","Slower decisions","Less automation"],correct:1},
-
-{q:"AI is used as a tool rather than an authority. Why is this approach important?",
-a:["Speed","Maintains human responsibility","Automation","Cost"],correct:1},
-
-{q:"A user is aware of AI limitations and adjusts outputs accordingly. What does this demonstrate?",
-a:["Avoidance","Smart usage","System failure","Overuse"],correct:1},
-
-{q:"A person blindly trusts AI outputs in daily life. What is the biggest risk?",
-a:["Efficiency","Errors","Speed","Automation"],correct:1},
-
-{q:"AI helps simplify tasks. What must users maintain to ensure success?",
-a:["Automation","Control","Speed","Deletion"],correct:1},
-
-{q:"A user actively reviews AI suggestions before using them. What does this demonstrate?",
-a:["Inefficiency","Responsible AI usage","System failure","Avoidance"],correct:1},
-
-{q:"Understanding AI improves what aspect of everyday use?",
-a:["Speed","Decision-making","Cost","Automation"],correct:1},
-
-{q:"A user applies awareness when using AI daily. What is the result?",
-a:["Better outcomes","Slower performance","More errors","System dependence"],correct:0}
-
-]
+  name: "Module 5: Awareness & Control in Everyday AI Use",
+  lessons: [
+    {
+      title: "Lesson 1",
+      lesson: {
+        coreTruth: "Understanding how AI works in daily life helps users make better decisions and avoid careless mistakes.",
+        whyItMatters: "When users know the limits of the tool, they are less likely to trust it blindly.",
+        realWorldExample: "A user who understands that AI can be helpful but imperfect pauses to review outputs before acting on them.",
+        decisionSkill: "Awareness increases the quality of AI use because it keeps the user engaged and alert."
+      },
+      quiz: [
+        {
+          q: "How does understanding AI limitations improve everyday use?",
+          a: [
+            "It removes the need for tools",
+            "It helps the user make stronger decisions and review outputs more wisely",
+            "It makes AI slower",
+            "It guarantees perfect results"
+          ],
+          correct: 1,
+          explanation: "Awareness strengthens judgment. It does not reduce usefulness."
+        },
+        {
+          q: "Why is blind trust risky in everyday AI use?",
+          a: [
+            "Because AI tools are always useless",
+            "Because acting without review can lead to avoidable mistakes",
+            "Because AI cannot process daily tasks",
+            "Because awareness makes systems fail"
+          ],
+          correct: 1,
+          explanation: "Good outcomes depend on engagement, not automatic trust."
+        }
+      ]
+    },
+    {
+      title: "Lesson 2",
+      lesson: {
+        coreTruth: "Control matters because AI should serve the user, not direct the user.",
+        whyItMatters: "If the user stops questioning outputs, the tool can begin shaping choices without enough reflection or correction.",
+        realWorldExample: "A person starts making daily decisions based only on AI suggestions without considering their own reasoning.",
+        decisionSkill: "Users should stay in control by reviewing, questioning, and deciding intentionally."
+      },
+      quiz: [
+        {
+          q: "What is the primary risk when someone starts making daily decisions based only on AI outputs?",
+          a: [
+            "Faster results",
+            "Incorrect or weak decisions caused by loss of active judgment",
+            "Better efficiency",
+            "Improved awareness"
+          ],
+          correct: 1,
+          explanation: "The issue is not that the tool exists. The issue is surrendering decision control to it."
+        },
+        {
+          q: "What does it mean to stay in control while using AI daily?",
+          a: [
+            "Let the system lead and review later",
+            "Use AI suggestions while still applying personal judgment and final choice",
+            "Avoid all recommendations",
+            "Delete outputs immediately"
+          ],
+          correct: 1,
+          explanation: "Control means the person remains the active decision-maker."
+        }
+      ]
+    },
+    {
+      title: "Lesson 3",
+      lesson: {
+        coreTruth: "AI should be used as a tool, not treated as authority.",
+        whyItMatters: "When people treat AI like authority, they may stop verifying whether the output is actually right for the moment.",
+        realWorldExample: "A user receives a confident AI answer and accepts it as final simply because it sounds certain.",
+        decisionSkill: "Strong users respect AI as support while keeping responsibility for deciding what to trust and use."
+      },
+      quiz: [
+        {
+          q: "Why is it important to use AI as a tool rather than as authority?",
+          a: [
+            "Because AI should only be used for entertainment",
+            "Because human responsibility and judgment must remain in place",
+            "Because authority only matters at work",
+            "Because tools should never be efficient"
+          ],
+          correct: 1,
+          explanation: "AI can assist the process without becoming the final source of judgment."
+        },
+        {
+          q: "What is the danger of treating a confident AI answer like final truth?",
+          a: [
+            "The answer becomes shorter",
+            "The user may stop checking whether it is accurate or appropriate",
+            "The system deletes older answers",
+            "The confidence disappears"
+          ],
+          correct: 1,
+          explanation: "Confidence in wording can make weak outputs feel stronger than they really are."
+        }
+      ]
+    },
+    {
+      title: "Lesson 4",
+      lesson: {
+        coreTruth: "Awareness leads to better outcomes because aware users notice when something needs adjustment.",
+        whyItMatters: "Careless use creates passive habits. Aware use creates stronger habits of review, refinement, and thoughtful action.",
+        realWorldExample: "A user notices that an AI output is useful but slightly off, and adjusts it before relying on it.",
+        decisionSkill: "Smart use means staying alert enough to improve what the tool gives you."
+      },
+      quiz: [
+        {
+          q: "What does a user demonstrate when they notice an AI output needs adjusting and refine it before using it?",
+          a: [
+            "Overuse of automation",
+            "Smart, aware use of AI",
+            "System mistrust",
+            "Avoidance of decision-making"
+          ],
+          correct: 1,
+          explanation: "Awareness shows up in how the user responds to imperfect output."
+        },
+        {
+          q: "Why do aware users usually get better outcomes from AI?",
+          a: [
+            "Because they treat every output as final",
+            "Because they stay engaged enough to catch issues and improve results",
+            "Because they avoid all digital tools",
+            "Because awareness makes AI more intelligent"
+          ],
+          correct: 1,
+          explanation: "Better outcomes come from active use, not passive use."
+        }
+      ]
+    },
+    {
+      title: "Lesson 5",
+      lesson: {
+        coreTruth: "Everyday AI use becomes strongest when awareness and control stay with the user.",
+        whyItMatters: "Without those two things, convenience can slowly turn into dependence or poor judgment.",
+        realWorldExample: "A person uses AI daily, but consistently reviews suggestions, checks fit, and chooses deliberately before acting.",
+        decisionSkill: "The best everyday AI users are not the fastest or most automatic. They are the most aware and intentional."
+      },
+      quiz: [
+        {
+          q: "What is the strongest result of applying awareness during everyday AI use?",
+          a: [
+            "Better outcomes and stronger decision quality",
+            "Slower tools",
+            "More system dependence",
+            "Less need for thinking"
+          ],
+          correct: 0,
+          explanation: "Awareness improves how the user works with the tool and what they choose to trust."
+        },
+        {
+          q: "What protects everyday AI use from becoming passive or careless?",
+          a: [
+            "More automation",
+            "Awareness and control staying with the user",
+            "Longer outputs",
+            "Fewer decisions"
+          ],
+          correct: 1,
+          explanation: "The strongest safeguard is a user who remains thoughtful, responsible, and deliberate."
+        }
+      ]
+    }
+  ]
 }
 
 ];
 
-let moduleIndex=0,lessonIndex=0,quizIndex=0,mode="lesson";
+let moduleIndex = 0;
+let lessonIndex = 0;
+let quizIndex = 0;
+let mode = "lesson";
+let answeredCurrentQuestion = false;
 
-function load(){
-let m=modules[moduleIndex];
-document.getElementById("module").innerText=m.name;
-if(mode==="lesson"){
-document.getElementById("title").innerText="Lesson "+(lessonIndex+1);
-document.getElementById("content").innerText=m.lessons[lessonIndex];
-}else{
-let q=m.quiz[quizIndex];
-document.getElementById("title").innerText="Question "+(quizIndex+1);
-document.getElementById("content").innerText=q.q;
-}
+function renderStructuredLesson(lesson) {
+  return `
+    <div class="lesson-block">
+      <div class="lesson-label">Core Truth</div>
+      <div class="lesson-text">${lesson.coreTruth}</div>
+    </div>
+
+    <div class="lesson-block">
+      <div class="lesson-label">Why This Matters</div>
+      <div class="lesson-text">${lesson.whyItMatters}</div>
+    </div>
+
+    <div class="lesson-block">
+      <div class="lesson-label">Real-World Example</div>
+      <div class="lesson-text">${lesson.realWorld}</div>
+    </div>
+
+    <div class="lesson-block">
+      <div class="lesson-label">Decision Skill</div>
+      <div class="lesson-text">${lesson.decisionSkill}</div>
+    </div>
+
+    <div class="transition-note">
+      Review the lesson above, then begin the knowledge check.
+    </div>
+  `;
 }
 
-function next(){
-let m=modules[moduleIndex];
-if(mode==="lesson"){
-lessonIndex++;
-if(lessonIndex>=m.lessons.length){lessonIndex=0;mode="quiz";}
-}else{
-quizIndex++;
-if(quizIndex>=m.quiz.length){
-quizIndex=0;moduleIndex++;mode="lesson";
-if(moduleIndex>=modules.length){alert("Course Complete!");return;}
-}}
+function renderQuestion(q) {
+  let html = `<div style="font-size:18px; line-height:1.6; margin-bottom:18px;">${q.q}</div>`;
+
+  q.a.forEach((answer, index) => {
+    html += `
+      <button class="answer-btn" onclick="checkAnswer(${index})" id="answer-${index}">
+        ${answer}
+      </button>
+    `;
+  });
+
+  html += `<div id="feedback"></div>`;
+  return html;
+}
+
+function load() {
+  const currentModule = modules[moduleIndex];
+  const currentLesson = currentModule.lessons[lessonIndex];
+  answeredCurrentQuestion = false;
+
+  document.getElementById("module").innerText = currentModule.name;
+
+  if (mode === "lesson") {
+    document.getElementById("title").innerText = currentLesson.title;
+    document.getElementById("content").innerHTML = renderStructuredLesson(currentLesson.lesson);
+    document.getElementById("nextBtn").style.display = "inline-block";
+    document.getElementById("nextBtn").innerText = "Start Knowledge Check";
+  } else {
+    const currentQuestion = currentLesson.quiz[quizIndex];
+    document.getElementById("title").innerText = `${currentLesson.title} — Question ${quizIndex + 1}`;
+    document.getElementById("content").innerHTML = renderQuestion(currentQuestion);
+    document.getElementById("nextBtn").style.display = "none";
+  }
+}
+
+function next() {
+  const currentModule = modules[moduleIndex];
+  const currentLesson = currentModule.lessons[lessonIndex];
+
+  if (mode === "lesson") {
+    mode = "quiz";
+    quizIndex = 0;
+    load();
+    return;
+  }
+
+  if (!answeredCurrentQuestion) return;
+
+  quizIndex++;
+
+  if (quizIndex >= currentLesson.quiz.length) {
+    quizIndex = 0;
+    lessonIndex++;
+    mode = "lesson";
+
+    if (lessonIndex >= currentModule.lessons.length) {
+      lessonIndex = 0;
+      moduleIndex++;
+
+      if (moduleIndex >= modules.length) {
+        document.getElementById("module").innerText = "Course Complete";
+        document.getElementById("title").innerText = "You completed AI Everyday Applications™";
+        document.getElementById("content").innerHTML = `
+          <div class="lesson-block">
+            <div class="lesson-label">Completion</div>
+            <div class="lesson-text">
+              Excellent work. You completed this course successfully.
+            </div>
+          </div>
+        `;
+        document.getElementById("nextBtn").style.display = "none";
+        return;
+      }
+    }
+  }
+
+  load();
+}
+
+function checkAnswer(selectedIndex) {
+  if (answeredCurrentQuestion) return;
+
+  const currentModule = modules[moduleIndex];
+  const currentLesson = currentModule.lessons[lessonIndex];
+  const currentQuestion = currentLesson.quiz[quizIndex];
+  const buttons = document.querySelectorAll(".answer-btn");
+  const feedback = document.getElementById("feedback");
+
+  buttons.forEach((btn, index) => {
+    btn.disabled = true;
+
+    if (index === currentQuestion.correct) {
+      btn.classList.add("correct");
+    }
+
+    if (index === selectedIndex && index !== currentQuestion.correct) {
+      btn.classList.add("incorrect");
+    }
+  });
+
+  if (selectedIndex === currentQuestion.correct) {
+    feedback.innerHTML = `
+      <div class="feedback-box correct">
+        <strong>Correct.</strong><br>
+        ${currentQuestion.explanation}
+      </div>
+    `;
+  } else {
+    feedback.innerHTML = `
+      <div class="feedback-box incorrect">
+        <strong>Not quite.</strong><br>
+        ${currentQuestion.explanation}
+      </div>
+    `;
+  }
+
+  answeredCurrentQuestion = true;
+  document.getElementById("nextBtn").style.display = "inline-block";
+  document.getElementById("nextBtn").innerText =
+    quizIndex === currentLesson.quiz.length - 1 ? "Next Lesson" : "Next Question";
+}
+
 load();
-}
-
-load();
-
 </script>
 </body>
 </html>
