@@ -6,33 +6,130 @@
 <title>Lumi AI Nexus™ | AI Foundations™</title>
 
 <style>
-body {
-  font-family: Arial;
-  background: #eaf6ff;
-  margin: 0;
-  padding: 20px;
-}
+  body {
+    font-family: Arial, sans-serif;
+    background: #eaf6ff;
+    margin: 0;
+    padding: 20px;
+  }
 
-.container {
-  max-width: 900px;
-  margin: auto;
-  background: white;
-  padding: 25px;
-  border-radius: 16px;
-}
+  .container {
+    max-width: 920px;
+    margin: auto;
+    background: white;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+  }
 
-h4 { color:#355171; }
-h2 { color:#1e4db7; }
+  h4 {
+    color: #355171;
+    margin-bottom: 8px;
+  }
 
-button {
-  margin-top: 20px;
-  padding: 12px 20px;
-  border: none;
-  background: #2c7dff;
-  color: white;
-  border-radius: 10px;
-  cursor: pointer;
-}
+  h2 {
+    color: #1e4db7;
+    margin-top: 0;
+  }
+
+  #content {
+    color: #243b55;
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  .lesson-block {
+    background: #f7faff;
+    border: 1px solid #d9e7ff;
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-bottom: 14px;
+  }
+
+  .lesson-label {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #355171;
+    margin-bottom: 6px;
+  }
+
+  .lesson-text {
+    color: #243b55;
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  .transition-note {
+    margin-top: 18px;
+    padding: 14px 16px;
+    background: #eef5ff;
+    border-radius: 10px;
+    color: #173b79;
+    font-size: 15px;
+  }
+
+  .answer-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    margin: 10px 0;
+    padding: 14px 16px;
+    border: none;
+    border-radius: 10px;
+    background: #f1f5ff;
+    color: #173b79;
+    cursor: pointer;
+    font-size: 15px;
+  }
+
+  .answer-btn:hover {
+    background: #e4ecff;
+  }
+
+  .answer-btn.correct {
+    background: #dff5e8;
+    color: #155b3d;
+  }
+
+  .answer-btn.incorrect {
+    background: #ffe5e5;
+    color: #8a1f1f;
+  }
+
+  .feedback-box {
+    margin-top: 14px;
+    padding: 14px 16px;
+    border-radius: 10px;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .feedback-box.correct {
+    background: #e7f8ee;
+    color: #155b3d;
+  }
+
+  .feedback-box.incorrect {
+    background: #fff1f1;
+    color: #8a1f1f;
+  }
+
+  #nextBtn {
+    margin-top: 20px;
+    padding: 12px 20px;
+    border: none;
+    background: #2c7dff;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 15px;
+  }
+
+  #nextBtn:hover {
+    background: #1f6ef0;
+  }
 </style>
 </head>
 
@@ -41,292 +138,726 @@ button {
 <div class="container">
   <h4 id="module"></h4>
   <h2 id="title"></h2>
-  <p id="content"></p>
-  <button onclick="next()">Next</button>
+  <div id="content"></div>
+  <button id="nextBtn" onclick="next()">Start Knowledge Check</button>
 </div>
 
 <script>
-
 const modules = [
 
-/* ================= MODULE 1 ================= */
-
 {
-name:"Module 1: Understanding AI Behavior in Real Use",
-lessons:[
-"AI systems do not think or understand information the way humans do. Instead, they identify patterns in data and generate responses based on probability. This distinction is critical when using AI in real-world situations.",
-"In many environments, AI is used to assist with writing, summarizing, and organizing information. However, the responsibility of verifying accuracy always remains with the human user.",
-"People often mistake AI confidence for correctness. AI systems can generate highly structured and confident responses, even when the information is incomplete or slightly inaccurate.",
-"Understanding AI requires recognizing its strengths and limitations. It excels at speed and pattern recognition, but lacks independent reasoning and real-world awareness.",
-"The most effective users of AI treat it as a support system rather than a replacement for decision-making. They actively review, question, and refine outputs."
-],
-quiz:[
-
-{q:"A professional uses an AI system to draft a report summary. The output is well-written and confident, but the user does not verify the information before submitting it. Later, errors are discovered in the report. What is the most accurate explanation of this situation?",
-a:["The AI intentionally provided incorrect data","The AI generated a probable response without verifying factual accuracy","The system malfunctioned during processing","The user input was deleted during generation"],
-correct:1},
-
-{q:"An employee begins relying on AI-generated responses without reviewing them, assuming the system fully understands the context of their work. Over time, small mistakes begin to accumulate in their tasks. What is the underlying issue in this scenario?",
-a:["The AI system stopped functioning correctly","The employee misunderstood how AI generates responses","The data source was corrupted","The AI system lacks internet access"],
-correct:1},
-
-{q:"A team member uses AI to assist in creating internal documentation. They notice that while the structure is strong, some details are missing or vague. What does this indicate about how AI systems operate?",
-a:["AI systems avoid providing complete answers","AI systems generate responses based on patterns rather than full understanding","AI systems are restricted from giving details","AI systems only work with incomplete data"],
-correct:1},
-
-{q:"During a meeting, an AI-generated summary is presented as a final conclusion without review. The summary overlooks key discussion points. What mistake was made in this process?",
-a:["The AI system failed to capture audio","The summary was accepted without human verification","The meeting lacked structure","The AI system processed too much data"],
-correct:1},
-
-{q:"A user believes that AI systems always provide accurate answers because they respond quickly and confidently. In a professional environment, why is this belief problematic?",
-a:["AI systems are too fast to be trusted","Confidence in output does not guarantee accuracy","AI systems require constant updates","AI systems cannot process language correctly"],
-correct:1},
-
-{q:"A manager integrates AI into daily workflows but requires all outputs to be reviewed before use. What does this demonstrate about proper AI usage?",
-a:["Lack of trust in technology","Balanced use of AI with human oversight","Avoidance of automation","Inefficient workflow design"],
-correct:1},
-
-{q:"An AI system provides a structured response that appears correct but lacks supporting detail. What should the user do next?",
-a:["Accept the response immediately","Verify and expand the information before use","Ignore the response completely","Request the same response again without changes"],
-correct:1},
-
-{q:"A user expects AI to interpret emotional tone and intent the same way humans do. What is the flaw in this expectation?",
-a:["AI systems lack emotional awareness and true understanding","AI systems cannot process language","AI systems are limited to numbers only","AI systems only understand commands"],
-correct:0},
-
-{q:"An organization implements AI to assist with documentation. Employees begin skipping review steps because the outputs appear complete. What risk does this create?",
-a:["Improved efficiency","Increased likelihood of unnoticed errors","Reduced workload","Enhanced automation"],
-correct:1},
-
-{q:"A professional treats AI output as a starting point rather than a final answer. Why is this considered best practice?",
-a:["It slows down workflow","It ensures human judgment refines AI output","It avoids using AI completely","It limits AI capabilities"],
-correct:1}
-
-]
+  name: "Module 1: What AI Is and What It Is Not",
+  lessons: [
+    {
+      title: "Lesson 1: AI Is Pattern-Based, Not Human-Like Understanding",
+      lesson: {
+        coreTruth: "Artificial Intelligence can sound intelligent, organized, and even insightful, but that does not mean it understands the world the way a human does.",
+        whyItMatters: "Most everyday AI systems work by finding patterns in data and predicting likely outputs. That is why AI can be useful in writing, sorting, recommending, and summarizing, while still making mistakes that a careful person would catch.",
+        realWorldExample: "A person may receive a polished AI response that sounds accurate on the surface, yet the system may still misunderstand a key detail because it is predicting language patterns, not understanding the full reality of the situation the way a human would.",
+        decisionSkill: "A strong foundation begins with understanding that AI is powerful, but it is not awareness, wisdom, or independent understanding. Strong users do not confuse polished output with true comprehension."
+      },
+      quiz: [
+        {
+          q: "A new employee starts using an AI writing tool and begins describing it as if it 'knows what people mean' in every situation. During a client project, the tool produces a polished paragraph that sounds correct but misunderstands an important detail from the prompt. Which explanation best reflects what happened in that situation?",
+          a: [
+            "The AI independently chose to ignore the user’s instructions",
+            "The AI produced a likely pattern-based response without truly understanding the full situation",
+            "The AI became temporarily disconnected from its training",
+            "The AI only works correctly when used for casual writing"
+          ],
+          correct: 1,
+          explanation: "This is the core foundation lesson: AI can produce polished language without truly understanding the situation the way a human does."
+        },
+        {
+          q: "A person says, 'If AI can answer quickly and confidently, then it must understand what it is talking about.' In a real-world learning environment, why is that statement incomplete or misleading?",
+          a: [
+            "Because speed and confidence in AI output do not prove deep understanding or correctness",
+            "Because AI is only designed for entertainment and not for real use",
+            "Because all AI systems are required to include human emotion before they work",
+            "Because AI can only process one type of task at a time"
+          ],
+          correct: 0,
+          explanation: "Confident wording and fast output can sound impressive, but they do not prove that the answer is truly understood or fully correct."
+        }
+      ]
+    },
+    {
+      title: "Lesson 2: AI Can Be Useful Without Being Infallible",
+      lesson: {
+        coreTruth: "Many people wrongly assume that if AI is useful, it must also be reliable all the time. In reality, usefulness and accuracy are not the same thing.",
+        whyItMatters: "AI can save time, generate ideas, and reduce manual effort while still needing review. Treating usefulness like perfection leads people to lower their guard too early.",
+        realWorldExample: "A manager may use AI to draft a team update because it creates a clean first version quickly. The draft may still include an outdated timeline or a weak detail that needs correction before it is ready to send.",
+        decisionSkill: "The smart user understands that AI can be valuable and flawed at the same time. That understanding creates better decisions, better review habits, and better final results."
+      },
+      quiz: [
+        {
+          q: "A manager uses AI to draft a team update because it saves time and creates a clean first version. The message is almost right, but one timeline in the draft is outdated and would confuse the team if sent unchanged. What is the best lesson to take from this scenario?",
+          a: [
+            "If AI makes one mistake, it should never be used again",
+            "AI can still be useful even when it requires review and correction",
+            "Managers should only use AI when the team cannot write",
+            "The best solution is to stop communicating in writing"
+          ],
+          correct: 1,
+          explanation: "AI does not have to be perfect to be useful. The mature lesson is to use it well, review it carefully, and improve the final result."
+        },
+        {
+          q: "A student says, 'If I still have to review AI output, then AI isn’t really helpful.' Why is that way of thinking too simplistic when learning how AI works in real settings?",
+          a: [
+            "Because helpful tools can still require human oversight to be valuable",
+            "Because AI is only meant to replace review, not support it",
+            "Because review is unnecessary once a tool sounds professional",
+            "Because AI becomes more accurate when the user avoids checking it"
+          ],
+          correct: 0,
+          explanation: "Useful tools often reduce effort without removing responsibility. Review is part of using AI effectively, not proof that it failed."
+        }
+      ]
+    },
+    {
+      title: "Lesson 3: AI Does Not Carry Responsibility",
+      lesson: {
+        coreTruth: "AI may produce drafts, recommendations, and summaries, but it does not carry responsibility for the final outcome.",
+        whyItMatters: "The user, manager, student, worker, or decision-maker still owns the result. When people let AI act as authority instead of assistance, errors become more likely and accountability becomes blurred.",
+        realWorldExample: "A staff member may copy AI-generated language into a report or message because it sounds polished, but if the content is wrong or misaligned, it is still the human user who approved and used it.",
+        decisionSkill: "Responsibility stays human, even when support is machine-driven. Strong AI users understand that using a tool does not transfer ownership of the outcome."
+      },
+      quiz: [
+        {
+          q: "A staff member copies an AI-generated recommendation directly into a report and submits it without checking whether it matches the actual facts. Later, the report causes confusion and rework for the whole department. In this case, where does responsibility still rest?",
+          a: [
+            "With the AI system, because it generated the wording",
+            "With the software provider, because the tool was used at work",
+            "With the person who chose to use the output without verifying it",
+            "With the department, because all shared work has collective ownership"
+          ],
+          correct: 2,
+          explanation: "AI can assist, but it does not take responsibility. The final accountability remains with the human who decided to use the output."
+        },
+        {
+          q: "A business owner asks AI for ideas on how to respond to a customer complaint. The owner chooses one suggestion and sends it without reading carefully, even though it does not match company policy. What does this reveal about responsibility in AI-supported work?",
+          a: [
+            "That AI takes responsibility once its advice is selected",
+            "That responsibility remains with the human who approves and uses the output",
+            "That company policy no longer matters when automation is involved",
+            "That customer communication should never use technology"
+          ],
+          correct: 1,
+          explanation: "The tool suggested language, but the human approved it. That means responsibility still stays with the human decision-maker."
+        }
+      ]
+    },
+    {
+      title: "Lesson 4: AI Can Sound Right and Still Be Wrong",
+      lesson: {
+        coreTruth: "One of the biggest beginner mistakes is trusting tone instead of truth. AI can generate responses that sound polished, persuasive, and complete while still containing errors.",
+        whyItMatters: "Surface quality can fool people into lowering their guard. Foundational AI literacy means learning not to be impressed by wording alone, especially when the output sounds too smooth to question.",
+        realWorldExample: "A user may ask AI to explain a process they do not understand. The answer may look clean, detailed, and professional, yet one important step may still be described inaccurately.",
+        decisionSkill: "Strong users do not mistake polished wording for verified accuracy. They know that tone can support communication, but truth still has to be checked."
+      },
+      quiz: [
+        {
+          q: "A user asks AI to explain a process they do not understand. The answer is smooth, detailed, and easy to read, so the user assumes it must be correct. Later, they discover one important step was described inaccurately. What is the strongest takeaway from this situation?",
+          a: [
+            "Readable language is not the same thing as verified accuracy",
+            "AI only works when the user already knows the answer",
+            "Detailed answers are usually more dangerous than short ones",
+            "The system failed because the topic was too technical"
+          ],
+          correct: 0,
+          explanation: "Clear wording can make an answer feel trustworthy, but it does not guarantee that the content is correct."
+        },
+        {
+          q: "A person says, 'The answer looked professional, so I trusted it.' Why is that statement a weak foundation for using AI effectively?",
+          a: [
+            "Because professional language can hide errors if the content is not checked",
+            "Because AI is only reliable when it uses casual wording",
+            "Because AI cannot generate professional wording at all",
+            "Because users should trust only short answers and not long ones"
+          ],
+          correct: 0,
+          explanation: "Professional tone can improve presentation, but it can also make mistakes easier to miss when the user stops checking the content."
+        }
+      ]
+    },
+    {
+      title: "Lesson 5: Strong Foundations Begin with Healthy Skepticism",
+      lesson: {
+        coreTruth: "Healthy skepticism does not mean fear or rejection. It means asking better questions, checking important outputs, and understanding when AI should support rather than decide.",
+        whyItMatters: "A strong AI foundation is built when the user stays engaged instead of becoming passive. Skepticism helps people avoid blind trust without forcing them to reject useful tools.",
+        realWorldExample: "A learner who verifies key points and checks important details usually makes fewer mistakes and builds stronger judgment over time than someone who simply accepts every output at face value.",
+        decisionSkill: "Skepticism is not weakness. In AI use, it is one of the clearest forms of responsibility and intelligence. Strong users stay open to support while remaining alert to risk."
+      },
+      quiz: [
+        {
+          q: "A learner begins using AI for daily study support and decides to verify key points instead of trusting every output immediately. Over time, they notice that this habit helps them learn faster and with fewer mistakes. Why is that a strong foundational practice?",
+          a: [
+            "Because skepticism improves accuracy without forcing the user to reject AI entirely",
+            "Because AI can only be useful when the user treats it as suspicious all the time",
+            "Because checking outputs slows learning in a way that improves memory",
+            "Because the best way to learn AI is to avoid using it independently"
+          ],
+          correct: 0,
+          explanation: "Healthy skepticism improves judgment and helps the user stay accurate without abandoning the value of the tool."
+        },
+        {
+          q: "A person uses AI regularly and says, 'I like it, but I still don’t let it think for me.' What does that statement show about their level of foundational AI understanding?",
+          a: [
+            "They do not trust technology enough to benefit from it",
+            "They understand that AI works best as support, not authority",
+            "They are using AI incorrectly because trust should be automatic",
+            "They are limiting AI in a way that makes it ineffective"
+          ],
+          correct: 1,
+          explanation: "That statement shows mature AI use: the person values the tool, but still keeps human judgment and responsibility in place."
+        }
+      ]
+    }
+  ]
 },
 
-/* ================= MODULE 2 ================= */
-
 {
-name:"Module 2: How AI Generates Information",
-lessons:[
-"AI systems generate responses based on probability and pattern recognition. They do not verify facts in real time unless specifically connected to verified data systems.",
-"The output of AI is influenced by the input it receives. Clear, detailed instructions typically lead to more useful and relevant responses.",
-"AI can produce responses that appear highly accurate because of structure and language, but accuracy still depends on context and validation.",
-"Understanding how AI generates responses helps users avoid over-reliance and improves their ability to guide outputs effectively.",
-"In professional use, refining input and reviewing output are equally important when working with AI systems."
-],
-quiz:[
-
-{q:"A user provides vague instructions to an AI system and receives a general, incomplete response. What is the most likely reason for this outcome?",
-a:["The AI system malfunctioned","The input lacked clarity and detail","The AI system ignored the request","The system cannot process vague language"],
-correct:1},
-
-{q:"An AI-generated response appears detailed but includes outdated information. Why might this occur?",
-a:["AI systems intentionally use old data","AI relies on training data and may not reflect real-time updates","The system failed to process input","The user entered incorrect data"],
-correct:1},
-
-{q:"A professional improves the quality of AI responses by refining their instructions. What principle does this demonstrate?",
-a:["AI independence","Input quality directly affects output quality","AI systems self-correct automatically","AI ignores user input"],
-correct:1},
-
-{q:"A team uses AI to generate multiple drafts of a document before selecting the best version. What does this approach demonstrate?",
-a:["Overuse of AI","Effective use of AI as a support tool","Avoidance of manual work","System inefficiency"],
-correct:1},
-
-{q:"An AI system produces a response that sounds accurate but contains subtle errors. What is the best explanation?",
-a:["AI systems guess randomly","AI generates probable responses without guaranteed accuracy","AI systems cannot process information","AI systems avoid detailed answers"],
-correct:1},
-
-{q:"A user expects AI to always provide complete answers without guidance. Why is this expectation unrealistic?",
-a:["AI systems require precise input to perform effectively","AI systems are too slow","AI systems only answer simple questions","AI systems ignore complex requests"],
-correct:0},
-
-{q:"An employee uses AI to summarize a long document but misses key points in the summary. What should they do next?",
-a:["Accept the summary as final","Review and adjust the summary manually","Delete the document","Avoid using AI"],
-correct:1},
-
-{q:"A user compares multiple AI-generated responses before choosing one. Why is this effective?",
-a:["It reduces system errors","It allows better evaluation of output quality","It speeds up AI performance","It limits data processing"],
-correct:1},
-
-{q:"A manager notices that clearer prompts produce more accurate AI results. What does this highlight?",
-a:["AI requires structured guidance","AI operates independently","AI ignores user input","AI cannot adapt"],
-correct:0},
-
-{q:"A user relies solely on AI output without reviewing it. What is the primary risk?",
-a:["Reduced system performance","Unchecked inaccuracies in final results","Data overload","Slower workflows"],
-correct:1}
-
-]
+  name: "Module 2: How AI Produces Outputs",
+  lessons: [
+    {
+      title: "Lesson 1: AI Responds to Inputs, Structure, and Context Clues",
+      content: "AI output quality is heavily influenced by what the user asks and how the request is phrased. Vague instructions often produce vague responses. Clear instructions usually lead to better results. This is one reason good prompting matters. A strong AI foundation includes learning that the output is shaped by the input, not magically produced in perfect form.",
+      quiz: [
+        {
+          q: "A user tells an AI tool, 'Write something about productivity,' and receives a broad response that is too generic to be useful. The same user later gives a more detailed request and receives something much stronger. What foundational principle about AI does this example illustrate?",
+          a: [
+            "AI tools produce the same quality no matter how they are prompted",
+            "The quality and clarity of the input strongly affect the usefulness of the output",
+            "AI becomes more accurate only after repeated use by the same person",
+            "Productivity topics are too broad for AI systems to handle well"
+          ],
+          correct: 1
+        },
+        {
+          q: "A student gives AI a short request with almost no detail, then gets frustrated that the answer does not match what they wanted. In a real learning environment, what should that student understand about how AI generates responses?",
+          a: [
+            "AI often needs clearer direction in order to produce more relevant results",
+            "AI should automatically know the user’s intent after one sentence",
+            "The tool is broken if it does not infer hidden meaning correctly",
+            "AI only works well for advanced users and not beginners"
+          ],
+          correct: 0
+        }
+      ]
+    },
+    {
+      title: "Lesson 2: AI Predicts Likely Language, Not Guaranteed Truth",
+      content: "Most language-based AI systems are designed to predict likely words, phrases, and structures based on patterns. That means the system may produce something fluent without fully grounding it in truth. This is one reason people sometimes feel surprised when a strong-sounding answer turns out to be incomplete or mistaken. Understanding this protects users from blind trust.",
+      quiz: [
+        {
+          q: "A professional asks AI for a summary of a process they are unfamiliar with. The answer is smooth and seems complete, but one of the steps later turns out to be inaccurate. What is the best explanation for why this can happen in AI systems?",
+          a: [
+            "AI predicts likely responses and can still produce polished but inaccurate language",
+            "AI is designed to insert one false detail into every long answer",
+            "AI only works correctly when writing about familiar topics",
+            "AI refuses to process information it has not seen in the last month"
+          ],
+          correct: 0
+        },
+        {
+          q: "A user thinks that if an AI answer is long, detailed, and confident, it must have verified the facts internally before presenting them. Why is that assumption weak from a foundational AI standpoint?",
+          a: [
+            "Because length and confidence do not guarantee fact-checking or correctness",
+            "Because AI is only designed for short responses and not long ones",
+            "Because detailed answers are always less accurate than short ones",
+            "Because AI systems cannot generate factual information at all"
+          ],
+          correct: 0
+        }
+      ]
+    },
+    {
+      title: "Lesson 3: Context Helps, but It Does Not Guarantee Precision",
+      content: "AI can work better when it is given context, examples, and purpose. But even with context, it can still misunderstand emphasis, leave out important details, or misread the user’s real goal. Foundational users learn not only to provide context, but also to inspect whether the system actually used that context correctly.",
+      quiz: [
+        {
+          q: "A user gives AI a long prompt that includes background information, tone preference, and desired format. The answer is still missing one of the user’s most important instructions. What should the user conclude from this situation?",
+          a: [
+            "Providing context is helpful, but it does not guarantee perfect output",
+            "AI performs worse when users include too much useful detail",
+            "Context only matters when the prompt is under twenty words",
+            "The system automatically ignores user priorities in long prompts"
+          ],
+          correct: 0
+        },
+        {
+          q: "A worker provides AI with several pieces of context before asking for a draft. The result is better than before, but one section still feels off. What is the most effective next step from a foundational AI-use perspective?",
+          a: [
+            "Assume the output is close enough and use it without review",
+            "Treat the response as a draft and refine the weak section manually or with a better follow-up prompt",
+            "Delete the result and stop using AI for that task permanently",
+            "Keep asking the exact same question until the system guesses correctly"
+          ],
+          correct: 1
+        }
+      ]
+    },
+    {
+      title: "Lesson 4: Better Inputs Often Lead to Better Outputs",
+      content: "One of the strongest beginner insights in AI is that better prompting is not just about longer wording. It is about clearer intent, needed detail, useful context, and defined outcomes. A user who learns how to ask well usually gets better results than a user who simply types more. This is why AI skill includes communication skill.",
+      quiz: [
+        {
+          q: "Two users ask the same AI tool for help. One asks a vague question, while the other gives the tool a clear purpose, audience, and desired format. The second user gets a much stronger answer. What does this teach about strong foundational AI use?",
+          a: [
+            "AI prefers longer users over shorter users",
+            "Clearer direction usually produces more usable output",
+            "The tool automatically rewards formal language only",
+            "AI works best when the user avoids giving specifics"
+          ],
+          correct: 1
+        },
+        {
+          q: "A learner wants AI to help with a writing task, but the first result is weak. Instead of quitting, they improve the prompt and the second result is much better. Why is this a valuable AI foundation lesson?",
+          a: [
+            "Because effective AI use includes improving the request, not just judging the first response",
+            "Because the first answer from AI is always wrong by design",
+            "Because AI tools only work after the second attempt",
+            "Because prompt changes matter only for formal writing"
+          ],
+          correct: 0
+        }
+      ]
+    },
+    {
+      title: "Lesson 5: Output Review Is Part of the Process, Not an Extra Step",
+      content: "Many beginners think the AI process ends when the answer appears. In reality, the answer is often the beginning of evaluation. Reviewing, correcting, refining, and deciding whether to use the output is part of AI literacy. That review step is not optional in important situations. It is part of using the system well.",
+      quiz: [
+        {
+          q: "A user treats AI output like a finished product and skips the review step because the wording sounds polished. Later, they realize the content was not fully aligned with their goal. What foundational misunderstanding does this reveal?",
+          a: [
+            "They assumed the process ended when the response appeared, rather than seeing review as part of the workflow",
+            "They expected the answer to be short and received something long",
+            "They used the wrong tone setting in the system",
+            "They forgot that AI can only produce drafts for technical subjects"
+          ],
+          correct: 0
+        },
+        {
+          q: "A strong user says, 'The answer is not the finish line. It is the point where I decide whether the tool actually helped me.' Why is that a mature AI foundation mindset?",
+          a: [
+            "Because it recognizes that reviewing and judging output is part of effective AI use",
+            "Because it means the user no longer needs to improve prompts",
+            "Because it proves the user distrusts all machine-generated content",
+            "Because it shows the user prefers manual work over digital tools"
+          ],
+          correct: 0
+        }
+      ]
+    }
+  ]
 },
 
-/* ================= MODULE 3 ================= */
-
 {
-name:"Module 3: AI Misinterpretation & Human Responsibility",
-lessons:[
-"Misinterpreting AI outputs is one of the most common issues in AI usage. Users must understand that outputs require evaluation.",
-"AI systems do not assume responsibility for decisions. The responsibility always remains with the user.",
-"Errors often occur not because AI fails, but because users misunderstand its role.",
-"Human oversight ensures that AI is used correctly and responsibly in decision-making processes.",
-"Recognizing AI limitations is essential for preventing errors and improving outcomes."
-],
-quiz:[
-
-{q:"A user accepts an AI recommendation without considering context, leading to a poor decision. What is the root issue?",
-a:["AI system error","Lack of human oversight","Data limitation","System delay"],
-correct:1},
-
-{q:"An organization implements AI but fails to train employees on its limitations. What is the likely outcome?",
-a:["Improved efficiency","Increased misuse and misunderstanding","Reduced automation","System failure"],
-correct:1},
-
-{q:"A team treats AI output as authoritative without review. Why is this problematic?",
-a:["AI lacks accountability for final decisions","AI cannot generate responses","AI requires internet access","AI systems are too fast"],
-correct:0},
-
-{q:"A user questions AI output before acting on it. What does this demonstrate?",
-a:["Lack of trust","Responsible AI usage","System inefficiency","Over-analysis"],
-correct:1},
-
-{q:"An employee notices discrepancies in AI-generated data and investigates further. What skill is being applied?",
-a:["Automation","Critical thinking","Data deletion","System reset"],
-correct:1},
-
-{q:"A manager requires verification of AI outputs before implementation. What does this reinforce?",
-a:["Speed","Accuracy and responsibility","Automation","System independence"],
-correct:1},
-
-{q:"A user assumes AI outputs are always correct. What misunderstanding does this reflect?",
-a:["AI independence","Overestimation of AI accuracy","System efficiency","Data overload"],
-correct:1},
-
-{q:"An AI recommendation conflicts with known policies. What should the user do?",
-a:["Follow AI","Verify against policy","Ignore policy","Regenerate response"],
-correct:1},
-
-{q:"A professional adjusts AI-generated content before final use. Why is this important?",
-a:["To reduce AI usage","To ensure accuracy and relevance","To slow workflow","To avoid automation"],
-correct:1},
-
-{q:"A user blindly trusts AI outputs. What is the biggest risk?",
-a:["Efficiency loss","Incorrect decision-making","System crash","Data corruption"],
-correct:1}
-
-]
+  name: "Module 3: AI Strengths, Limits, and Practical Boundaries",
+  lessons: [
+    {
+      title: "Lesson 1: AI Is Strong at Speed, Structure, and Pattern Support",
+      content: "AI often performs well when the task involves generating drafts, organizing information, recognizing patterns, or simplifying repetitive work. These strengths make it valuable in real environments. But those strengths can also mislead people into expecting too much. A strong foundation includes knowing what AI does well without pretending it does everything well.",
+      quiz: [
+        {
+          q: "A team uses AI to generate first drafts of short internal updates and notices that it saves time when the structure is routine and the goal is clear. However, they still rely on people to review meaning and accuracy before sending anything out. What does this scenario reveal about AI’s real strengths?",
+          a: [
+            "AI is often strong at speed and structure support, while humans still handle judgment and final accuracy",
+            "AI works best only when humans stop reviewing it completely",
+            "AI is useful mainly because it eliminates the need for editing",
+            "AI performs best when it is allowed to manage communication alone"
+          ],
+          correct: 0
+        },
+        {
+          q: "A user wants AI to help them organize scattered notes into a cleaner format. The tool performs that task well, even though it would be less reliable if asked to make a final strategic decision. Why is that distinction important in foundational AI understanding?",
+          a: [
+            "Because AI can be strong in supportive tasks without being appropriate for final authority",
+            "Because organization tasks are the only things AI can do accurately",
+            "Because decision-making is never improved by digital systems",
+            "Because AI becomes weak when users ask it to format anything"
+          ],
+          correct: 0
+        }
+      ]
+    },
+    {
+      title: "Lesson 2: AI Can Be Helpful and Limited at the Same Time",
+      content: "One of the most important 'aha' moments in AI learning is realizing that usefulness does not remove limitation. A tool can save time while still making errors. A system can help a user think while still failing to understand nuance. This dual reality is one of the biggest pieces of mature AI literacy.",
+      quiz: [
+        {
+          q: "A learner says, 'If AI helps me finish a task faster, then the output must be reliable enough to use without review.' Why is that reasoning flawed from a foundational perspective?",
+          a: [
+            "Because speed and usefulness do not remove the possibility of incomplete or incorrect output",
+            "Because AI only works correctly when it takes more time than manual work",
+            "Because reliable outputs are always slower than fast outputs",
+            "Because tasks completed quickly are rarely worth checking"
+          ],
+          correct: 0
+        },
+        {
+          q: "A professional uses AI to outline ideas before a meeting. The outline saves time, but two of the supporting points need to be rewritten after review. What is the best lesson hidden in that scenario?",
+          a: [
+            "If editing is needed, AI was not useful in the first place",
+            "A tool can still be worth using even when it requires thoughtful correction",
+            "Outlining is too complex for AI to handle at all",
+            "Meetings should never involve AI-assisted preparation"
+          ],
+          correct: 1
+        }
+      ]
+    },
+    {
+      title: "Lesson 3: AI Does Not Know What Matters Most Unless Guided",
+      content: "AI may generate a response that seems complete, but it does not automatically know which part matters most to the user unless the user makes that clear. This is why prompting, review, and refinement matter so much. AI can help process information, but it does not naturally rank meaning the way a thoughtful human does.",
+      quiz: [
+        {
+          q: "A user asks AI to summarize a long message and the result includes most of the content, but it gives equal weight to minor details and the main priority. In a real-life use case, what does this show about the system?",
+          a: [
+            "The system can process content, but it still needs human guidance on what matters most",
+            "The system should always be avoided for summarization",
+            "The user asked too short a question for any summary to work",
+            "AI naturally ranks priorities better than humans once enough text is provided"
+          ],
+          correct: 0
+        },
+        {
+          q: "A manager asks AI for a draft update but forgets to mention that the audience only needs the three most urgent points. The resulting message is long and unfocused. What is the strongest explanation for this outcome?",
+          a: [
+            "The AI did not receive enough direction about priority and audience",
+            "The AI tool was too advanced for the task",
+            "Long updates are always the best output for management",
+            "The user should never ask AI for help with summaries"
+          ],
+          correct: 0
+        }
+      ]
+    },
+    {
+      title: "Lesson 4: Limitations Become More Serious in Higher-Stakes Use",
+      content: "A small mistake in a casual task might only waste a little time. A small mistake in a professional, educational, financial, or operational setting can create bigger consequences. Foundational AI learning is not just about what the tool can do. It is also about knowing when the risks of being wrong become more serious.",
+      quiz: [
+        {
+          q: "A person uses AI to rewrite a casual grocery list and does not review it closely, which causes little harm. Later, the same person uses AI to help draft an important work message and is tempted to skip review again. Why is that second situation more serious from a foundational AI perspective?",
+          a: [
+            "Because higher-stakes tasks require more careful verification when the consequences of error are greater",
+            "Because AI should only be used for personal tasks and never for work",
+            "Because work messages are always too formal for machine assistance",
+            "Because grocery planning is the only safe setting for AI support"
+          ],
+          correct: 0
+        },
+        {
+          q: "A student says, 'The answer was close enough, so I used it anyway,' after AI helped with an important assignment explanation. In a low-stakes chat this might not matter much, but in education or work it can. What is the key principle here?",
+          a: [
+            "The higher the stakes, the less review matters because time is limited",
+            "The higher the stakes, the more important it is to check whether AI output is truly accurate and usable",
+            "AI becomes more accurate automatically in formal settings",
+            "Educational tasks should never involve technology of any kind"
+          ],
+          correct: 1
+        }
+      ]
+    },
+    {
+      title: "Lesson 5: Foundational AI Skill Includes Knowing When Not to Trust the First Output",
+      content: "Some users treat the first AI answer as the final answer. Stronger users know that the first response is often a draft, a starting point, or a direction to evaluate. Knowing when to question, reframe, or refine the first output is part of foundational skill. That habit separates casual use from mature use.",
+      quiz: [
+        {
+          q: "A user asks AI for help and receives a reasonable first answer. Instead of accepting it immediately, they ask a follow-up question, tighten the prompt, and compare the second response before deciding what to use. What does this show about their foundational AI ability?",
+          a: [
+            "They understand that the first response is often a starting point, not always the final answer",
+            "They do not trust technology enough to benefit from it",
+            "They are making the task too complicated for a simple tool",
+            "They are using AI incorrectly by asking more than one question"
+          ],
+          correct: 0
+        },
+        {
+          q: "A beginner sees the first output from AI and assumes revising the prompt would be a waste of time. A more experienced user does revise the prompt and gets a far better result. Why is that difference important?",
+          a: [
+            "Because foundational AI skill includes improving interaction, not just passively accepting the first output",
+            "Because AI only works properly after three attempts",
+            "Because prompt revision matters only for creative writing and not normal work",
+            "Because experienced users should always ask the same question twice"
+          ],
+          correct: 0
+        }
+      ]
+    }
+  ]
 },
 
-/* ================= MODULE 4 ================= */
-
 {
-name:"Module 4: Responsible & Ethical AI Use",
-lessons:[
-"Responsible AI use includes verifying outputs, understanding limitations, and maintaining accountability.",
-"Ethical considerations include fairness, bias, and transparency in AI-generated results.",
-"AI should enhance decision-making, not replace it.",
-"Users must remain aware of how AI impacts outcomes and decisions.",
-"Proper AI use requires balance between efficiency and responsibility."
-],
-quiz:[
-
-{q:"An AI system produces biased output due to training data. What should the user do?",
-a:["Ignore bias","Recognize and adjust output","Delete system","Restart AI"],
-correct:1},
-
-{q:"A company uses AI for decision support but maintains human oversight. What does this demonstrate?",
-a:["Inefficiency","Responsible AI use","System failure","Automation dependency"],
-correct:1},
-
-{q:"A user identifies potential bias in AI results. What is the correct response?",
-a:["Accept results","Review and adjust findings","Ignore issue","Stop using AI"],
-correct:1},
-
-{q:"A manager ensures AI outputs are reviewed before implementation. What is being practiced?",
-a:["Speed","Accountability","Automation","Independence"],
-correct:1},
-
-{q:"AI generates a response that conflicts with ethical standards. What should happen?",
-a:["Use response","Reject or modify it","Ignore standards","Regenerate blindly"],
-correct:1},
-
-{q:"A user understands AI limitations. What benefit does this provide?",
-a:["Faster AI","Better decision-making","Reduced cost","More automation"],
-correct:1},
-
-{q:"AI is used without oversight. What risk increases?",
-a:["Accuracy","Error rate","Efficiency","Speed"],
-correct:1},
-
-{q:"A company trains employees on AI limitations. What does this improve?",
-a:["Automation","Responsible use","System complexity","Cost"],
-correct:1},
-
-{q:"AI outputs are reviewed before action. What does this ensure?",
-a:["Speed","Accuracy","Automation","Efficiency"],
-correct:1},
-
-{q:"A user understands ethical implications of AI. What is strengthened?",
-a:["Efficiency","Trust and responsibility","Speed","Cost reduction"],
-correct:1}
-
-]
+  name: "Module 4: Human Judgment, Verification, and Real Use",
+  lessons: [
+    {
+      title: "Lesson 1: Human Judgment Is Not Optional",
+      content: "Some people treat AI like a shortcut around thinking. Strong users understand that AI works best when paired with thought, review, and judgment. The tool may reduce effort, but it should not remove responsibility. Human judgment stays necessary, especially when the output affects other people, important tasks, or real decisions.",
+      quiz: [
+        {
+          q: "A user turns to AI whenever they face a difficult task and begins following the system’s suggestions automatically instead of thinking through the situation. Over time, the quality of their decisions drops even though the tool still sounds helpful. What is the clearest explanation for that pattern?",
+          a: [
+            "The tool became less intelligent over time",
+            "The user replaced judgment with dependence instead of using the tool as support",
+            "AI systems lower decision quality whenever they are used frequently",
+            "The tasks were too easy for the system to handle correctly"
+          ],
+          correct: 1
+        },
+        {
+          q: "A manager says, 'AI can help me move faster, but it does not excuse me from thinking carefully.' Why is that statement a strong part of AI foundations?",
+          a: [
+            "Because it shows that judgment still matters even when a tool saves time",
+            "Because it proves AI is mostly unnecessary in modern work",
+            "Because it means managers should avoid automated tools entirely",
+            "Because it suggests speed and caution can never exist together"
+          ],
+          correct: 0
+        }
+      ]
+    },
+    {
+      title: "Lesson 2: Verification Is a Core Skill, Not a Sign of Distrust",
+      content: "Checking AI output is not fear. It is skill. People sometimes act as though review shows weakness or lack of trust, but in reality it shows maturity. Verification becomes especially important when facts, instructions, summaries, or recommendations are involved. Strong AI users verify not because the tool is useless, but because they understand how it works.",
+      quiz: [
+        {
+          q: "A user feels awkward checking AI output because they think it means they do not trust the tool enough. In a strong foundational learning model, why is that mindset mistaken?",
+          a: [
+            "Because verification is part of responsible AI use, not an insult to the tool",
+            "Because AI tools improve only when users stop checking them",
+            "Because checking outputs is necessary only for advanced users",
+            "Because trust is more efficient than verification in digital systems"
+          ],
+          correct: 0
+        },
+        {
+          q: "A worker receives an AI-generated summary that seems useful and mostly accurate. They still check the most important points before sharing it with others. What does this behavior demonstrate?",
+          a: [
+            "That the worker does not understand AI well enough to use it confidently",
+            "That the worker understands verification is a normal part of effective AI use",
+            "That the worker should have rewritten everything manually from the start",
+            "That the worker is slowing down the team unnecessarily"
+          ],
+          correct: 1
+        }
+      ]
+    },
+    {
+      title: "Lesson 3: AI Can Assist Thinking Without Replacing It",
+      content: "AI can help users brainstorm, simplify, outline, and compare possibilities. That can strengthen human thinking when the user stays active. Problems begin when users stop thinking and let the tool dominate the process. Foundational AI literacy means learning how to use support without surrendering control of reasoning.",
+      quiz: [
+        {
+          q: "A student uses AI to brainstorm possible angles for a presentation, then chooses the most relevant ideas and reshapes them with their own judgment. What does this show about good foundational use of AI?",
+          a: [
+            "That AI should generate the full presentation with no user input",
+            "That AI can support thinking while the person still controls direction and quality",
+            "That brainstorming is the only appropriate use for AI systems",
+            "That users should avoid editing anything AI helps create"
+          ],
+          correct: 1
+        },
+        {
+          q: "A person starts asking AI what to think instead of using it to explore possibilities. Over time, their own reasoning becomes weaker and less confident. What is the foundational warning inside this scenario?",
+          a: [
+            "AI is most dangerous when used for any reflective task at all",
+            "Support tools become harmful when they replace active human thinking",
+            "Reasoning is less important than speed in modern work",
+            "The person should switch to a different AI model instead"
+          ],
+          correct: 1
+        }
+      ]
+    },
+    {
+      title: "Lesson 4: The User Must Decide What to Keep, Reject, or Refine",
+      content: "AI often produces something usable mixed with something weak, incomplete, or unnecessary. That means the user’s job is not only to receive output, but to judge it. What should be kept? What should be corrected? What should be thrown out? Foundational skill includes that filtering process.",
+      quiz: [
+        {
+          q: "A user asks AI for help with a difficult task and gets a response that contains several strong ideas and one misleading recommendation. Instead of accepting or rejecting the whole thing, they sort through it carefully. Why is that a strong foundational habit?",
+          a: [
+            "Because strong AI use often means deciding what to keep, what to improve, and what to discard",
+            "Because the safest practice is to reject all mixed-quality responses immediately",
+            "Because AI outputs should be judged only by their tone and structure",
+            "Because users should always keep the majority of what AI gives them"
+          ],
+          correct: 0
+        },
+        {
+          q: "A learner says, 'I don’t need AI to be perfect. I need to know how to work with what it gives me.' Why is that a more mature foundational mindset than expecting perfect output every time?",
+          a: [
+            "Because it recognizes that human filtering and refinement are part of effective use",
+            "Because it lowers standards and accepts poor-quality work",
+            "Because it proves the user prefers machine help over human review",
+            "Because it means the user no longer needs to improve prompts"
+          ],
+          correct: 0
+        }
+      ]
+    },
+    {
+      title: "Lesson 5: Good Foundations Lead to Better Use in Every Other Course",
+      content: "Foundational AI understanding does more than explain one tool. It prepares the learner to use AI more wisely in daily life, work, healthcare, finance, operations, and other settings. Once a person understands limits, strengths, verification, prompting, and responsibility, they can carry that awareness into every advanced course that follows.",
+      quiz: [
+        {
+          q: "A learner finishes an AI foundations course and begins recognizing that verification, prompt quality, and human judgment matter in almost every AI-supported setting they encounter. Why is that realization so important before moving into more specialized courses?",
+          a: [
+            "Because foundational principles carry into advanced AI use across industries and tools",
+            "Because specialized courses do not require any basic understanding of AI behavior",
+            "Because verification matters only in learning environments and not real work",
+            "Because advanced tools automatically remove the need for human review"
+          ],
+          correct: 0
+        },
+        {
+          q: "Someone says, 'Once I understand the foundation, I can spot mistakes faster and use AI more intelligently anywhere.' What does that statement show?",
+          a: [
+            "That foundational knowledge improves later judgment and practical use",
+            "That advanced AI tools are no longer needed after basic learning",
+            "That the person should avoid specialized AI systems entirely",
+            "That foundations matter only for people who work in technology"
+          ],
+          correct: 0
+        }
+      ]
+    }
+  ]
 },
 
-/* ================= MODULE 5 ================= */
-
 {
-name:"Module 5: Applying AI Foundations in Real Work",
-lessons:[
-"Applying AI effectively means combining system output with human judgment.",
-"AI supports productivity when used correctly within workflows.",
-"Understanding AI helps users make better decisions and avoid mistakes.",
-"Professional use requires continuous learning and adaptation.",
-"The strongest users of AI integrate it thoughtfully into their processes."
-],
-quiz:[
-
-{q:"A professional uses AI to generate ideas but refines them manually. What does this show?",
-a:["Dependence","Balanced AI use","Avoidance","System limitation"],
-correct:1},
-
-{q:"AI suggests a solution that conflicts with known data. What should be done?",
-a:["Follow AI","Verify and adjust","Ignore data","Restart AI"],
-correct:1},
-
-{q:"A team uses AI to speed up work while maintaining review processes. What is achieved?",
-a:["Efficiency with accuracy","System overload","Reduced output","Automation dependency"],
-correct:0},
-
-{q:"A user integrates AI into workflow carefully. What benefit results?",
-a:["Better outcomes","More errors","Slower work","Less automation"],
-correct:0},
-
-{q:"AI provides multiple options for a task. What is the best approach?",
-a:["Pick first","Evaluate and select best","Ignore options","Regenerate endlessly"],
-correct:1},
-
-{q:"AI is used without understanding. What risk exists?",
-a:["Efficiency","Misuse","Speed","Automation"],
-correct:1},
-
-{q:"A user understands AI strengths. What improves?",
-a:["Decisions","System speed","Data volume","Automation"],
-correct:0},
-
-{q:"AI assists but does not replace human judgment. Why is this important?",
-a:["Accuracy","Speed","Automation","Cost"],
-correct:0},
-
-{q:"A professional uses AI for support, not authority. What does this demonstrate?",
-a:["Dependence","Control","Avoidance","Inefficiency"],
-correct:1},
-
-{q:"Understanding AI fundamentals leads to what outcome?",
-a:["Better usage","System failure","Reduced speed","Automation loss"],
-correct:0}
-
-]
+  name: "Module 5: Foundational AI Use in Everyday and Professional Life",
+  lessons: [
+    {
+      title: "Lesson 1: Everyday AI Use Still Requires Awareness",
+      content: "People use AI in phones, search, writing tools, recommendations, and assistants every day. That does not mean every use feels formal or high-stakes, but it still matters. Everyday use shapes habits. If someone learns bad habits in daily use, those habits often follow them into work and more serious settings.",
+      quiz: [
+        {
+          q: "A person casually uses AI in their daily life for recommendations, quick summaries, and writing help. Because the tasks feel small, they stop reviewing outputs carefully and begin assuming the system is always 'close enough.' Why can that everyday habit become a bigger problem over time?",
+          a: [
+            "Because repeated casual trust can build weak habits that carry into more important decisions later",
+            "Because everyday AI use is always more dangerous than workplace AI use",
+            "Because small tasks are harder for AI than high-level professional tasks",
+            "Because recommendation tools train users to avoid technology completely"
+          ],
+          correct: 0
+        },
+        {
+          q: "A user says, 'It was just a small everyday task, so I didn’t think I needed to check it.' Why is that attitude still worth correcting in a foundations course?",
+          a: [
+            "Because foundations shape habits, and habits formed in small tasks often carry into bigger ones",
+            "Because every single AI task has equal consequences in every situation",
+            "Because everyday tasks should never involve digital tools of any kind",
+            "Because AI becomes less accurate in casual settings than serious ones"
+          ],
+          correct: 0
+        }
+      ]
+    },
+    {
+      title: "Lesson 2: Professional AI Use Requires Even More Care",
+      content: "When AI moves from casual support into work, education, or shared responsibilities, the consequences of mistakes increase. That is why foundational skills become even more important in professional environments. The same review habits that help in small tasks become essential in larger ones. Strong users scale their caution with the stakes.",
+      quiz: [
+        {
+          q: "A worker uses AI the same way they use it casually at home: fast, trusting, and without much review. In a professional setting, this leads to avoidable errors in shared documents and communications. What is the key lesson hidden in that contrast?",
+          a: [
+            "Professional use requires stronger review habits because the consequences of error are greater",
+            "Home use should always be treated as more serious than work use",
+            "AI becomes less accurate whenever it is used at work",
+            "Professional settings should avoid AI even for basic support tasks"
+          ],
+          correct: 0
+        },
+        {
+          q: "A student says, 'I use AI casually all the time, so I already know how to use it for serious work.' Why is that assumption incomplete from a foundational perspective?",
+          a: [
+            "Because higher-stakes use requires more discipline, verification, and judgment than casual use",
+            "Because casual use and serious use are exactly the same skill level",
+            "Because AI should never be used for school or work under any circumstances",
+            "Because casual use teaches all necessary review habits automatically"
+          ],
+          correct: 0
+        }
+      ]
+    },
+    {
+      title: "Lesson 3: Foundational Users Know How to Ask Better Questions",
+      content: "One hidden mark of AI skill is knowing how to ask. Many weak results come from weak requests. People who understand AI foundations tend to get stronger outputs because they provide clearer goals, useful details, and better follow-up. Asking better is one of the simplest ways to use AI better.",
+      quiz: [
+        {
+          q: "Two people use the same AI tool for the same general task. One gets a vague answer and the other gets something much more useful because they gave the system a clear purpose, audience, and desired outcome. What is the deeper foundation lesson here?",
+          a: [
+            "The tool favors certain users over others for unknown reasons",
+            "Better questioning often produces better AI support",
+            "AI works only for people with advanced technical backgrounds",
+            "The quality difference came from the system changing modes by itself"
+          ],
+          correct: 1
+        },
+        {
+          q: "A learner keeps blaming the AI for weak results, but never improves the request, adds context, or asks a useful follow-up. From a foundational training standpoint, what is that learner missing?",
+          a: [
+            "That AI skill includes shaping the interaction, not just reacting to the output",
+            "That AI automatically improves if ignored after weak responses",
+            "That better results come only from using a paid version of the tool",
+            "That follow-up questions reduce the quality of future outputs"
+          ],
+          correct: 0
+        }
+      ]
+    },
+    {
+      title: "Lesson 4: Foundational Skill Is Visible in How a User Responds to Weak Output",
+      content: "Anyone can enjoy a good response. Strong foundational users reveal themselves when the output is weak. Do they panic? Do they trust it anyway? Or do they refine, question, and improve the interaction? Mature AI use is shown not only by what a person does with strong output, but by how they handle imperfect output.",
+      quiz: [
+        {
+          q: "An AI tool gives a user a weak answer that is too general to help. Instead of accepting it or giving up, the user narrows the request, adds missing details, and asks again. Why is that response a sign of growing foundational skill?",
+          a: [
+            "Because strong users know how to improve the interaction when the first output is weak",
+            "Because weak answers always mean the system is broken beyond repair",
+            "Because the best strategy is to ask the same vague question repeatedly",
+            "Because AI quality depends more on patience than on input clarity"
+          ],
+          correct: 0
+        },
+        {
+          q: "A beginner gets a poor AI answer and decides the tool is useless. A stronger user gets the same answer and improves the prompt until the result becomes helpful. What is the real difference between the two users?",
+          a: [
+            "One understands that AI use involves refinement, not just one-step acceptance",
+            "One prefers longer answers and the other prefers short ones",
+            "One has better internet and the other does not",
+            "One is more creative, so the system responds better automatically"
+          ],
+          correct: 0
+        }
+      ]
+    },
+    {
+      title: "Lesson 5: A Strong Foundation Makes the User More Valuable, Not Less",
+      content: "Some people fear that learning AI will make human skill less important. In reality, strong foundational AI users become more valuable because they know how to combine speed with judgment, support with review, and output with responsibility. AI does not remove the value of a capable person. It increases the value of a person who knows how to use it well.",
+      quiz: [
+        {
+          q: "A worker learns how to prompt better, review outputs carefully, and decide when AI should support rather than decide. Over time, they become faster without becoming careless. What does that show about the relationship between AI foundations and human value?",
+          a: [
+            "That good AI foundations can make a person more effective, not less important",
+            "That human skill matters less once AI tools are introduced",
+            "That faster work is always more valuable than accurate work",
+            "That people should avoid reviewing outputs if they want to stay efficient"
+          ],
+          correct: 0
+        },
+        {
+          q: "A learner says, 'The more I understand AI, the more I realize my judgment matters.' Why is that one of the strongest foundational conclusions a person can reach?",
+          a: [
+            "Because it recognizes that the tool becomes more useful when the human becomes more thoughtful",
+            "Because it proves AI can never be helpful in any real setting",
+            "Because it means the learner no longer needs support systems",
+            "Because it shows that AI is mainly a replacement for responsibility"
+          ],
+          correct: 0
+        }
+      ]
+    }
+  ]
 }
 
 ];
@@ -335,38 +866,121 @@ let moduleIndex = 0;
 let lessonIndex = 0;
 let quizIndex = 0;
 let mode = "lesson";
+let answeredCurrentQuestion = false;
 
-function load(){
-  let currentModule = modules[moduleIndex];
+function renderStructuredLesson(lesson) {
+  return `
+    <div class="lesson-block">
+      <div class="lesson-label">Core Truth</div>
+      <div class="lesson-text">${lesson.coreTruth}</div>
+    </div>
+
+    <div class="lesson-block">
+      <div class="lesson-label">Why This Matters</div>
+      <div class="lesson-text">${lesson.whyItMatters}</div>
+    </div>
+
+    <div class="lesson-block">
+      <div class="lesson-label">Real-World Example</div>
+      <div class="lesson-text">${lesson.realWorldExample}</div>
+    </div>
+
+    <div class="lesson-block">
+      <div class="lesson-label">Decision Skill</div>
+      <div class="lesson-text">${lesson.decisionSkill}</div>
+    </div>
+
+    <div class="transition-note">
+      Review the lesson above, then begin the knowledge check.
+    </div>
+  `;
+}
+
+function renderLegacyLesson(content) {
+  return `<div class="lesson-text">${content}</div>`;
+}
+
+function renderQuestion(q) {
+  let html = `<div style="font-size:18px; line-height:1.6; margin-bottom:18px;">${q.q}</div>`;
+
+  q.a.forEach((answer, index) => {
+    html += `
+      <button
+        class="answer-btn"
+        id="answer-${index}"
+        onclick="checkAnswer(${index})">
+        ${answer}
+      </button>
+    `;
+  });
+
+  html += `<div id="feedback"></div>`;
+  return html;
+}
+
+function load() {
+  const currentModule = modules[moduleIndex];
+  const currentLesson = currentModule.lessons[lessonIndex];
+
   document.getElementById("module").innerText = currentModule.name;
+  answeredCurrentQuestion = false;
 
-  if(mode==="lesson"){
-    document.getElementById("title").innerText = "Lesson " + (lessonIndex+1);
-    document.getElementById("content").innerText = currentModule.lessons[lessonIndex];
+  if (mode === "lesson") {
+    document.getElementById("title").innerText = currentLesson.title;
+
+    if (currentLesson.lesson) {
+      document.getElementById("content").innerHTML = renderStructuredLesson(currentLesson.lesson);
+      document.getElementById("nextBtn").innerText = "Start Knowledge Check";
+    } else {
+      document.getElementById("content").innerHTML = renderLegacyLesson(currentLesson.content);
+      document.getElementById("nextBtn").innerText = "Start Knowledge Check";
+    }
+
+    document.getElementById("nextBtn").style.display = "inline-block";
   } else {
-    let q = currentModule.quiz[quizIndex];
-    document.getElementById("title").innerText = "Question " + (quizIndex+1);
-    document.getElementById("content").innerText = q.q;
+    const q = currentLesson.quiz[quizIndex];
+    document.getElementById("title").innerText = `${currentLesson.title} — Question ${quizIndex + 1}`;
+    document.getElementById("content").innerHTML = renderQuestion(q);
+    document.getElementById("nextBtn").style.display = "none";
   }
 }
 
-function next(){
-  let currentModule = modules[moduleIndex];
+function next() {
+  if (mode === "lesson") {
+    mode = "quiz";
+    quizIndex = 0;
+    load();
+    return;
+  }
 
-  if(mode==="lesson"){
+  if (!answeredCurrentQuestion) return;
+
+  const currentModule = modules[moduleIndex];
+  const currentLesson = currentModule.lessons[lessonIndex];
+
+  quizIndex++;
+
+  if (quizIndex >= currentLesson.quiz.length) {
+    mode = "lesson";
+    quizIndex = 0;
     lessonIndex++;
-    if(lessonIndex >= currentModule.lessons.length){
+
+    if (lessonIndex >= currentModule.lessons.length) {
       lessonIndex = 0;
-      mode = "quiz";
-    }
-  } else {
-    quizIndex++;
-    if(quizIndex >= currentModule.quiz.length){
-      quizIndex = 0;
       moduleIndex++;
-      mode = "lesson";
-      if(moduleIndex >= modules.length){
-        alert("Course Complete!");
+
+      if (moduleIndex >= modules.length) {
+        document.getElementById("module").innerText = "Course Complete";
+        document.getElementById("title").innerText = "You completed all modules.";
+        document.getElementById("content").innerHTML = `
+          <div class="lesson-block">
+            <div class="lesson-label">Completion</div>
+            <div class="lesson-text">
+              Excellent work. You have completed this course experience.
+            </div>
+          </div>
+        `;
+        document.getElementById("nextBtn").style.display = "none";
         return;
       }
     }
@@ -375,8 +989,50 @@ function next(){
   load();
 }
 
-load();
+function checkAnswer(selectedIndex) {
+  if (answeredCurrentQuestion) return;
 
+  const currentModule = modules[moduleIndex];
+  const currentLesson = currentModule.lessons[lessonIndex];
+  const currentQuestion = currentLesson.quiz[quizIndex];
+  const buttons = document.querySelectorAll(".answer-btn");
+  const feedback = document.getElementById("feedback");
+
+  buttons.forEach((btn, index) => {
+    btn.disabled = true;
+
+    if (index === currentQuestion.correct) {
+      btn.classList.add("correct");
+    }
+
+    if (index === selectedIndex && selectedIndex !== currentQuestion.correct) {
+      btn.classList.add("incorrect");
+    }
+  });
+
+  if (selectedIndex === currentQuestion.correct) {
+    feedback.innerHTML = `
+      <div class="feedback-box correct">
+        <strong>Correct.</strong><br>
+        ${currentQuestion.explanation ? currentQuestion.explanation : "That answer reflects the strongest lesson takeaway."}
+      </div>
+    `;
+  } else {
+    feedback.innerHTML = `
+      <div class="feedback-box incorrect">
+        <strong>Not quite.</strong><br>
+        ${currentQuestion.explanation ? currentQuestion.explanation : "Review the lesson and notice which answer best matches the core principle."}
+      </div>
+    `;
+  }
+
+  answeredCurrentQuestion = true;
+  document.getElementById("nextBtn").style.display = "inline-block";
+  document.getElementById("nextBtn").innerText =
+    quizIndex === currentLesson.quiz.length - 1 ? "Next Lesson" : "Next Question";
+}
+
+load();
 </script>
 
 </body>
