@@ -738,11 +738,14 @@
       const modules = document.getElementById("modalModules");
       const primaryBtn = document.getElementById("modalPrimaryBtn");
 
-      title.innerText = course.title;
-      price.innerText = course.price;
-      desc.innerText = course.desc;
-      summary.innerText = course.summary;
+     title.innerText = course.title;
 
+price.innerText = course.price;
+price.className = "price-badge";
+
+desc.innerText = course.desc;
+summary.innerText = course.summary;
+      
       modules.innerHTML = "";
       course.modules.forEach(module => {
         modules.innerHTML += `
